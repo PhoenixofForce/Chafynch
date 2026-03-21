@@ -13,8 +13,8 @@
 	>
 		<!-- Sidebar toggle icon -->
 		<input type="checkbox" bind:checked={drawerOpen} />
-		<div class="swap-on"><PanelLeftClose class="is-drawer-close:hidden" size="1rem" /></div>
-		<div class="swap-off"><PanelLeftOpen class="is-drawer-close:hidden" size="1rem" /></div>
+		<div class="swap-on"><PanelLeftClose class="is-drawer-close:hidden" /></div>
+		<div class="swap-off"><PanelLeftOpen class="is-drawer-close:hidden" /></div>
 	</label>
 	<a href={resolve('/')} class="btn text-xl btn-ghost">Tea Tracker</a>
 </nav>

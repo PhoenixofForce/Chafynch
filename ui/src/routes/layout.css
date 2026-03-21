@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 
 @plugin '@tailwindcss/typography';
-@plugin "daisyui" {
-    themes: lemonade --default;
+@plugin 'daisyui' {
+	themes: lemonade --default;
+}
+
+.lucide {
+	width: 1rem;
+	height: 1rem;
 }

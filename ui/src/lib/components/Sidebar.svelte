@@ -37,7 +37,7 @@
 				href={resolve(link.path)}
 				class="{currentPath === link.path
 					? 'bg-neutral text-neutral-content'
-					: 'opacity-70 transition-opacity hover:opacity-100'} is-drawer-close:tooltip is-drawer-close:tooltip-right"
+					: 'opacity-70 transition-opacity hover:opacity-100'} is-drawer-close:tooltip is-drawer-close:tooltip-right is-drawer-close:w-fit"
 				data-tip={link.text}
 			>
 				<link.icon size="21" />
