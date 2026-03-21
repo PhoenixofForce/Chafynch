@@ -198,9 +198,10 @@
 
 		<div class="flex gap-2">
 			<button type="submit" class="btn btn-primary" disabled={submitting}>
-				{submitting ? 'Speichern...' : 'Speichern'}
+			<span class:hidden={!submitting} class="loading loading-ring loading-xs"></span>
+				{submitting ?  'Speichern...' : 'Speichern'}
 			</button>
-			<a href="/" class="btn btn-ghost">Abbrechen</a>
+			<a href="/" class="btn btn-ghost" >Abbrechen</a>
 		</div>
 	</form>
 </div>

@@ -3,7 +3,8 @@
 	import CountryMap from '$lib/components/CountryMap.svelte';
 	import { api } from '$lib/api/client';
 	import type { TeaDTO } from '$lib/api/types';
-    import { Leaf, Store, Scale } from '@lucide/svelte';
+	import { Leaf, Store, Scale } from '@lucide/svelte';
+	import { resolve } from '$app/paths';
 
 	let teas = $state<TeaDTO[]>([]);
 	let countryCodeMap = $state<Record<string, string>>({});
@@ -23,13 +24,7 @@
 </script>
 
 <div class="mx-auto max-w-5xl p-6">
-	<h1 class="text-base-content text-3xl font-bold">Tea Tracker</h1>
-	<div class="mt-1 flex items-center justify-between">
-		<p class="text-base-content/60">Deine Tee-Sammlung im Ueberblick</p>
-		<a href="/teas/new" class="btn btn-primary btn-sm">+ Neuer Tee</a>
-	</div>
-
-	<div class="stats stats-horizontal mt-6 w-full border border-base-300 bg-base-200 shadow">
+	<div class="stats mt-6 w-full stats-horizontal border border-base-300 bg-base-200 shadow">
 		<div class="stat">
 			<div class="stat-title">Tees gesamt</div>
 			<div class="stat-value text-primary">42</div>
@@ -53,13 +48,17 @@
 	</div>
 
 	<div class="mt-6">
-		<h2 class="text-base-content text-xl font-bold mb-4">Alle Tees</h2>
+		<div class="flex justify-between">
+			<h2 class="mb-4 text-xl font-bold text-base-content">Alle Tees</h2>
+			<a href={resolve('/teas/new')} class="btn btn-sm btn-primary">+ Neuer Tee</a>
+		</div>
+
 		{#if teas.length === 0}
-			<p class="text-base-content/60 text-sm">Noch keine Tees vorhanden.</p>
+			<p class="text-sm text-base-content/60">Noch keine Tees vorhanden.</p>
 		{:else}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-				{#each teas as tea}
-					<div class="card card-border border-base-300 bg-base-200">
+				{#each teas as tea (tea.id)}
+					<div class="card border-base-300 bg-base-200 card-border">
 						{#if tea.originCountry && countryCodeMap[tea.originCountry]}
 							<figure class="relative aspect-square overflow-hidden bg-base-300">
 								<div class="h-full w-full">
@@ -70,8 +69,10 @@
 										showNeighbors={false}
 									/>
 								</div>
-								<div class="absolute bottom-2 left-2 badge badge-secondary text-xs">
-									{[tea.originCity, tea.originProvince, tea.originCountry].filter(Boolean).join(', ')}
+								<div class="absolute right-2 bottom-2 badge badge-soft badge-sm badge-secondary">
+									{[tea.originCity, tea.originProvince, tea.originCountry]
+										.filter(Boolean)
+										.join(', ')}
 								</div>
 							</figure>
 						{/if}
@@ -79,11 +80,12 @@
 						<div class="card-body gap-2 p-4">
 							<h3 class="card-title text-lg">{tea.name}</h3>
 
-							<div class="flex items-center flex-wrap gap-3 text-sm text-base-content/70">
+							<div class="flex flex-wrap items-center gap-3 text-sm text-base-content/70">
 								{#if tea.teaType || tea.cultivar}
 									<span class="flex items-center gap-1">
 										<Leaf size="0.875rem" />
-										{tea.teaType ?? ''}{tea.cultivar && tea.teaType ? ' - ' : ''}{tea.cultivar ?? ''}
+										{tea.teaType ?? ''}{tea.cultivar && tea.teaType ? ' - ' : ''}{tea.cultivar ??
+											''}
 									</span>
 								{/if}
 								{#if tea.vendor}
