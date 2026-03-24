@@ -2,7 +2,7 @@ import adapter from '@sveltejs/adapter-node';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	kit: { adapter: adapter(), ssr: false },
+	kit: { adapter: adapter() },
 	vitePlugin: {
 		dynamicCompileOptions: ({ filename }) =>
 			filename.includes('node_modules') ? undefined : { runes: true }

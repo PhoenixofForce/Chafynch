@@ -15,18 +15,15 @@
 		</div>
 		<div class="stat">
 			<div class="stat-title">Sorten</div>
-			<div class="stat-value">12</div>
+			<div class="stat-value">{data.types?.length ?? 0}</div>
 			<div class="stat-desc">Gruen, Schwarz, Oolong, ...</div>
 		</div>
 		<div class="stat">
-			<div class="stat-title">Herkunftslaender</div>
-			<div class="stat-value">5</div>
-			<div class="stat-desc">China, Japan, Indien, ...</div>
-		</div>
-		<div class="stat">
-			<div class="stat-title">Verkostungen</div>
-			<div class="stat-value text-secondary">128</div>
-			<div class="stat-desc">+12 diesen Monat</div>
+			<div class="stat-title">Herkunftsländer</div>
+			<div class="stat-value">{data.countries.length}</div>
+			<div class="stat-desc">
+				{data.countries.slice(0, Math.min(3, data.countries.length)).join(', ')}, ...
+			</div>
 		</div>
 	</div>
 

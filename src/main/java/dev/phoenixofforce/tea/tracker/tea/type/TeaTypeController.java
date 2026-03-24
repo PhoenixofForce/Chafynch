@@ -1,7 +1,7 @@
 package dev.phoenixofforce.tea.tracker.tea.type;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeaTypeController {
 
-    private final TeaTypeRepository teaTypeRepository;
+    private final TeaTypeService teaTypeService;
 
     @GetMapping
-    public List<TeaType> findAll() {
-        return teaTypeRepository.findAll();
+    public List<TeaTypeDto> findAll() {
+        return teaTypeService.findAll();
     }
 }

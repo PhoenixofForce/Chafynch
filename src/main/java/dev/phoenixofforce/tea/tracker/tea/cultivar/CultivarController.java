@@ -1,7 +1,7 @@
 package dev.phoenixofforce.tea.tracker.tea.cultivar;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -10,11 +10,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CultivarController {
 
-    private final CultivarRepository cultivarRepository;
+    private final CultivarService cultivarService;
 
     @GetMapping
-    public List<Cultivar> search(@RequestParam(defaultValue = "") String q) {
-        if (q.isBlank()) return cultivarRepository.findAll();
-        return cultivarRepository.findByNameContainingIgnoreCase(q);
+    public List<CultivarDto> search(@RequestParam(defaultValue = "") String q) {
+        return cultivarService.searchByName(q);
     }
 }
