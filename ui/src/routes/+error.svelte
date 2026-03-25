@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { Clock, Captions, Compass, Server } from '@lucide/svelte';
+	import { Clock, Compass, Server, Clipboard } from '@lucide/svelte';
 
 	const errorData = extractErrorObject();
 
@@ -12,9 +12,9 @@
 	const timestamp = errorData?.timestamp ?? new Date().toISOString();
 	const frontendPath = page.url.pathname;
 	const backendPath = errorData?.path;
-	const trace = errorData?.trace?.split('\n').slice(0, 10).join('\n');
+	const completeTrace = errorData?.trace;
+	const trace = errorData?.trace?.split('\n').slice(0, 10);
 
-	console.log(errorData);
 	function extractErrorObject() {
 		const message = page.error?.message ?? '{}';
 		try {
@@ -22,6 +22,12 @@
 		} catch (_) {
 			return undefined;
 		}
+	}
+
+	let tooltipText = $state('Copy');
+	function onClick() {
+		tooltipText = 'Copied!';
+		navigator.clipboard.writeText(completeTrace);
 	}
 </script>
 
@@ -49,8 +55,20 @@
 			<h2 class="mb-2">{backendMessage}</h2>
 		{/if}
 		{#if trace}
-			<div class="mockup-code mt-4 w-full bg-warning text-warning-content">
-				<pre data-prefix="$" class="bg-warning text-warning-content"><code>{trace}</code></pre>
+			<div class="mockup-code relative mt-4 w-full bg-warning text-warning-content">
+				{#each trace as line, i (i)}
+					<pre data-prefix={i + 1} class="mt-0 mb-0 bg-warning py-0 text-warning-content"><code
+							>{line}</code
+						></pre>
+				{/each}
+				<div
+					class="tooltip absolute tooltip-left top-3 right-6 tooltip-primary"
+					data-tip={tooltipText}
+				>
+					<button class="btn btn-warning" onclick={onClick}>
+						<Clipboard />
+					</button>
+				</div>
 			</div>
 		{/if}
 		<h2 class="mb-1">This was not supposed to happen</h2>

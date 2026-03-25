@@ -16,7 +16,6 @@ public class TeaController {
 
     @GetMapping
     public List<TeaDTO> findAll() {
-        if(true)     throw new RuntimeException("Test error");
         return teaService.findAll();
     }
 
