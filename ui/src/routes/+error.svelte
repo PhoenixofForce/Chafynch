@@ -55,9 +55,13 @@
 			<h2 class="mb-2">{backendMessage}</h2>
 		{/if}
 		{#if trace}
-			<div class="mockup-code relative mt-4 w-full bg-warning text-warning-content">
+			<div
+				class="mockup-code relative mt-4 w-full overflow-x-scroll bg-warning text-warning-content"
+			>
 				{#each trace as line, i (i)}
-					<pre data-prefix={i + 1} class="mt-0 mb-0 bg-warning py-0 text-warning-content"><code
+					<pre
+						data-prefix={i + 1}
+						class="mt-0 mb-0 overflow-x-visible bg-warning py-0 text-warning-content"><code
 							>{line}</code
 						></pre>
 				{/each}
