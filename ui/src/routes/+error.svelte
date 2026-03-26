@@ -3,29 +3,19 @@
 	import { page } from '$app/state';
 	import { Clock, Compass, Server, Clipboard } from '@lucide/svelte';
 
-	const errorData = extractErrorObject();
-
 	const status = page.status;
-	const errorMessage = errorData?.error || page.error?.message;
-	const backendMessage = errorData?.message;
+	const errorMessage = page.error?.error || page.error?.message;
+	const backendMessage = page.error?.message;
 
-	const timestamp = errorData?.timestamp ?? new Date().toISOString();
+	const timestamp = page.error?.timestamp ?? new Date().toISOString();
 	const frontendPath = page.url.pathname;
-	const backendPath = errorData?.path;
-	const completeTrace = errorData?.trace;
-	const trace = errorData?.trace?.split('\n').slice(0, 10);
-
-	function extractErrorObject() {
-		const message = page.error?.message ?? '{}';
-		try {
-			return JSON.parse(message);
-		} catch (_) {
-			return undefined;
-		}
-	}
+	const backendPath = page.error?.path;
+	const completeTrace = page.error?.trace;
+	const trace = page.error?.trace?.split('\n').slice(0, 10);
 
 	let tooltipText = $state('Copy');
 	function onClick() {
+		if (!completeTrace) return;
 		tooltipText = 'Copied!';
 		navigator.clipboard.writeText(completeTrace);
 	}

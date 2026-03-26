@@ -11,7 +11,7 @@ api.use({
 	async onResponse({ response }) {
 		if (!response.ok) {
 			const body = await response.clone().json();
-			throw error(body.status, JSON.stringify(body));
+			throw error(body.status, body as App.Error);
 		}
 	}
 });

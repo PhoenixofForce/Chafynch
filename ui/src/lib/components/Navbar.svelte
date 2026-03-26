@@ -19,7 +19,11 @@
 		</label>
 		<a href={resolve('/')} class="btn text-xl btn-ghost">Tea Tracker</a>
 	</div>
-	<div>
-		<div class="mr-2 h-10 w-10 rounded-full bg-primary"></div>
+	<div class="dropdown dropdown-end">
+		<div tabindex="0" class="mr-2 h-10 w-10 rounded-full bg-primary"></div>
+		<ul tabindex="-1" class="dropdown-content menu z-1 w-52 rounded-box bg-base-100 p-2 shadow-sm">
+			<li><a>Item 1</a></li>
+			<li><a>Item 2</a></li>
+		</ul>
 	</div>
 </nav>
