@@ -8,15 +8,9 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM alpine:3.21
+FROM nginx:alpine-slim
 
-RUN apk add --no-cache nodejs
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /app
-
-COPY --from=build /app/build ./build
-
-ENV PORT=3000
 EXPOSE 3000
-
-CMD ["node", "build"]

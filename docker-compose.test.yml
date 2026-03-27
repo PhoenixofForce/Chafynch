@@ -14,8 +14,8 @@ services:
       dockerfile: ./service.Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/tea_tracker
+    depends_on:
+      - postgres
 
   ui:
     build:
@@ -23,8 +23,8 @@ services:
       dockerfile: ../ui.Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      PUBLIC_BACKEND_URL: "http://localhost:8080"
+    depends_on:
+      - service
 
 volumes:
   postgres_data:
