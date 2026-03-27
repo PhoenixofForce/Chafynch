@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: tea_tracker
+      POSTGRES_USER: tea_tracker
+      POSTGRES_PASSWORD: tea_tracker
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  service:
+    build:
+      context: .
+      dockerfile: ./service.Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/tea_tracker
+
+  ui:
+    build:
+      context: ./ui
+      dockerfile: ../ui.Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      PUBLIC_BACKEND_URL: "http://localhost:8080"
+
+volumes:
+  postgres_data:
