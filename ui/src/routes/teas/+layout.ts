@@ -1,12 +1,7 @@
-import type { Breadcrumb } from '$lib/routes';
-import { Leaf } from '@lucide/svelte';
+import { breadcrumbFor, type Breadcrumb } from '$lib/routes';
 
-export async function load({ parent }) {
-	const { breadcrumbs } = await parent();
+export async function load() {
 	return {
-		breadcrumbs: [
-			...breadcrumbs,
-			{ label: 'Teas', path: '/teas', icon: Leaf }
-		] satisfies Breadcrumb[]
+		breadcrumbs: [breadcrumbFor('/teas')!] satisfies Breadcrumb[]
 	};
 }

@@ -1,10 +1,9 @@
-import type { Breadcrumb } from '$lib/routes';
+import { breadcrumbFor, type Breadcrumb } from '$lib/routes';
 
 export const ssr = false;
 
-export async function load({ parent }) {
-	const { breadcrumbs } = await parent();
+export async function load() {
 	return {
-		breadcrumbs: [...breadcrumbs, { label: 'Vendors', path: '/vendors' }] satisfies Breadcrumb[]
+		breadcrumbs: [breadcrumbFor('/vendors')!] satisfies Breadcrumb[]
 	};
 }

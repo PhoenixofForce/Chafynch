@@ -10,25 +10,29 @@ export type Breadcrumb = {
 };
 
 export type Route = RouteIdWithSearchOrHash | PathnameWithSearchOrHash;
-export const links: { path: Route; icon: Component; text: string }[] = [
+export const sidebarLinks: Breadcrumb[] = [
 	{
 		path: '/',
 		icon: House,
-		text: 'Home'
+		label: 'Home'
 	},
 	{
 		path: '/teas',
 		icon: Leaf,
-		text: 'Teas'
+		label: 'Teas'
 	},
 	{
 		path: '/vendors',
 		icon: Store,
-		text: 'Vendors'
+		label: 'Vendors'
 	},
 	{
 		path: '/settings',
 		icon: Cog,
-		text: 'Settings'
+		label: 'Settings'
 	}
 ];
+
+export function breadcrumbFor(path: Route): Breadcrumb | undefined {
+	return sidebarLinks.find((l) => l.path === path);
+}
