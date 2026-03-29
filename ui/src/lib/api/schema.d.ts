@@ -123,23 +123,28 @@ export interface components {
             purchaseDate?: string;
             weightGrams?: number;
         };
-        Location: {
-            /** Format: int64 */
-            id?: number;
-            country?: string;
-            province?: string;
+        LocationDto: {
             city?: string;
-            /** Format: double */
-            longitude?: number;
+            province?: string;
+            country?: string;
             /** Format: double */
             latitude?: number;
+            /** Format: double */
+            longitude?: number;
         };
-        Vendor: {
+        VendorDto: {
             /** Format: int64 */
             id?: number;
             name?: string;
             website?: string;
-            location?: components["schemas"]["Location"];
+            locationDto?: components["schemas"]["LocationDto"];
+        };
+        VendorOverviewDto: {
+            vendor?: components["schemas"]["VendorDto"];
+            /** Format: double */
+            averagePricePerGram?: number;
+            /** Format: int64 */
+            teas?: number;
         };
         TeaTypeDto: {
             /** Format: int64 */
@@ -221,7 +226,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Vendor"][];
+                    "*/*": components["schemas"]["VendorOverviewDto"][];
                 };
             };
         };
@@ -285,7 +290,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Location"][];
+                    "*/*": components["schemas"]["LocationDto"][];
                 };
             };
         };

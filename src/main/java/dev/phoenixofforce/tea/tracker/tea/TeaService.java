@@ -2,6 +2,7 @@ package dev.phoenixofforce.tea.tracker.tea;
 
 import dev.phoenixofforce.tea.tracker.location.LocationService;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.CultivarService;
+import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeDto;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeRepository;
 import dev.phoenixofforce.tea.tracker.vendor.VendorService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,7 @@ public class TeaService {
 
     @Transactional(readOnly = true)
     public List<TeaDTO> findAll() {
-        return teaRepository.findAllWithRelations().stream()
-                .map(TeaDTO::from)
-                .toList();
+        return TeaDTO.from(teaRepository.findAllWithRelations());
     }
 
     @Transactional(readOnly = true)

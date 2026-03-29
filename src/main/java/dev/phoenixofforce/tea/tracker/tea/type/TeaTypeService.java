@@ -12,10 +12,7 @@ public class TeaTypeService {
     private final TeaTypeRepository teaTypeRepository;
 
     public List<TeaTypeDto> findAll() {
-        return teaTypeRepository.findAll()
-                .stream()
-                .map(TeaTypeDto::from)
-                .toList();
+        return TeaTypeDto.from(teaTypeRepository.findAll());
     }
 
 }

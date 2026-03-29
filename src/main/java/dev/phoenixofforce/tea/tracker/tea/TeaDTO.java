@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class TeaDTO {
@@ -14,10 +15,11 @@ public class TeaDTO {
     @NotBlank
     private String name;
 
-    private String cultivar;
-    private String teaType;
-    private String vendor;
+    private String cultivar; //todo: use cultivar dto
+    private String teaType; // Todo: use teaType dto
+    private String vendor; //Todo: use vendor dto
 
+    // Todo: use LocationDto
     private String originCountry;
     private String originProvince;
     private String originCity;
@@ -48,5 +50,11 @@ public class TeaDTO {
         }
 
         return dto;
+    }
+
+    public static List<TeaDTO> from(List<Tea> teas) {
+        return teas.stream()
+                .map(TeaDTO::from)
+                .toList();
     }
 }

@@ -1,3 +1,6 @@
+import { api } from '$lib/api/client';
+
 export async function load() {
-	return { };
+	const { data: vendors } = await api.GET('/api/vendors');
+	return { vendors };
 }

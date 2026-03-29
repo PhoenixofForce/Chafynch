@@ -10,11 +10,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LocationController {
 
-    private final LocationRepository locationRepository;
+    private final LocationService locationService;
 
     @GetMapping
-    public List<Location> search(@RequestParam(defaultValue = "") String q) {
-        if (q.isBlank()) return locationRepository.findAll();
-        return locationRepository.search(q);
+    public List<LocationDto> search(@RequestParam(defaultValue = "") String q) {
+        return locationService.find(q);
     }
 }

@@ -12,10 +12,7 @@ public class CultivarService {
     private final CultivarRepository cultivarRepository;
 
     public List<CultivarDto> searchByName(String name) {
-        return searchByNameInRepository(name)
-                .stream()
-                .map(CultivarDto::from)
-                .toList();
+        return CultivarDto.from(searchByNameInRepository(name));
     }
 
     private List<Cultivar> searchByNameInRepository(String name) {

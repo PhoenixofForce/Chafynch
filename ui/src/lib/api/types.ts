@@ -3,7 +3,8 @@
 import type { components } from './schema';
 
 export type TeaDTO = components['schemas']['TeaDTO'];
-export type Location = components['schemas']['Location'];
-export type Vendor = components['schemas']['Vendor'];
+export type LocationDto = components['schemas']['LocationDto'];
+export type VendorDto = components['schemas']['VendorDto'];
+export type VendorOverviewDto = components['schemas']['VendorOverviewDto'];
 export type TeaTypeDto = components['schemas']['TeaTypeDto'];
 export type CultivarDto = components['schemas']['CultivarDto'];

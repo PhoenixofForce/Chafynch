@@ -1,7 +1,7 @@
 package dev.phoenixofforce.tea.tracker.vendor;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -10,11 +10,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VendorController {
 
-    private final VendorRepository vendorRepository;
+    private final VendorService vendorService;
 
     @GetMapping
-    public List<Vendor> search(@RequestParam(defaultValue = "") String q) {
-        if (q.isBlank()) return vendorRepository.findAll();
-        return vendorRepository.findByNameContainingIgnoreCase(q);
+    public List<VendorOverviewDto> search(@RequestParam(defaultValue = "") String q) {
+        return vendorService.find(q);
     }
 }
