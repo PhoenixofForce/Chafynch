@@ -24,7 +24,7 @@ public class TeaService {
 
     @Transactional(readOnly = true)
     public List<TeaDTO> findAll() {
-        return teaRepository.findAll().stream()
+        return teaRepository.findAllWithRelations().stream()
                 .map(TeaDTO::from)
                 .toList();
     }
