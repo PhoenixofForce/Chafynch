@@ -29,6 +29,13 @@ public class TeaService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public TeaDTO findById(Long id) {
+        Tea tea = teaRepository.findById(id)
+                .orElseThrow();
+        return TeaDTO.from(tea);
+    }
+
     @Transactional
     public TeaDTO create(TeaDTO dto) {
         Tea tea = new Tea();

@@ -2,11 +2,11 @@
 	import { resolve } from '$app/paths';
 	import { PanelLeftClose, PanelLeftOpen } from '@lucide/svelte';
 
-	let { drawerOpen } = $props();
+	let { drawerOpen, breadcrumbs } = $props();
 </script>
 
 <nav class="navbar flex w-full justify-between bg-base-300 shadow-sm">
-	<div>
+	<div class="flex items-center">
 		<label
 			for="sidebar"
 			aria-label="open sidebar"
@@ -17,7 +17,18 @@
 			<div class="swap-on"><PanelLeftClose class="is-drawer-close:hidden" /></div>
 			<div class="swap-off"><PanelLeftOpen class="is-drawer-close:hidden" /></div>
 		</label>
-		<a href={resolve('/')} class="btn text-xl btn-ghost">Tea Tracker</a>
+		<div class="breadcrumbs ml-2 text-sm">
+			<ul>
+				{#each breadcrumbs as breadcrumb, i (i)}
+					<li>
+						<span class="inline-flex items-center gap-2">
+							<breadcrumb.icon />
+							<a href={resolve(breadcrumb.path)}>{breadcrumb.label}</a>
+						</span>
+					</li>
+				{/each}
+			</ul>
+		</div>
 	</div>
 	<div class="dropdown dropdown-end">
 		<div tabindex="0" class="mr-2 h-10 w-10 rounded-full bg-primary"></div>

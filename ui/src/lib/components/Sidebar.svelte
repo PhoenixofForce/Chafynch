@@ -1,32 +1,8 @@
 <script lang="ts">
-	import { Cog, House, Leaf, Store } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
-	import type { Component } from 'svelte';
 	import { page } from '$app/state';
+	import { links } from '$lib/routes';
 
-	type Route = Parameters<typeof resolve>[0];
-	const links: { path: Route; icon: Component; text: string }[] = [
-		{
-			path: '/',
-			icon: House,
-			text: 'Home'
-		},
-		{
-			path: '/teas',
-			icon: Leaf,
-			text: 'Teas'
-		},
-		{
-			path: '/vendors',
-			icon: Store,
-			text: 'Vendors'
-		},
-		{
-			path: '/settings',
-			icon: Cog,
-			text: 'Settings'
-		}
-	];
 	const currentPath = $derived(page.url.pathname);
 </script>
 

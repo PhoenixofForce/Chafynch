@@ -19,6 +19,11 @@ public class TeaController {
         return teaService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public TeaDTO findById(@PathVariable Long id) {
+        return teaService.findById(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TeaDTO create(@Valid @RequestBody TeaDTO dto) {

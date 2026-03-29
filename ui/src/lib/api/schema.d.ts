@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/teas/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["findById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tea-types": {
         parameters: {
             query?: never;
@@ -125,12 +141,12 @@ export interface components {
             website?: string;
             location?: components["schemas"]["Location"];
         };
-        TeaType: {
+        TeaTypeDto: {
             /** Format: int64 */
             id?: number;
             name?: string;
         };
-        Cultivar: {
+        CultivarDto: {
             /** Format: int64 */
             id?: number;
             name?: string;
@@ -210,6 +226,28 @@ export interface operations {
             };
         };
     };
+    findById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaDTO"];
+                };
+            };
+        };
+    };
     findAll_1: {
         parameters: {
             query?: never;
@@ -225,7 +263,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["TeaType"][];
+                    "*/*": components["schemas"]["TeaTypeDto"][];
                 };
             };
         };
@@ -269,7 +307,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Cultivar"][];
+                    "*/*": components["schemas"]["CultivarDto"][];
                 };
             };
         };
