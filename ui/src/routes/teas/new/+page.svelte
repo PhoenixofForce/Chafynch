@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { api } from '$lib/api/client';
-	import type { TeaDTO, TeaType, Location } from '$lib/api/types';
+	import type { LocationDto, TeaDTO, TeaTypeDto } from '$lib/api/types';
 	import Autocomplete from '$lib/components/Autocomplete.svelte';
 	import SearchableSelect from '$lib/components/SearchableSelect.svelte';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 
 	let form = $state<TeaDTO>({
 		name: '',
@@ -19,7 +20,7 @@
 		weightGrams: undefined
 	});
 
-	let teaTypes = $state<TeaType[]>([]);
+	let teaTypes = $state<TeaTypeDto[]>([]);
 	let countryNames = $state<string[]>([]);
 	let submitting = $state(false);
 	let error = $state('');
@@ -44,10 +45,10 @@
 
 	async function searchVendors(q: string): Promise<string[]> {
 		const { data } = await api.GET('/api/vendors', { params: { query: { q } } });
-		return data?.map((v) => v.name ?? '') ?? [];
+		return data?.map((v) => v.vendor.name ?? '') ?? [];
 	}
 
-	async function searchLocations(q: string): Promise<{ label: string; value: Location }[]> {
+	async function searchLocations(q: string): Promise<{ label: string; value: LocationDto }[]> {
 		const { data } = await api.GET('/api/locations', { params: { query: { q } } });
 		return (
 			data?.map((l) => ({
@@ -57,7 +58,7 @@
 		);
 	}
 
-	function onLocationSelect(loc: Location) {
+	function onLocationSelect(loc: LocationDto) {
 		form.originCountry = loc.country ?? '';
 		form.originProvince = loc.province ?? '';
 		form.originCity = loc.city ?? '';
@@ -70,26 +71,32 @@
 		}
 		submitting = true;
 		error = '';
-		const { data, error: err } = await api.POST('/api/teas', { body: form });
+		const { error: err } = await api.POST('/api/teas', { body: form });
 		submitting = false;
 		if (err) {
 			error = 'Fehler beim Speichern.';
 			return;
 		}
-		await goto('/');
+		await goto(resolve('/'));
 	}
 </script>
 
 <div class="mx-auto max-w-2xl p-6">
-	<h1 class="text-base-content text-3xl font-bold">Neuen Tee hinzufuegen</h1>
+	<h1 class="text-3xl font-bold text-base-content">Neuen Tee hinzufuegen</h1>
 
-	<form class="mt-6 space-y-4" onsubmit={(e) => { e.preventDefault(); submit(); }}>
+	<form
+		class="mt-6 space-y-4"
+		onsubmit={(e) => {
+			e.preventDefault();
+			submit();
+		}}
+	>
 		<div class="form-control">
 			<label class="label" for="name">Name*</label>
 			<input
 				id="name"
 				type="text"
-				class="input input-bordered w-full"
+				class="input-bordered input w-full"
 				bind:value={form.name}
 				required
 			/>
@@ -97,9 +104,9 @@
 
 		<div class="form-control">
 			<label class="label" for="teaType">Sorte</label>
-			<select id="teaType" class="select select-bordered w-full" bind:value={form.teaType}>
+			<select id="teaType" class="select-bordered select w-full" bind:value={form.teaType}>
 				<option value="">-- Waehlen --</option>
-				{#each teaTypes as t}
+				{#each teaTypes as t (t.id)}
 					<option value={t.name}>{t.name}</option>
 				{/each}
 			</select>
@@ -111,7 +118,7 @@
 				id="cultivar"
 				placeholder="z.B. Da Bai"
 				search={searchCultivars}
-				bind:value={form.cultivar}
+				bind:value={form.cultivar!}
 			/>
 		</div>
 
@@ -121,7 +128,7 @@
 				id="vendor"
 				placeholder="z.B. Yunnan Sourcing"
 				search={searchVendors}
-				bind:value={form.vendor}
+				bind:value={form.vendor!}
 			/>
 		</div>
 
@@ -134,7 +141,7 @@
 						id="originCountry"
 						placeholder="z.B. China"
 						options={countryNames}
-						bind:value={form.originCountry}
+						bind:value={form.originCountry!}
 					/>
 				</div>
 				<div class="form-control">
@@ -142,7 +149,7 @@
 					<input
 						id="originProvince"
 						type="text"
-						class="input input-bordered w-full"
+						class="input-bordered input w-full"
 						placeholder="z.B. Fujian"
 						bind:value={form.originProvince}
 					/>
@@ -152,7 +159,7 @@
 					<input
 						id="originCity"
 						type="text"
-						class="input input-bordered w-full"
+						class="input-bordered input w-full"
 						placeholder="z.B. Taimu"
 						bind:value={form.originCity}
 					/>
@@ -167,7 +174,7 @@
 					id="price"
 					type="number"
 					step="0.01"
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					bind:value={form.price}
 				/>
 			</div>
@@ -177,7 +184,7 @@
 					id="weightGrams"
 					type="number"
 					step="0.01"
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					bind:value={form.weightGrams}
 				/>
 			</div>
@@ -186,7 +193,7 @@
 				<input
 					id="purchaseDate"
 					type="date"
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					bind:value={form.purchaseDate}
 				/>
 			</div>
@@ -198,10 +205,10 @@
 
 		<div class="flex gap-2">
 			<button type="submit" class="btn btn-primary" disabled={submitting}>
-			<span class:hidden={!submitting} class="loading loading-ring loading-xs"></span>
-				{submitting ?  'Speichern...' : 'Speichern'}
+				<span class:hidden={!submitting} class="loading loading-xs loading-ring"></span>
+				{submitting ? 'Speichern...' : 'Speichern'}
 			</button>
-			<a href="/" class="btn btn-ghost" >Abbrechen</a>
+			<a href={resolve('/')} class="btn btn-ghost">Abbrechen</a>
 		</div>
 	</form>
 </div>

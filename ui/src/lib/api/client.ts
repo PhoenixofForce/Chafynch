@@ -31,9 +31,10 @@ export async function wrapApi<T>(
 	options: { success?: string; error?: string; invalidate?: boolean } = {}
 ) {
 	try {
-		await caller();
-		if (options?.invalidate ?? true) invalidateAll();
+		const out = await caller();
+		if (options?.invalidate ?? true) await invalidateAll();
 		if (options.success) successToast(options.success);
+		return out;
 	} catch (e) {
 		handleApiError(e, options.error);
 	}
@@ -41,11 +42,5 @@ export async function wrapApi<T>(
 
 export function handleApiError(error: unknown, fallback = '') {
 	console.log(error);
-	if (isHttpError(error)) {
-		errorToast(error.body.message ?? fallback);
-	} else if (typeof error === 'string') {
-		errorToast(error ?? fallback);
-	} else {
-		errorToast(fallback);
-	}
+	errorToast(isHttpError(error) ? (error.body.message ?? fallback) : fallback);
 }
