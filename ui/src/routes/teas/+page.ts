@@ -6,7 +6,7 @@ export async function load() {
 
 	const countries = unique(teas?.map((e) => e.originCountry).filter((e) => !!e) ?? []);
 
-	return { teas: teas?.reverse().slice(0, 8) ?? [], types, countries };
+	return { teas: teas ?? [], types, countries };
 }
 
 function unique<T>(array: T[]): T[] {

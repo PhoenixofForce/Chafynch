@@ -7,6 +7,8 @@ import dev.phoenixofforce.tea.tracker.location.Location;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.Cultivar;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaType;
 import dev.phoenixofforce.tea.tracker.vendor.Vendor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
@@ -42,6 +44,7 @@ public class Tea {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vendor_id")
     @ToString.Exclude
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Vendor vendor;
 
     @ManyToOne(fetch = FetchType.LAZY)

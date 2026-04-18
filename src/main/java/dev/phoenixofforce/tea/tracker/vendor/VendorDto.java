@@ -1,10 +1,11 @@
 package dev.phoenixofforce.tea.tracker.vendor;
 
 import dev.phoenixofforce.tea.tracker.location.LocationDto;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record VendorDto(Long id, String name, String website, LocationDto locationDto) {
+public record VendorDto(@NotNull Long id, @NotNull String name, String website, LocationDto locationDto) {
 
     public static VendorDto from(Vendor vendor) {
         if(vendor == null) return null;

@@ -6,7 +6,7 @@
 	let { tea }: { tea: TeaDTO } = $props();
 </script>
 
-<div class="card border-base-300 bg-base-200 card-border">
+<div class="card h-full border-base-300 bg-base-200 card-border">
 	{#if tea.originCountry}
 		<figure class="relative aspect-square overflow-hidden bg-base-300">
 			<div class="h-full w-full">

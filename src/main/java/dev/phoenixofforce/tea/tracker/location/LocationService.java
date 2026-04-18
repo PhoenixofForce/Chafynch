@@ -4,7 +4,6 @@ import dev.phoenixofforce.tea.tracker.geocoding.GeocodingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +21,9 @@ public class LocationService {
     }
 
     public Location resolveOrCreate(String country, String province, String city) {
+        if(country == null || province == null || city == null) return null;
+        if(country.isBlank() && province.isBlank() && city.isBlank()) return null;
+
         return locationRepository.findByCountryAndProvinceAndCity(country, province, city)
                 .orElseGet(() -> {
                     Location l = new Location();

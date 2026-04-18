@@ -1,22 +1,22 @@
 package dev.phoenixofforce.tea.tracker.vendor;
 
-import dev.phoenixofforce.tea.tracker.tea.Tea;
-import dev.phoenixofforce.tea.tracker.tea.TeaDTO;
-import dev.phoenixofforce.tea.tracker.tea.TeaService;
+import dev.phoenixofforce.tea.tracker.location.LocationDto;
+import dev.phoenixofforce.tea.tracker.location.LocationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class VendorService {
 
     private final VendorRepository vendorRepository;
+    private final LocationService locationService;
 
     public List<VendorOverviewDto> find(String query) {
         return vendorRepository.findVendorOverviews(query)
@@ -32,5 +32,46 @@ public class VendorService {
                     v.setName(name);
                     return vendorRepository.save(v);
                 });
+    }
+
+    @Transactional
+    public VendorDto create(VendorDto vendorDto) {
+        Vendor vendor = new Vendor();
+        vendor.setName(vendorDto.name());
+        vendor.setWebsite(vendorDto.website());
+
+        LocationDto locationDto = vendorDto.locationDto();
+        if(locationDto != null) {
+            vendor.setLocation(locationService.resolveOrCreate(locationDto.country(), locationDto.province(), locationDto.city()));
+
+        }
+
+        vendor = vendorRepository.save(vendor);
+        return VendorDto.from(vendor);
+    }
+
+    @Transactional
+    public VendorDto update(long id, VendorDto vendorDto) {
+        Vendor vendor = vendorRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vendor Not Found"));
+        vendor.setName(vendorDto.name());
+        vendor.setWebsite(vendorDto.website());
+
+        LocationDto locationDto = vendorDto.locationDto();
+        if(locationDto != null) {
+            vendor.setLocation(locationService.resolveOrCreate(locationDto.country(), locationDto.province(), locationDto.city()));
+
+        }
+
+        vendor = vendorRepository.save(vendor);
+        return VendorDto.from(vendor);
+    }
+
+    @Transactional
+    public void delete(long id) {
+       if(!vendorRepository.existsById(id)) {
+           throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Vendor Not Found");
+       }
+       vendorRepository.deleteById(id);
+       vendorRepository.flush();
     }
 }

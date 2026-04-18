@@ -4,17 +4,17 @@
  */
 
 export interface paths {
-    "/api/teas": {
+    "/api/vendors/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["findAll"];
-        put?: never;
-        post: operations["create"];
-        delete?: never;
+        get?: never;
+        put: operations["update"];
+        post?: never;
+        delete: operations["deleteById"];
         options?: never;
         head?: never;
         patch?: never;
@@ -29,7 +29,23 @@ export interface paths {
         };
         get: operations["search"];
         put?: never;
-        post?: never;
+        post: operations["save"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/teas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["findAll"];
+        put?: never;
+        post: operations["create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -104,6 +120,22 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        LocationDto: {
+            city?: string;
+            province?: string;
+            country?: string;
+            /** Format: double */
+            latitude?: number;
+            /** Format: double */
+            longitude?: number;
+        };
+        VendorDto: {
+            /** Format: int64 */
+            id: number;
+            name: string;
+            website?: string;
+            locationDto?: components["schemas"]["LocationDto"];
+        };
         TeaDTO: {
             /** Format: int64 */
             id?: number;
@@ -123,24 +155,8 @@ export interface components {
             purchaseDate?: string;
             weightGrams?: number;
         };
-        LocationDto: {
-            city?: string;
-            province?: string;
-            country?: string;
-            /** Format: double */
-            latitude?: number;
-            /** Format: double */
-            longitude?: number;
-        };
-        VendorDto: {
-            /** Format: int64 */
-            id?: number;
-            name?: string;
-            website?: string;
-            locationDto?: components["schemas"]["LocationDto"];
-        };
         VendorOverviewDto: {
-            vendor?: components["schemas"]["VendorDto"];
+            vendor: components["schemas"]["VendorDto"];
             /** Format: double */
             averagePricePerGram?: number;
             /** Format: int64 */
@@ -165,6 +181,98 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VendorDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["VendorDto"];
+                };
+            };
+        };
+    };
+    deleteById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    search: {
+        parameters: {
+            query?: {
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["VendorOverviewDto"][];
+                };
+            };
+        };
+    };
+    save: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VendorDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["VendorDto"];
+                };
+            };
+        };
+    };
     findAll: {
         parameters: {
             query?: never;
@@ -205,28 +313,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["TeaDTO"];
-                };
-            };
-        };
-    };
-    search: {
-        parameters: {
-            query?: {
-                q?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["VendorOverviewDto"][];
                 };
             };
         };

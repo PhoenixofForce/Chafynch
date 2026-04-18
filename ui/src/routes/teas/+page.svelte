@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import TeaCard from '$lib/components/TeaCard.svelte';
-	import { Leaf, Plus } from '@lucide/svelte';
+	import { Plus } from '@lucide/svelte';
 
 	let { data } = $props();
 </script>
@@ -29,9 +29,9 @@
 
 	<div class="mt-6">
 		<div class="flex justify-between">
-			<h2 class="mb-4 text-xl font-bold text-base-content">Recent Tees</h2>
-			<a href={resolve('/teas')} class="btn btn-sm btn-primary">
-				<Leaf /> Alle Tees
+			<h2 class="mb-4 text-xl font-bold text-base-content">Alle Tees</h2>
+			<a href={resolve('/teas/new')} class="btn btn-sm btn-primary">
+				<Plus /> Neuer Tee
 			</a>
 		</div>
 

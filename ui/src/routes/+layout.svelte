@@ -4,6 +4,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import { page } from '$app/state';
+	import Toast from '$lib/components/Toast.svelte';
 
 	let { children } = $props();
 	let drawerOpen = $state(false);
@@ -12,6 +13,7 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<Toast />
 <div class="drawer lg:drawer-open">
 	<input id="sidebar" type="checkbox" bind:checked={drawerOpen} class="drawer-toggle" />
 	<div class="drawer-content">

@@ -1,6 +1,8 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './schema';
-import { error } from '@sveltejs/kit';
+import { error, isHttpError } from '@sveltejs/kit';
+import { errorToast, successToast } from '$lib/data/toast.svelte';
+import { invalidateAll } from '$app/navigation';
 
 export const api = createClient<paths>({
 	baseUrl: ''
@@ -8,9 +10,42 @@ export const api = createClient<paths>({
 
 api.use({
 	async onResponse({ response }) {
-		if (!response.ok) {
-			const body = await response.clone().json();
-			throw error(body.status, body as App.Error);
+		if (response.ok) {
+			return;
 		}
+		const text = await response.clone().text();
+		const body: App.Error = text
+			? JSON.parse(text)
+			: {
+					error: response.statusText,
+					message: response.statusText,
+					timestamp: new Date().toISOString(),
+					path: new URL(response.url).pathname
+				};
+		throw error(response.status, body);
 	}
 });
+
+export async function wrapApi<T>(
+	caller: () => Promise<T>,
+	options: { success?: string; error?: string; invalidate?: boolean } = {}
+) {
+	try {
+		await caller();
+		if (options?.invalidate ?? true) invalidateAll();
+		if (options.success) successToast(options.success);
+	} catch (e) {
+		handleApiError(e, options.error);
+	}
+}
+
+export function handleApiError(error: unknown, fallback = '') {
+	console.log(error);
+	if (isHttpError(error)) {
+		errorToast(error.body.message ?? fallback);
+	} else if (typeof error === 'string') {
+		errorToast(error ?? fallback);
+	} else {
+		errorToast(fallback);
+	}
+}
