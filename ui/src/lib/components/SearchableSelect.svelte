@@ -44,7 +44,7 @@
 	<input
 		{id}
 		type="text"
-		class="input input-bordered w-full"
+		class="input-bordered input w-full"
 		class:input-error={query.length > 0 && !valid}
 		{placeholder}
 		value={query}
@@ -54,8 +54,10 @@
 		autocomplete="off"
 	/>
 	{#if open && filtered.length > 0}
-		<ul class="menu h-48 w-full flex-nowrap bg-base-200 border-base-300 absolute z-50 mt-1 overflow-y-auto overflow-x-hidden rounded-lg border shadow">
-			{#each filtered as s}
+		<ul
+			class="menu absolute z-50 mt-1 h-48 w-full flex-nowrap overflow-x-hidden overflow-y-auto rounded-lg border border-base-300 bg-base-200 shadow"
+		>
+			{#each filtered as s (s)}
 				<li>
 					<button type="button" onmousedown={() => select(s)}>{s}</button>
 				</li>

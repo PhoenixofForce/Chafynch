@@ -19,11 +19,15 @@
 	const { entity, editor, onSave, onDelete, title, editTitle, header, editHeader, body }: Props =
 		$props();
 
+	let formEl: HTMLFormElement;
+
 	let editing = $derived(editor.isEditing(entity));
 	let saving = $state(false);
 	let deleting = $state(false);
 
 	async function handleSave() {
+		if (!formEl.reportValidity()) return;
+
 		saving = true;
 		try {
 			await editor.save(onSave);
@@ -44,61 +48,63 @@
 
 <div class="card mb-8 w-full bg-base-200 shadow">
 	<div class="card-body">
-		<div class="flex items-center justify-between">
-			{#if editing}
-				{@render editTitle(editor.draft!)}
-			{:else}
-				{@render title()}
-			{/if}
-			<div>
-				{#if !editing}
-					<button
-						disabled={editor.editingAny() || editor.isPending}
-						onclick={() => editor.edit(entity)}
-						class="btn btn-square"
-					>
-						<Pen />
-					</button>
-					<button
-						disabled={editor.editingAny() || editor.isPending}
-						onclick={handleDelete}
-						class="btn btn-square btn-error"
-					>
-						{#if !deleting}
-							<Trash />
-						{:else}
-							<span class="loading loading-sm loading-ring"></span>
-						{/if}
-					</button>
+		<form bind:this={formEl}>
+			<div class="flex items-center justify-between">
+				{#if editing}
+					{@render editTitle(editor.draft!)}
 				{:else}
-					<button
-						disabled={editor.isPending}
-						onclick={handleSave}
-						class="btn btn-square btn-success"
-					>
-						{#if !saving}
-							<Check />
-						{:else}
-							<span class="loading loading-sm loading-ring"></span>
-						{/if}
-					</button>
-					<button
-						disabled={editor.isPending}
-						onclick={() => editor.cancel()}
-						class="btn btn-square btn-error"><X /></button
-					>
+					{@render title()}
 				{/if}
+				<div>
+					{#if !editing}
+						<button
+							disabled={editor.editingAny() || editor.isPending}
+							onclick={() => editor.edit(entity)}
+							class="btn btn-square"
+						>
+							<Pen />
+						</button>
+						<button
+							disabled={editor.editingAny() || editor.isPending}
+							onclick={handleDelete}
+							class="btn btn-square btn-error"
+						>
+							{#if !deleting}
+								<Trash />
+							{:else}
+								<span class="loading loading-sm loading-ring"></span>
+							{/if}
+						</button>
+					{:else}
+						<button
+							disabled={editor.isPending}
+							onclick={handleSave}
+							class="btn btn-square btn-success"
+						>
+							{#if !saving}
+								<Check />
+							{:else}
+								<span class="loading loading-sm loading-ring"></span>
+							{/if}
+						</button>
+						<button
+							disabled={editor.isPending}
+							onclick={() => editor.cancel()}
+							class="btn btn-square btn-error"><X /></button
+						>
+					{/if}
+				</div>
 			</div>
-		</div>
 
-		{#if editing && editHeader}
-			{@render editHeader(editor.draft!)}
-		{:else if header}
-			{@render header()}
-		{/if}
+			{#if editing && editHeader}
+				{@render editHeader(editor.draft!)}
+			{:else if header}
+				{@render header()}
+			{/if}
 
-		{#if body}
-			{@render body()}
-		{/if}
+			{#if body}
+				{@render body()}
+			{/if}
+		</form>
 	</div>
 </div>

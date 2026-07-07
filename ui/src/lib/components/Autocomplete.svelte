@@ -41,17 +41,21 @@
 	<input
 		{id}
 		type="text"
-		class="input input-bordered w-full"
+		class="input-bordered input w-full"
 		{placeholder}
 		{value}
 		oninput={onInput}
 		onblur={onBlur}
-		onfocus={() => { if (suggestions.length > 0) open = true; }}
+		onfocus={() => {
+			if (suggestions.length > 0) open = true;
+		}}
 		autocomplete="off"
 	/>
 	{#if open}
-		<ul class="menu bg-base-200 border-base-300 absolute z-50 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border shadow">
-			{#each suggestions as s}
+		<ul
+			class="menu absolute z-50 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border border-base-300 bg-base-200 shadow"
+		>
+			{#each suggestions as s (s)}
 				<li>
 					<button type="button" onmousedown={() => select(s)}>{s}</button>
 				</li>

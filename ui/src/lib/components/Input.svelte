@@ -1,0 +1,33 @@
+<script lang="ts">
+	import type { Component } from 'svelte';
+	import type { HTMLInputAttributes } from 'svelte/elements';
+
+	let {
+		value = $bindable(''),
+		placeholder = 'Placeholder',
+		hint,
+		icon: Icon,
+		class: className,
+		inputClass,
+		...rest
+	}: {
+		value?: string;
+		placeholder?: string;
+		hint?: string;
+		icon?: Component;
+		inputClass?: string;
+	} & HTMLInputAttributes = $props();
+</script>
+
+<div>
+	<label class="floating-label {className}">
+		<span>{placeholder}</span>
+		<div class="validator input {inputClass}">
+			<Icon color="currentColor" size="21" />
+			<input type="text" {placeholder} bind:value {...rest} />
+		</div>
+		{#if hint}
+			<p class="validator-hint mt-0.5">{hint}</p>
+		{/if}
+	</label>
+</div>

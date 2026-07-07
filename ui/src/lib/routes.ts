@@ -27,7 +27,7 @@ export const sidebarLinks: Breadcrumb[] = [
 		label: 'Vendors'
 	},
 	{
-		path: '/settings',
+		path: '/settings' as Route,
 		icon: Cog,
 		label: 'Settings'
 	}
