@@ -2,12 +2,14 @@
 	import { api, wrapApi } from '$lib/api/client.js';
 	import type { VendorDto } from '$lib/api/types.js';
 	import BasicEntityCard from '$lib/components/BasicEntityCard.svelte';
-	import Input from '$lib/components/ui/Input.svelte';
 	import SearchableSelect from '$lib/components/SearchableSelect.svelte';
 	import { createEditor } from '$lib/data/editable.svelte.js';
-	import { Leaf, MapPin, Scale } from '@lucide/svelte';
-	const { data } = $props();
+	import { Leaf, MapPin, Plus, Scale } from '@lucide/svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Input from '$lib/components/ui/Input.svelte';
+	import { onMount } from 'svelte';
 
+	const { data } = $props();
 	const editor = createEditor<VendorDto>();
 
 	function create() {
@@ -39,74 +41,61 @@
 			success: `Successfully deleted vendor '${vendor.name}'`
 		});
 	}
+
+	let countryNames: string[] = $state([]);
+	onMount(() => {
+		fetch('/countries/index.json').then(async (res) => {
+			if (res.ok) {
+				const entries: { code: string; name: string }[] = await res.json();
+				countryNames = entries.map((e) => e.name);
+			}
+		});
+	});
 </script>
 
 {#snippet editTitle(draft: VendorDto)}
-	<div>
-		<label class="floating-label">
-			<span>Name*</span>
-			<input
-				type="text"
-				class="validator input"
-				required
-				placeholder="Name*"
-				bind:value={draft.name}
-			/>
-			<p class="validator-hint mt-0.5">Name is required</p>
-		</label>
-	</div>
+	<Input
+		required
+		placeholder="Name*"
+		bind:value={draft.name}
+		hint="Name is required"
+		class="mb-2"
+	/>
 {/snippet}
 
 {#snippet editHeader(draft: VendorDto)}
 	<div>
-		<label class="floating-label">
-			<span>Website*</span>
-			<input
-				type="url"
-				class="validator input"
-				pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9-].*[a-zA-Z0-9])?.)+[a-zA-Z].*$"
-				placeholder="Website*"
-				bind:value={draft.website}
-			/>
-			<p class="validator-hint mt-0.5">Must be a valid URL</p>
-		</label>
+		<Input
+			type="url"
+			pattern="(http(s?):\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]+(\/.*)?"
+			placeholder="Website"
+			bind:value={draft.website}
+			hint="Must be a valid URL"
+			class="mb-2"
+		/>
 	</div>
 
 	<div class="grid grid-cols-3 gap-2">
-		<div>
-			<label class="label" for="originCountry">Land</label>
-			<SearchableSelect
-				id="originCountry"
-				placeholder="z.B. China"
-				options={[]}
-				bind:value={draft.locationDto!.country!}
-			/>
-		</div>
-		<div>
-			<label class="label" for="originProvince">Provinz</label>
-			<input
-				id="originProvince"
-				type="text"
-				class="input-bordered input w-full"
-				placeholder="z.B. Fujian"
-				bind:value={draft.locationDto!.province}
-			/>
-		</div>
-		<div>
-			<label class="label" for="originCity">Stadt</label>
-			<input
-				id="originCity"
-				type="text"
-				class="input-bordered input w-full"
-				placeholder="z.B. Taimu"
-				bind:value={draft.locationDto!.city!}
-			/>
-		</div>
+		<SearchableSelect
+			placeholder="Land"
+			options={countryNames}
+			bind:value={draft.locationDto!.country}
+		/>
+		<Input placeholder="Provinz" bind:value={draft.locationDto!.province} />
+		<Input placeholder="Stadt" bind:value={draft.locationDto!.city} />
 	</div>
 {/snippet}
 
-<div class="w-full p-8">
-	<button class="btn btn-primary" onclick={create}> new </button>
+<div class="flex w-full flex-col gap-8 p-8">
+	{#if !editor.isNew}
+		<Button
+			class="btn btn-dash btn-primary"
+			onclick={create}
+			label="Add Vendor"
+			icon={Plus}
+			disabled={editor.editingAny()}
+		/>
+	{/if}
 
 	{#if editor.isNew}
 		<BasicEntityCard entity={editor.draft!} {editor} {onSave} {onDelete} {editTitle} {editHeader}>
@@ -119,7 +108,7 @@
 	{#each data.vendors as overview (overview.vendor.id)}
 		<BasicEntityCard entity={overview.vendor} {editor} {onSave} {onDelete} {editTitle} {editHeader}>
 			{#snippet title()}
-				<div class="text-lg font-bold">{overview.vendor.name}</div>
+				<div class="m-0 text-lg font-bold">{overview.vendor.name}</div>
 			{/snippet}
 
 			{#snippet header()}

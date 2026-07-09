@@ -3,8 +3,9 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
 	let {
-		value = $bindable(''),
+		value = $bindable(),
 		placeholder = 'Placeholder',
+		validity,
 		hint,
 		icon: Icon,
 		inputClass,
@@ -13,6 +14,7 @@
 	}: {
 		value?: string;
 		placeholder?: string;
+		validity?: string;
 		hint?: string;
 		icon?: Component;
 		inputClass?: string;
@@ -24,10 +26,16 @@
 		<span>{placeholder}</span>
 		<div class="validator input {inputClass}">
 			<Icon color="currentColor" size="21" />
-			<input type="text" {placeholder} bind:value {...rest} />
+			<input
+				type="text"
+				{placeholder}
+				bind:value
+				{...rest}
+				{@attach (node) => node.setCustomValidity(validity ?? '')}
+			/>
 		</div>
-		{#if hint}
-			<p class="validator-hint mt-0.5">{hint}</p>
+		{#if validity || hint}
+			<p class="validator-hint mt-0.5">{validity ?? hint}</p>
 		{/if}
 	</label>
 </div>

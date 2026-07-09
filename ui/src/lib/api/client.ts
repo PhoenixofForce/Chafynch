@@ -37,6 +37,7 @@ export async function wrapApi<T>(
 		return out;
 	} catch (e) {
 		handleApiError(e, options.error);
+		throw e;
 	}
 }
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { api } from '$lib/api/client';
-	import type { LocationDto, TeaDTO, TeaTypeDto } from '$lib/api/types';
+	import type { TeaDTO, TeaTypeDto } from '$lib/api/types';
 	import Autocomplete from '$lib/components/Autocomplete.svelte';
 	import SearchableSelect from '$lib/components/SearchableSelect.svelte';
 	import { goto } from '$app/navigation';
@@ -46,22 +46,6 @@
 	async function searchVendors(q: string): Promise<string[]> {
 		const { data } = await api.GET('/api/vendors', { params: { query: { q } } });
 		return data?.map((v) => v.vendor.name ?? '') ?? [];
-	}
-
-	async function searchLocations(q: string): Promise<{ label: string; value: LocationDto }[]> {
-		const { data } = await api.GET('/api/locations', { params: { query: { q } } });
-		return (
-			data?.map((l) => ({
-				label: [l.city, l.province, l.country].filter(Boolean).join(', '),
-				value: l
-			})) ?? []
-		);
-	}
-
-	function onLocationSelect(loc: LocationDto) {
-		form.originCountry = loc.country ?? '';
-		form.originProvince = loc.province ?? '';
-		form.originCity = loc.city ?? '';
 	}
 
 	async function submit() {

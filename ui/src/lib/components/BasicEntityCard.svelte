@@ -7,8 +7,8 @@
 	type Props = {
 		entity: T;
 		editor: ReturnType<typeof createEditor<T>>;
-		onSave: (t: T, isNew: boolean) => void | Promise<void>;
-		onDelete: (t: T) => void | Promise<void>;
+		onSave: (t: T, isNew: boolean) => void;
+		onDelete: (t: T) => void;
 
 		title: Snippet<[]>;
 		editTitle: Snippet<[T]>;
@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div class="card mb-8 w-full bg-base-200 shadow">
+<div class="card w-full bg-base-200 shadow">
 	<div class="card-body">
 		<form bind:this={formEl}>
 			<div class="flex items-center justify-between">
@@ -93,10 +93,10 @@
 			{:else if header}
 				{@render header()}
 			{/if}
-
-			{#if body}
-				{@render body()}
-			{/if}
 		</form>
+
+		{#if body}
+			{@render body()}
+		{/if}
 	</div>
 </div>
