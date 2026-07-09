@@ -4,7 +4,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import { page } from '$app/state';
-	import Toast from '$lib/components/Toast.svelte';
+	import Toast from '$lib/components/ui/Toast.svelte';
 
 	let { children } = $props();
 	let drawerOpen = $state(false);

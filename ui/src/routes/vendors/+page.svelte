@@ -2,7 +2,7 @@
 	import { api, wrapApi } from '$lib/api/client.js';
 	import type { VendorDto } from '$lib/api/types.js';
 	import BasicEntityCard from '$lib/components/BasicEntityCard.svelte';
-	import Input from '$lib/components/Input.svelte';
+	import Input from '$lib/components/ui/Input.svelte';
 	import SearchableSelect from '$lib/components/SearchableSelect.svelte';
 	import { createEditor } from '$lib/data/editable.svelte.js';
 	import { Leaf, MapPin, Scale } from '@lucide/svelte';
@@ -64,7 +64,6 @@
 			<input
 				type="url"
 				class="validator input"
-				required
 				pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9-].*[a-zA-Z0-9])?.)+[a-zA-Z].*$"
 				placeholder="Website*"
 				bind:value={draft.website}

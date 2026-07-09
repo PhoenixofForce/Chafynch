@@ -2,12 +2,13 @@
 	import type { createEditor } from '$lib/data/editable.svelte';
 	import type { Snippet } from 'svelte';
 	import { Check, Pen, Trash, X } from '@lucide/svelte';
+	import Button from './ui/Button.svelte';
 
 	type Props = {
 		entity: T;
 		editor: ReturnType<typeof createEditor<T>>;
-		onSave: (t: T, isNew: boolean) => void;
-		onDelete: (t: T) => void;
+		onSave: (t: T, isNew: boolean) => void | Promise<void>;
+		onDelete: (t: T) => void | Promise<void>;
 
 		title: Snippet<[]>;
 		editTitle: Snippet<[T]>;
@@ -57,41 +58,32 @@
 				{/if}
 				<div>
 					{#if !editing}
-						<button
+						<Button
 							disabled={editor.editingAny() || editor.isPending}
 							onclick={() => editor.edit(entity)}
-							class="btn btn-square"
-						>
-							<Pen />
-						</button>
-						<button
+							icon={Pen}
+						/>
+						<Button
 							disabled={editor.editingAny() || editor.isPending}
 							onclick={handleDelete}
-							class="btn btn-square btn-error"
-						>
-							{#if !deleting}
-								<Trash />
-							{:else}
-								<span class="loading loading-sm loading-ring"></span>
-							{/if}
-						</button>
+							class="btn-error"
+							icon={Trash}
+							loading={deleting}
+						/>
 					{:else}
-						<button
+						<Button
 							disabled={editor.isPending}
 							onclick={handleSave}
-							class="btn btn-square btn-success"
-						>
-							{#if !saving}
-								<Check />
-							{:else}
-								<span class="loading loading-sm loading-ring"></span>
-							{/if}
-						</button>
-						<button
+							class=" btn-success"
+							loading={saving}
+							icon={Check}
+						/>
+						<Button
 							disabled={editor.isPending}
 							onclick={() => editor.cancel()}
-							class="btn btn-square btn-error"><X /></button
-						>
+							class="btn-error"
+							icon={X}
+						/>
 					{/if}
 				</div>
 			</div>

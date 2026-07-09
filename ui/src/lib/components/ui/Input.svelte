@@ -7,8 +7,8 @@
 		placeholder = 'Placeholder',
 		hint,
 		icon: Icon,
-		class: className,
 		inputClass,
+		class: className,
 		...rest
 	}: {
 		value?: string;
