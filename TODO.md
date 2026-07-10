@@ -7,9 +7,9 @@
 ## Phase 1 — Core Foundation
 
 ### UI Shell
-- [ ] Header
-- [ ] Sidebar navigation
-- [ ] Light / dark mode toggle
+- [x] Header
+- [x] Sidebar navigation
+- [x] Light / dark mode toggle
 
 ### Tea Types
 - [ ] Manage tea types (green, black, oolong, white, pu-erh, etc.)
@@ -17,8 +17,8 @@
 - [ ] Display as colored dots / accent color in UI
 
 ### Vendors
-- [ ] Vendor management (CRUD)
-- [ ] Link / URL to vendor shop
+- [x] Vendor management (CRUD)
+- [x] Link / URL to vendor shop
 
 ### Tea Metadata (basics)
 - [ ] Description (markdown)
