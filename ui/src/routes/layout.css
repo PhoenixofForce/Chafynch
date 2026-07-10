@@ -2,7 +2,9 @@
 
 @plugin '@tailwindcss/typography';
 @plugin 'daisyui' {
-	themes: lemonade --default;
+	themes:
+		lemonade --default,
+		forest;
 }
 
 .lucide {
@@ -13,4 +15,16 @@
 .icon-lg {
 	width: 2rem;
 	height: 2rem;
+}
+
+.no-transitions,
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
+	transition-property: none !important;
+}
+
+.no-transitions .swap-rotate .swap-on,
+.no-transitions .swap-rotate .swap-off {
+	transition-property: all !important;
 }

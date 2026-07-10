@@ -5,11 +5,10 @@
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import { page } from '$app/state';
 	import Toast from '$lib/components/ui/Toast.svelte';
+	import Controls from '$lib/components/Controls.svelte';
 
 	let { children } = $props();
 	let drawerOpen = $state(false);
-
-	console.log(page);
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
@@ -34,4 +33,6 @@
 			<Sidebar />
 		</div>
 	</div>
+
+	<Controls />
 </div>
