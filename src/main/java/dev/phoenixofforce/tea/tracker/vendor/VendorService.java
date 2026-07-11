@@ -2,11 +2,10 @@ package dev.phoenixofforce.tea.tracker.vendor;
 
 import dev.phoenixofforce.tea.tracker.location.LocationDto;
 import dev.phoenixofforce.tea.tracker.location.LocationService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

@@ -2,8 +2,8 @@ package dev.phoenixofforce.tea.tracker.tea;
 
 import dev.phoenixofforce.tea.tracker.location.LocationService;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.CultivarService;
-import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeDto;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeRepository;
+import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeService;
 import dev.phoenixofforce.tea.tracker.vendor.VendorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class TeaService {
 
     private final TeaRepository teaRepository;
     private final CultivarService cultivarService;
-    private final TeaTypeRepository teaTypeRepository;
+    private final TeaTypeService teaTypeService;
     private final VendorService vendorService;
     private final LocationService locationService;
 
@@ -48,7 +48,7 @@ public class TeaService {
         }
 
         if (dto.getTeaType() != null && !dto.getTeaType().isBlank()) {
-            tea.setTeaType(teaTypeRepository.findByName(dto.getTeaType())
+            tea.setTeaType(teaTypeService.findByName(dto.getTeaType())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                             "Unknown tea type: " + dto.getTeaType())));
         }

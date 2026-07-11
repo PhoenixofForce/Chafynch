@@ -13,8 +13,8 @@
 
 ### Tea Types
 - [ ] Manage tea types (green, black, oolong, white, pu-erh, etc.)
-- [ ] Assign a color per tea type
-- [ ] Display as colored dots / accent color in UI
+- [ ] ~~Assign a color per tea type~~
+- [ ] ~~Display as colored dots / accent color in UI~~
 
 ### Vendors
 - [x] Vendor management (CRUD)

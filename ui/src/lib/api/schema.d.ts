@@ -20,7 +20,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/vendors": {
+    "/api/tea-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["findAll"];
+        put: operations["update_1"];
+        post: operations["create"];
+        delete: operations["delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/cultivars": {
         parameters: {
             query?: never;
             header?: never;
@@ -28,6 +44,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["search"];
+        put: operations["update_2"];
+        post: operations["create_1"];
+        delete: operations["delete_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vendors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["search_1"];
         put?: never;
         post: operations["save"];
         delete?: never;
@@ -43,9 +75,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["findAll"];
+        get: operations["findAll_1"];
         put?: never;
-        post: operations["create"];
+        post: operations["create_2"];
         delete?: never;
         options?: never;
         head?: never;
@@ -68,39 +100,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/tea-types": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["findAll_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/locations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["search_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/cultivars": {
         parameters: {
             query?: never;
             header?: never;
@@ -136,6 +136,16 @@ export interface components {
             website?: string;
             locationDto?: components["schemas"]["LocationDto"];
         };
+        TeaTypeDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        CultivarDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
         TeaDTO: {
             /** Format: int64 */
             id?: number;
@@ -161,16 +171,6 @@ export interface components {
             averagePricePerGram?: number;
             /** Format: int64 */
             teas?: number;
-        };
-        TeaTypeDto: {
-            /** Format: int64 */
-            id?: number;
-            name?: string;
-        };
-        CultivarDto: {
-            /** Format: int64 */
-            id?: number;
-            name?: string;
         };
     };
     responses: never;
@@ -227,7 +227,181 @@ export interface operations {
             };
         };
     };
+    findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaTypeDto"][];
+                };
+            };
+        };
+    };
+    update_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TeaTypeDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaTypeDto"];
+                };
+            };
+        };
+    };
+    create: {
+        parameters: {
+            query: {
+                name: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaTypeDto"];
+                };
+            };
+        };
+    };
+    delete: {
+        parameters: {
+            query: {
+                id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     search: {
+        parameters: {
+            query?: {
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CultivarDto"][];
+                };
+            };
+        };
+    };
+    update_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CultivarDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CultivarDto"];
+                };
+            };
+        };
+    };
+    create_1: {
+        parameters: {
+            query: {
+                name: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CultivarDto"];
+                };
+            };
+        };
+    };
+    delete_1: {
+        parameters: {
+            query: {
+                id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    search_1: {
         parameters: {
             query?: {
                 q?: string;
@@ -273,7 +447,7 @@ export interface operations {
             };
         };
     };
-    findAll: {
+    findAll_1: {
         parameters: {
             query?: never;
             header?: never;
@@ -293,7 +467,7 @@ export interface operations {
             };
         };
     };
-    create: {
+    create_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -339,48 +513,6 @@ export interface operations {
             };
         };
     };
-    findAll_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeaTypeDto"][];
-                };
-            };
-        };
-    };
-    search_1: {
-        parameters: {
-            query?: {
-                q?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["LocationDto"][];
-                };
-            };
-        };
-    };
     search_2: {
         parameters: {
             query?: {
@@ -398,7 +530,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["CultivarDto"][];
+                    "*/*": components["schemas"]["LocationDto"][];
                 };
             };
         };

@@ -16,4 +16,19 @@ public class TeaTypeController {
     public List<TeaTypeDto> findAll() {
         return teaTypeService.findAll();
     }
+
+    @PostMapping
+    public TeaTypeDto create(@RequestParam String name) {
+        return TeaTypeDto.from(teaTypeService.create(name));
+    }
+
+    @PutMapping
+    public TeaTypeDto update(@RequestBody TeaTypeDto teaTypeDto) {
+        return teaTypeService.update(teaTypeDto);
+    }
+
+    @DeleteMapping
+    public void delete(@RequestParam Long id) {
+        teaTypeService.delete(id);
+    }
 }
