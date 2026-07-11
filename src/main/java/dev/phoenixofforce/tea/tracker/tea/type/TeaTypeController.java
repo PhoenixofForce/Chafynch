@@ -22,13 +22,13 @@ public class TeaTypeController {
         return TeaTypeDto.from(teaTypeService.create(name));
     }
 
-    @PutMapping
-    public TeaTypeDto update(@RequestBody TeaTypeDto teaTypeDto) {
-        return teaTypeService.update(teaTypeDto);
+    @PutMapping("/{id}")
+    public TeaTypeDto update(@PathVariable long id, @RequestBody TeaTypeDto teaTypeDto) {
+        return teaTypeService.update(id, teaTypeDto);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         teaTypeService.delete(id);
     }
 }

@@ -20,32 +20,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/tea-types": {
+    "/api/tea-types/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["findAll"];
+        get?: never;
         put: operations["update_1"];
-        post: operations["create"];
+        post?: never;
         delete: operations["delete"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/cultivars": {
+    "/api/cultivars/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["search"];
+        get?: never;
         put: operations["update_2"];
-        post: operations["create_1"];
+        post?: never;
         delete: operations["delete_1"];
         options?: never;
         head?: never;
@@ -59,7 +59,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["search_1"];
+        get: operations["search"];
         put?: never;
         post: operations["save"];
         delete?: never;
@@ -75,7 +75,39 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        get: operations["findAll"];
+        put?: never;
+        post: operations["create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tea-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
         get: operations["findAll_1"];
+        put?: never;
+        post: operations["create_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/cultivars": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["search_1"];
         put?: never;
         post: operations["create_2"];
         delete?: never;
@@ -227,31 +259,13 @@ export interface operations {
             };
         };
     };
-    findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeaTypeDto"][];
-                };
-            };
-        };
-    };
     update_1: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -271,35 +285,13 @@ export interface operations {
             };
         };
     };
-    create: {
-        parameters: {
-            query: {
-                name: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeaTypeDto"];
-                };
-            };
-        };
-    };
     delete: {
         parameters: {
-            query: {
+            query?: never;
+            header?: never;
+            path: {
                 id: number;
             };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -313,33 +305,13 @@ export interface operations {
             };
         };
     };
-    search: {
-        parameters: {
-            query?: {
-                q?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CultivarDto"][];
-                };
-            };
-        };
-    };
     update_2: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -359,35 +331,13 @@ export interface operations {
             };
         };
     };
-    create_1: {
-        parameters: {
-            query: {
-                name: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CultivarDto"];
-                };
-            };
-        };
-    };
     delete_1: {
         parameters: {
-            query: {
+            query?: never;
+            header?: never;
+            path: {
                 id: number;
             };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -401,7 +351,7 @@ export interface operations {
             };
         };
     };
-    search_1: {
+    search: {
         parameters: {
             query?: {
                 q?: string;
@@ -447,7 +397,7 @@ export interface operations {
             };
         };
     };
-    findAll_1: {
+    findAll: {
         parameters: {
             query?: never;
             header?: never;
@@ -467,7 +417,7 @@ export interface operations {
             };
         };
     };
-    create_2: {
+    create: {
         parameters: {
             query?: never;
             header?: never;
@@ -487,6 +437,92 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["TeaDTO"];
+                };
+            };
+        };
+    };
+    findAll_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaTypeDto"][];
+                };
+            };
+        };
+    };
+    create_1: {
+        parameters: {
+            query: {
+                name: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaTypeDto"];
+                };
+            };
+        };
+    };
+    search_1: {
+        parameters: {
+            query?: {
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CultivarDto"][];
+                };
+            };
+        };
+    };
+    create_2: {
+        parameters: {
+            query: {
+                name: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CultivarDto"];
                 };
             };
         };

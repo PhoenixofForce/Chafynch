@@ -23,13 +23,13 @@ public class CultivarController {
         return CultivarDto.from(cultivarService.resolveOrCreate(name));
     }
 
-    @PutMapping
-    public CultivarDto update(@RequestBody CultivarDto cultivarDto) {
-        return cultivarService.update(cultivarDto);
+    @PutMapping("/{id}")
+    public CultivarDto update(@PathVariable long id, @RequestBody CultivarDto cultivarDto) {
+        return cultivarService.update(id, cultivarDto);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         cultivarService.delete(id);
     }
 }

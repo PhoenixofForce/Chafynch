@@ -1,4 +1,4 @@
-import { House, Leaf, Store, Cog } from '@lucide/svelte';
+import { House, Leaf, Store, Cog, Sprout, Palette } from '@lucide/svelte';
 import type { Component } from 'svelte';
 import type { RouteIdWithSearchOrHash } from '$app/types';
 import type { PathnameWithSearchOrHash } from '$app/types';
@@ -25,6 +25,16 @@ export const sidebarLinks: Breadcrumb[] = [
 		path: '/vendors',
 		icon: Store,
 		label: 'Vendors'
+	},
+	{
+		path: '/cultivars',
+		icon: Sprout,
+		label: 'Cultivars'
+	},
+	{
+		path: '/tea-types',
+		icon: Palette,
+		label: 'Tea Types'
 	},
 	{
 		path: '/settings' as Route,

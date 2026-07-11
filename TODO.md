@@ -3,6 +3,11 @@
 > **Design notes:**
 > - **Units** — Store metric internally (g, °C, ml). Convert for display based on user preference. Keep in mind for all inputs/outputs.
 > - **Currency** — User selects a currency in their settings. All prices are entered in that currency, no automatic conversion.
+> - **Core data model (decided 2026-07-11)** — Split the flat `Tea` entity into three layers:
+>   - **TeaProduct** (catalog / "what is it") — identity `(vendor, name, harvestYear)` + cultivar, teaType, origin. `harvestYear` int, nullable, **in** identity; `harvestLabel` free text ("1. Ernte April 2024") display-only, **not** in identity. Unique `(vendor_id, name, COALESCE(harvest_year, 0))` (NULL-in-unique trick, like `location`). Flush deferred → lives in the label.
+>   - **Purchase** (inventory / cost) — `product_id` + date, price, weight.
+>   - **Session** (experience) — `product_id` + notes / rating / brew params; hangs on the product so repurchases share one note overview.
+>   - **Vendor** = producer/brand → part of product identity → do **not** `SET NULL` on delete (RESTRICT or soft-delete). Revisit `V5__null_vendor_on_delete.sql`, which contradicts this. Pragmatically it's the reseller; accepted cost: same tea from two shops = two products.
 
 ## Phase 1 — Core Foundation
 
@@ -22,7 +27,7 @@
 
 ### Tea Metadata (basics)
 - [ ] Description (markdown)
-- [ ] Harvest year
+- [ ] Harvest year — `harvestYear` int (nullable, part of product identity) + `harvestLabel` free text ("1. Ernte April 2024", display only)
 - [ ] Link to buy
 - [ ] Cultivar
 - [ ] Origin / Terroir

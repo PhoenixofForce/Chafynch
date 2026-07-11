@@ -37,10 +37,10 @@ public class TeaTypeService {
     }
 
     @Transactional
-    public TeaTypeDto update(TeaTypeDto teaTypeDto) {
-        Optional<TeaType> optionalTeaType = teaTypeRepository.findById(teaTypeDto.id());
+    public TeaTypeDto update(long id, TeaTypeDto teaTypeDto) {
+        Optional<TeaType> optionalTeaType = teaTypeRepository.findById(id);
         if (optionalTeaType.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "TeaType with id " + teaTypeDto.id() + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "TeaType with id " + id + " not found");
         }
         TeaType teaType = optionalTeaType.get();
         teaType.setName(teaTypeDto.name());

@@ -37,10 +37,10 @@ public class CultivarService {
 
 
     @Transactional
-    public CultivarDto update(CultivarDto cultivarDto) {
-        Optional<Cultivar> optionalCultivar = cultivarRepository.findById(cultivarDto.id());
+    public CultivarDto update(long id, CultivarDto cultivarDto) {
+        Optional<Cultivar> optionalCultivar = cultivarRepository.findById(id);
         if (optionalCultivar.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cultivar with id " + cultivarDto.id() + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cultivar with id " + id + " not found");
         }
         Cultivar cultivar = optionalCultivar.get();
         cultivar.setName(cultivarDto.name());
