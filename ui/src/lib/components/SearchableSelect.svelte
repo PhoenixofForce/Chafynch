@@ -44,7 +44,7 @@
 <div class="relative">
 	<Input
 		class="w-full"
-		inputClass={query.length > 0 && !valid ? 'input-error' : ''}
+		inputClass="{query.length > 0 && !valid ? 'input-error' : ''} w-full"
 		validity={query.length > 0 && !valid ? 'Please select a valid country' : ''}
 		{placeholder}
 		value={query}

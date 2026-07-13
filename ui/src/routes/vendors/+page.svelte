@@ -54,13 +54,15 @@
 </script>
 
 {#snippet editTitle(draft: VendorDto)}
-	<Input
-		required
-		placeholder="Name*"
-		bind:value={draft.name}
-		hint="Name is required"
-		class="mb-2"
-	/>
+	<div class="mr-4 flex-1">
+		<Input
+			required
+			placeholder="Name*"
+			bind:value={draft.name}
+			hint="Name is required"
+			inputClass="w-full"
+		/>
+	</div>
 {/snippet}
 
 {#snippet editHeader(draft: VendorDto)}
@@ -72,6 +74,7 @@
 			bind:value={draft.website}
 			hint="Must be a valid URL"
 			class="mb-2"
+			inputClass="w-full"
 		/>
 	</div>
 
@@ -81,8 +84,8 @@
 			options={countryNames}
 			bind:value={draft.locationDto!.country}
 		/>
-		<Input placeholder="Provinz" bind:value={draft.locationDto!.province} />
-		<Input placeholder="Stadt" bind:value={draft.locationDto!.city} />
+		<Input placeholder="Provinz" inputClass="w-full" bind:value={draft.locationDto!.province} />
+		<Input placeholder="Stadt" inputClass="w-full" bind:value={draft.locationDto!.city} />
 	</div>
 {/snippet}
 

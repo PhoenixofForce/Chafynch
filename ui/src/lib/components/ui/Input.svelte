@@ -8,8 +8,8 @@
 		validity,
 		hint,
 		icon: Icon,
-		inputClass,
 		class: className,
+		inputClass,
 		...rest
 	}: {
 		value?: string;
@@ -22,8 +22,12 @@
 </script>
 
 <div>
+	<p class="validator-hint mb-1" aria-hidden="true">
+		{validity ?? hint}
+	</p>
 	<label class="floating-label {className}">
 		<span>{placeholder}</span>
+
 		<div class="validator input {inputClass}">
 			<Icon color="currentColor" size="21" />
 			<input
@@ -34,8 +38,6 @@
 				{@attach (node) => node.setCustomValidity(validity ?? '')}
 			/>
 		</div>
-		{#if validity || hint}
-			<p class="validator-hint mt-0.5">{validity ?? hint}</p>
-		{/if}
+		<p class="validator-hint mt-1">{validity ?? hint}</p>
 	</label>
 </div>
