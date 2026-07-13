@@ -1,8 +1,10 @@
 package dev.phoenixofforce.tea.tracker.tea.cultivar;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
-public record CultivarDto(Long id, String name) {
+public record CultivarDto(@NotNull Long id, @NotNull String name) {
 
     public static CultivarDto from(Cultivar cultivar) {
         return new CultivarDto(cultivar.getId(), cultivar.getName());

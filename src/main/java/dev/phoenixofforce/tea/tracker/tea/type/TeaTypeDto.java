@@ -1,8 +1,10 @@
 package dev.phoenixofforce.tea.tracker.tea.type;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
-public record TeaTypeDto(Long id, String name) {
+public record TeaTypeDto(@NotNull Long id, @NotNull String name) {
 
     public static TeaTypeDto from(TeaType teaType) {
         return new TeaTypeDto(teaType.getId(), teaType.getName());

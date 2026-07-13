@@ -1,5 +1,6 @@
 package dev.phoenixofforce.tea.tracker.tea.type;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +24,7 @@ public class TeaTypeController {
     }
 
     @PutMapping("/{id}")
-    public TeaTypeDto update(@PathVariable long id, @RequestBody TeaTypeDto teaTypeDto) {
+    public TeaTypeDto update(@PathVariable long id, @Valid @RequestBody TeaTypeDto teaTypeDto) {
         return teaTypeService.update(id, teaTypeDto);
     }
 

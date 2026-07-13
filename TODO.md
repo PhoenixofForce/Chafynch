@@ -17,7 +17,7 @@
 - [x] Light / dark mode toggle
 
 ### Tea Types
-- [ ] Manage tea types (green, black, oolong, white, pu-erh, etc.)
+- [x] Manage tea types (green, black, oolong, white, pu-erh, etc.)
 - [ ] ~~Assign a color per tea type~~
 - [ ] ~~Display as colored dots / accent color in UI~~
 

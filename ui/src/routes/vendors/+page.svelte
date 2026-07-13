@@ -87,6 +87,10 @@
 {/snippet}
 
 <div class="flex w-full flex-col gap-8 p-8">
+	<div class="prose">
+		<h2>Manage Vendors</h2>
+	</div>
+
 	{#if !editor.isNew}
 		<Button
 			class="btn btn-dash btn-primary"

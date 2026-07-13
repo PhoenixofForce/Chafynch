@@ -2,6 +2,7 @@ package dev.phoenixofforce.tea.tracker.tea.cultivar;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +23,8 @@ public class CultivarService {
     }
 
     private List<Cultivar> searchByNameInRepository(String name) {
-        if (name.isBlank()) return cultivarRepository.findAll();
-        return cultivarRepository.findByNameContainingIgnoreCase(name);
+        if (name.isBlank()) return cultivarRepository.findAll(Sort.by("name"));
+        return cultivarRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
     }
 
     public Cultivar resolveOrCreate(String name) {

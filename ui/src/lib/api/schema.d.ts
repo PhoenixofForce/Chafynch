@@ -170,13 +170,13 @@ export interface components {
         };
         TeaTypeDto: {
             /** Format: int64 */
-            id?: number;
-            name?: string;
+            id: number;
+            name: string;
         };
         CultivarDto: {
             /** Format: int64 */
-            id?: number;
-            name?: string;
+            id: number;
+            name: string;
         };
         TeaDTO: {
             /** Format: int64 */

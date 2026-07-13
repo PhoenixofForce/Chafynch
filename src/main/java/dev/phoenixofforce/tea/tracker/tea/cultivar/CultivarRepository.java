@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface CultivarRepository extends JpaRepository<Cultivar, Long> {
     Optional<Cultivar> findByName(String name);
-    List<Cultivar> findByNameContainingIgnoreCase(String name);
+    List<Cultivar> findByNameContainingIgnoreCaseOrderByNameAsc(String name);
 }

@@ -2,6 +2,7 @@ package dev.phoenixofforce.tea.tracker.tea.type;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class TeaTypeService {
     }
 
     public List<TeaTypeDto> findAll() {
-        return TeaTypeDto.from(teaTypeRepository.findAll());
+        return TeaTypeDto.from(teaTypeRepository.findAll(Sort.by("name")));
     }
 
     @Transactional
