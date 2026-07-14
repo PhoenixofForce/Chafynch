@@ -50,7 +50,7 @@
 <div class="card w-full bg-base-200 shadow">
 	<div class="card-body">
 		<form bind:this={formEl}>
-			<div class="flex items-center justify-between">
+			<div class="flex {editing ? 'items-start' : 'items-center'} justify-between">
 				{#if editing}
 					{@render editTitle(editor.draft!)}
 				{:else}

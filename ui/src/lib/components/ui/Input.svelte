@@ -22,9 +22,6 @@
 </script>
 
 <div>
-	<p class="validator-hint mb-1" aria-hidden="true">
-		{validity ?? hint}
-	</p>
 	<label class="floating-label {className}">
 		<span>{placeholder}</span>
 
@@ -38,6 +35,6 @@
 				{@attach (node) => node.setCustomValidity(validity ?? '')}
 			/>
 		</div>
-		<p class="validator-hint mt-1">{validity ?? hint}</p>
+		<p class="validator-hint mt-0 mb-1">{validity ?? hint}</p>
 	</label>
 </div>

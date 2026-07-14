@@ -19,7 +19,7 @@
 	<Navbar breadcrumbs={page.data.breadcrumbs} bind:drawerOpen />
 	<Sidebar bind:drawerOpen>
 		{#snippet pageContent()}
-			<div class="mx-auto w-full max-w-5xl p-6">
+			<div class="mx-auto flex w-full max-w-5xl flex-col items-center p-6">
 				{@render children()}
 			</div>
 		{/snippet}
