@@ -14,17 +14,21 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<!-- Navbar -->
-<Navbar breadcrumbs={page.data.breadcrumbs} bind:drawerOpen />
-<Sidebar bind:drawerOpen>
-	{#snippet pageContent()}
-		{@render children()}
-	{/snippet}
+<div class="w-full">
+	<!-- Navbar -->
+	<Navbar breadcrumbs={page.data.breadcrumbs} bind:drawerOpen />
+	<Sidebar bind:drawerOpen>
+		{#snippet pageContent()}
+			<div class="mx-auto w-full max-w-5xl p-6">
+				{@render children()}
+			</div>
+		{/snippet}
 
-	{#snippet sidebarContent()}
-		<SidebarMenu />
-	{/snippet}
-</Sidebar>
+		{#snippet sidebarContent()}
+			<SidebarMenu />
+		{/snippet}
+	</Sidebar>
 
-<Toast />
-<Controls />
+	<Toast />
+	<Controls />
+</div>

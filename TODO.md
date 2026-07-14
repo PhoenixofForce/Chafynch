@@ -25,15 +25,21 @@
 - [x] Vendor management (CRUD)
 - [x] Link / URL to vendor shop
 
-### Tea Metadata (basics)
+
+### Tea Product Metadata (basics)
 - [ ] Description (markdown)
-- [ ] Harvest year — `harvestYear` int (nullable, part of product identity) + `harvestLabel` free text ("1. Ernte April 2024", display only)
+- [ ] Harvest year — `harvestYear` int (nullable, part of product identity) 
+- [ ] `harvestLabel` free text ("1. Ernte April 2024", display only)
 - [ ] Link to buy
 - [ ] Cultivar
 - [ ] Origin / Terroir
-- [ ] Rating
-- [ ] Infusion times (western / gongfu)
-- [ ] detail page
+- [ ] Rating (future: Tea Session Enity)
+- [ ] Tasting Notes (future: Tea Session Enity)
+- [ ] Price (future: Tea Purchase Enity)
+- [ ] Gram (future: Tea Purchase Enity)
+
+### Tea UI
+- [ ] Detail page
 
 > **Note:** Design all diary/rating/tasting tables with a user FK from the start to avoid migrations later when multi-user (Phase 7) lands.
 
@@ -59,6 +65,7 @@
 - [ ] Photo upload (dry leaf, liquor, wet leaf)
 
 ### Inventory
+- [ ] Add Tea Purchase Split (id, product_id, date, gram, price)
 - [ ] Track remaining weight / "tea is empty" status
 - [ ] Storage location (shelf, tin, bag)
 
@@ -76,7 +83,8 @@
 > - Tasting notes UI as separate tab/stepper (Eyes → Nose → Mouth → Body) or card-per-sense layout
 
 ### Session Logging
-- [ ] Log tea drinking sessions
+- [ ] Add Tea Session Split (id, product_id, rating, tasting notes)
+- [ ] Log tea drinking session
 - [ ] Rating per session
 - [ ] Infusion parameters per session (time, temp, amount)
 - [ ] Steep counter — track how many infusions from a session
