@@ -48,8 +48,9 @@
 	{#snippet afterForm()}
 		<div class="divider">OR</div>
 
-		<div class="w-full">
+		<div class="indicator w-full">
 			<Button class="w-full btn-sm" label="Login with Authentik" />
+			<div class=" indicator-item badge badge-xs badge-info">Last used</div>
 		</div>
 	{/snippet}
 </AuthCard>
