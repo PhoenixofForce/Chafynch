@@ -1,15 +1,13 @@
+import type { Pathname } from '$app/types';
 import { House, Leaf, Store, Cog, Sprout, Palette } from '@lucide/svelte';
 import type { Component } from 'svelte';
-import type { RouteIdWithSearchOrHash } from '$app/types';
-import type { PathnameWithSearchOrHash } from '$app/types';
 
 export type Breadcrumb = {
 	label: string;
-	path?: Route;
+	path?: Pathname;
 	icon?: Component;
 };
 
-export type Route = RouteIdWithSearchOrHash | PathnameWithSearchOrHash;
 export const sidebarLinks: Breadcrumb[] = [
 	{
 		path: '/',
@@ -37,12 +35,12 @@ export const sidebarLinks: Breadcrumb[] = [
 		label: 'Tea Types'
 	},
 	{
-		path: '/settings' as Route,
+		path: '/settings' as Pathname,
 		icon: Cog,
 		label: 'Settings'
 	}
 ];
 
-export function breadcrumbFor(path: Route): Breadcrumb | undefined {
+export function breadcrumbFor(path: Pathname): Breadcrumb | undefined {
 	return sidebarLinks.find((l) => l.path === path);
 }
