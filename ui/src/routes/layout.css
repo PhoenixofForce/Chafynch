@@ -7,14 +7,16 @@
 		forest;
 }
 
-.lucide {
-	width: 1rem;
-	height: 1rem;
-}
+@layer base {
+	.lucide {
+		width: 1em;
+		height: 1em;
+	}
 
-.icon-lg {
-	width: 2rem;
-	height: 2rem;
+	.stat-figure .lucide {
+		width: 1lh;
+		height: 1lh;
+	}
 }
 
 .no-transitions,
