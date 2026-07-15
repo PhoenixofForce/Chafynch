@@ -22,7 +22,7 @@
 </script>
 
 <div>
-	<label class="floating-label {className}">
+	<label class="flex-col floating-label {className}">
 		<span>{placeholder}</span>
 
 		<div class="validator input {inputClass}">
