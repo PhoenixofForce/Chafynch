@@ -1,14 +1,38 @@
 <script lang="ts">
 	import CountryMap from '$lib/components/CountryMap.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Markdown from '$lib/components/ui/Markdown.svelte';
 	import { Calendar, Coffee, Coins, Pen, Trash, Weight } from '@lucide/svelte';
 
 	let { data } = $props();
+
+	const md = `
+
+This is one of these amazing teas I found during my trip to Pinglin during 2023 spring.
+
+I was focused mainly on fresh Baozhongs made from old cultivars… but as you know me, I was asking
+every farmer about old teas in their storages.
+
+1970’s Dry Stored Aged Pinglin Oolong is 50 years old tea what makes it the oldest tea in our offer.
+
+It’s of course huge taste and aroma experience, but this tea carries lots about history of tea in
+that area. You can easily notice the tea is rolled in different way with quite lots of stems. You
+can see that old rolling machines were making different results comparing to modern teas.
+
+When tasting this amazing oolong you will find notes of fresh tobacco, dark cane sugar, wood, incenses
+and surprising nuances of candied star fruit and ginseng.
+
+Aftertaste stays with drinker really long time.
+
+Tea is really smooth, balanced and sweet with well developed aged character.
+
+Warming and deeply relaxing experience.
+	`;
 </script>
 
-<div class="grid w-full grid-cols-1 items-start gap-8 md:grid-cols-[2fr_5fr] md:gap-12">
-	<div class="md:col-start-2 md:row-start-1 md:h-full">{@render header('md:h-full')}</div>
-	<div class="md:col-start-1 md:row-start-1">{@render country()}</div>
+<div class="grid w-full grid-cols-1 gap-8 md:grid-cols-[2fr_5fr] md:gap-12">
+	<div class="md:col-start-2 md:row-start-1">{@render header()}</div>
+	<div class="md:relative md:col-start-1 md:row-start-1">{@render country()}</div>
 
 	<div class="card bg-base-200 px-6 py-8 text-base-content/70 shadow">{@render stats()}</div>
 	<div>
@@ -19,39 +43,15 @@
 </div>
 
 {#snippet description()}
-	<div class="prose">
-		<h2>Description</h2>
-		This is one of these amazing teas I found during my trip to Pinglin during 2023 spring.
-		<br />
-		<br />
-		I was focused mainly on fresh Baozhongs made from old cultivars… but as you know me, I was asking
-		every farmer about old teas in their storages.
-		<br />
-		<br />
-		1970’s Dry Stored Aged Pinglin Oolong is 50 years old tea what makes it the oldest tea in our offer.
-		<br />
-		<br />
-		It’s of course huge taste and aroma experience, but this tea carries lots about history of tea in
-		that area. You can easily notice the tea is rolled in different way with quite lots of stems. You
-		can see that old rolling machines were making different results comparing to modern teas.
-		<br />
-		<br />
-		When tasting this amazing oolong you will find notes of fresh tobacco, dark cane sugar, wood, incenses
-		and surprising nuances of candied star fruit and ginseng.
-		<br />
-		<br />
-		Aftertaste stays with drinker really long time.
-		<br />
-		<br />
-		Tea is really smooth, balanced and sweet with well developed aged character.
-		<br />
-		<br />
-		Warming and deeply relaxing experience.
-	</div>
+	<Markdown {md}>
+		{#snippet after()}
+			<h2>Description</h2>
+		{/snippet}
+	</Markdown>
 {/snippet}
 
-{#snippet header(className?: string)}
-	<div class="card {className} min-w-full bg-base-300 text-base-content">
+{#snippet header()}
+	<div class="card bg-base-300 text-base-content">
 		<div class="card-body">
 			<div class="prose">
 				<h1 class="mb-2 text-primary">{data.tea.name}</h1>
@@ -121,7 +121,7 @@
 					<div class="stat-figure text-secondary">
 						<Weight />
 					</div>
-					<div class="stat-title">Left</div>
+					<div class="stat-title">Inventory</div>
 					<div class="stat-value">20 g</div>
 					<div class="stat-desc">In the Sideboard</div>
 				</div>
@@ -350,14 +350,19 @@
 {/snippet}
 
 {#snippet country()}
-	<CountryMap
-		country={data.tea.originCountry ?? ''}
-		markerLon={data.tea.originLongitude}
-		markerLat={data.tea.originLatitude}
-		showNeighbors={false}
-	/>
-	<div class="mb-6 w-full">
-		<div class="badge badge-primary">{data.tea.originCountry}</div>
+	<div class="flex h-full flex-col md:absolute md:inset-0">
+		<div class="min-h-0 flex-1">
+			<CountryMap
+				country={data.tea.originCountry ?? ''}
+				markerLon={data.tea.originLongitude}
+				markerLat={data.tea.originLatitude}
+				showNeighbors={false}
+			/>
+		</div>
+
+		<div>
+			<div class="badge badge-primary">{data.tea.originCountry}</div>
+		</div>
 	</div>
 {/snippet}
 

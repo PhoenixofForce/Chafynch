@@ -47,6 +47,8 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.577.0",
+		"dompurify": "^3.4.12",
+		"marked": "^18.0.6",
 		"openapi-fetch": "^0.17.0"
 	}
 }
