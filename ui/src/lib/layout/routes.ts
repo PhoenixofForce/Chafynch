@@ -1,5 +1,6 @@
 import type { Pathname } from '$app/types';
-import { House, Leaf, Store, Cog, Sprout, Palette } from '@lucide/svelte';
+import { icons } from '$lib/basics/icons';
+import { House, Cog } from '@lucide/svelte';
 import type { Component } from 'svelte';
 
 export type Breadcrumb = {
@@ -16,22 +17,22 @@ export const sidebarLinks: Breadcrumb[] = [
 	},
 	{
 		path: '/teas',
-		icon: Leaf,
+		icon: icons.tea,
 		label: 'Teas'
 	},
 	{
 		path: '/vendors',
-		icon: Store,
+		icon: icons.vendor,
 		label: 'Vendors'
 	},
 	{
 		path: '/cultivars',
-		icon: Sprout,
+		icon: icons.cultivar,
 		label: 'Cultivars'
 	},
 	{
 		path: '/tea-types',
-		icon: Palette,
+		icon: icons.teaType,
 		label: 'Tea Types'
 	},
 	{

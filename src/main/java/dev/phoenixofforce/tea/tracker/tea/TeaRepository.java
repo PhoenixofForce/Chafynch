@@ -1,12 +1,18 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeaRepository extends JpaRepository<Tea, Long> {
 
-    @Query("SELECT t FROM Tea t LEFT JOIN FETCH t.cultivar LEFT JOIN FETCH t.teaType LEFT JOIN FETCH t.vendor LEFT JOIN FETCH t.originLocation")
-    List<Tea> findAllWithRelations();
+    @Override
+    @EntityGraph(attributePaths = {"cultivar", "vendor", "teaType", "originLocation"})
+    List<Tea> findAll();
+
+    @Override
+    @EntityGraph(attributePaths = {"cultivar", "vendor", "teaType", "originLocation"})
+    Optional<Tea> findById(Long id);
 }

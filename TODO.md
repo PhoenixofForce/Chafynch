@@ -27,19 +27,19 @@
 
 
 ### Tea Product Metadata (basics)
-- [ ] Description (markdown)
-- [ ] Harvest year — `harvestYear` int (nullable, part of product identity) 
-- [ ] `harvestLabel` free text ("1. Ernte April 2024", display only)
-- [ ] Link to buy
-- [ ] Cultivar
-- [ ] Origin / Terroir
-- [ ] Rating (future: Tea Session Enity)
-- [ ] Tasting Notes (future: Tea Session Enity)
-- [ ] Price (future: Tea Purchase Enity)
-- [ ] Gram (future: Tea Purchase Enity)
+- [x] Description (markdown)
+- [x] Harvest year — `harvestYear` int (nullable, part of product identity) 
+- [x] `harvestLabel` free text ("1. Ernte April 2024", display only)
+- [x] Link to buy
+- [x] Cultivar
+- [x] Origin / Terroir
+- [x] Rating (future: Tea Session Enity)
+- [x] Tasting Notes (future: Tea Session Enity)
+- [x] Price (future: Tea Purchase Enity)
+- [x] Gram (future: Tea Purchase Enity)
 
 ### Tea UI
-- [ ] Detail page
+- [x] Detail page
 
 > **Note:** Design all diary/rating/tasting tables with a user FK from the start to avoid migrations later when multi-user (Phase 7) lands.
 
@@ -57,7 +57,6 @@
 ### Tea Metadata (extended)
 - [ ] Elevation
 - [ ] Picking & processing details
-- [ ] Season / harvest period
 - [ ] Shading technique / duration
 - [ ] Steaming method (e.g. Asamushi)
 - [ ] Cultivation method (e.g. organic certified)

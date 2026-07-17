@@ -178,6 +178,11 @@ export interface components {
             id: number;
             name: string;
         };
+        TastingNoteDto: {
+            /** Format: int64 */
+            id: number;
+            note: string;
+        };
         TeaDTO: {
             /** Format: int64 */
             id?: number;
@@ -196,6 +201,14 @@ export interface components {
             /** Format: date */
             purchaseDate?: string;
             weightGrams?: number;
+            descriptionMd?: string;
+            /** Format: int32 */
+            harvestYear?: number;
+            harvestLabel?: string;
+            website?: string;
+            /** Format: int32 */
+            rating?: number;
+            tastingNotes?: components["schemas"]["TastingNoteDto"][];
         };
         VendorOverviewDto: {
             vendor: components["schemas"]["VendorDto"];

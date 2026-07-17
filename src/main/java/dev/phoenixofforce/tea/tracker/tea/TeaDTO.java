@@ -1,5 +1,6 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
+import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -30,6 +31,14 @@ public class TeaDTO {
     private LocalDate purchaseDate;
     private BigDecimal weightGrams;
 
+    private String descriptionMd;
+    private Integer harvestYear;
+    private String harvestLabel;
+    private String website;
+    private Integer rating;
+
+    private List<TastingNoteDto> tastingNotes;
+
     public static TeaDTO from(Tea tea) {
         TeaDTO dto = new TeaDTO();
         dto.setId(tea.getId());
@@ -48,6 +57,14 @@ public class TeaDTO {
             dto.setOriginLatitude(tea.getOriginLocation().getLatitude());
             dto.setOriginLongitude(tea.getOriginLocation().getLongitude());
         }
+        if(tea.getDescriptionMd() != null) dto.setDescriptionMd(tea.getDescriptionMd());
+        if(tea.getRating() != null) dto.setRating(tea.getRating());
+        if(tea.getWebsite() != null) dto.setWebsite(tea.getWebsite());
+        if(tea.getHarvestYear() != null) dto.setHarvestYear(tea.getHarvestYear());
+        if(tea.getHarvestLabel() != null) dto.setHarvestLabel(tea.getHarvestLabel());
+        if(tea.getTastingNotes() != null){
+            dto.setTastingNotes(TastingNoteDto.from(tea.getTastingNotes()));
+        } else dto.setTastingNotes(List.of());
 
         return dto;
     }

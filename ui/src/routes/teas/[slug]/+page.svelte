@@ -2,39 +2,17 @@
 	import CountryMap from '$lib/geo/CountryMap.svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import Markdown from '$lib/basics/Markdown.svelte';
-	import { Calendar, Coffee, Coins, Pen, Trash, Weight } from '@lucide/svelte';
+	import { Calendar, Coffee, Coins, Pen, Trash, Weight, X } from '@lucide/svelte';
+	import { icons } from '$lib/basics/icons.js';
 
 	let { data } = $props();
-
-	const md = `
-
-This is one of these amazing teas I found during my trip to Pinglin during 2023 spring.
-
-I was focused mainly on fresh Baozhongs made from old cultivars… but as you know me, I was asking
-every farmer about old teas in their storages.
-
-1970’s Dry Stored Aged Pinglin Oolong is 50 years old tea what makes it the oldest tea in our offer.
-
-It’s of course huge taste and aroma experience, but this tea carries lots about history of tea in
-that area. You can easily notice the tea is rolled in different way with quite lots of stems. You
-can see that old rolling machines were making different results comparing to modern teas.
-
-When tasting this amazing oolong you will find notes of fresh tobacco, dark cane sugar, wood, incenses
-and surprising nuances of candied star fruit and ginseng.
-
-Aftertaste stays with drinker really long time.
-
-Tea is really smooth, balanced and sweet with well developed aged character.
-
-Warming and deeply relaxing experience.
-	`;
 </script>
 
 <div class="grid w-full grid-cols-1 gap-8 md:grid-cols-[2fr_5fr] md:gap-12">
 	<div class="md:col-start-2 md:row-start-1">{@render header()}</div>
 	<div class="md:relative md:col-start-1 md:row-start-1">{@render country()}</div>
 
-	<div class="card bg-base-200 px-6 py-8 text-base-content/70 shadow">{@render stats()}</div>
+	<div class="card bg-base-200 px-6 py-4 text-base-content/70 shadow">{@render stats()}</div>
 	<div>
 		{@render description()}
 	</div>
@@ -43,8 +21,8 @@ Warming and deeply relaxing experience.
 </div>
 
 {#snippet description()}
-	<Markdown {md}>
-		{#snippet after()}
+	<Markdown md={data.tea.descriptionMd ?? ''}>
+		{#snippet before()}
 			<h2>Description</h2>
 		{/snippet}
 	</Markdown>
@@ -58,64 +36,64 @@ Warming and deeply relaxing experience.
 			</div>
 			<div class="flex flex-col gap-4 md:flex-row md:gap-2">
 				<div>
-					<div class="badge badge-primary">{data.tea.teaType}</div>
-					<div class="badge badge-primary">{data.tea.cultivar}</div>
-					<div class="badge badge-primary">{data.tea.vendor}</div>
+					{#if data.tea.teaType}
+						<div class="badge badge-primary">
+							<icons.teaType />
+							{data.tea.teaType}
+						</div>
+					{/if}
+					{#if data.tea.cultivar}
+						<div class="badge badge-primary">
+							<icons.cultivar />
+							{data.tea.cultivar}
+						</div>
+					{/if}
+					{#if data.tea.vendor}
+						<div class="badge badge-primary">
+							<icons.vendor />
+							{data.tea.vendor}
+						</div>
+					{/if}
 				</div>
 
 				<div class="rating">
-					<input
-						type="radio"
-						name="rating-1"
-						class="mask bg-primary mask-star"
-						aria-label="1 star"
-					/>
-					<input
-						type="radio"
-						name="rating-1"
-						class="mask bg-primary mask-star"
-						aria-label="2 star"
-						checked="checked"
-					/>
-					<input
-						type="radio"
-						name="rating-1"
-						class="mask bg-primary mask-star"
-						aria-label="3 star"
-					/>
-					<input
-						type="radio"
-						name="rating-1"
-						class="mask bg-primary mask-star"
-						aria-label="4 star"
-					/>
-					<input
-						type="radio"
-						name="rating-1"
-						class="mask bg-primary mask-star"
-						aria-label="5 star"
-					/>
+					{#each { length: 5 } as _, i (i)}
+						<input
+							type="radio"
+							name="rating"
+							class="mask bg-primary mask-star"
+							aria-label="{i} star"
+							checked={i + 1 === (data.tea.rating ?? 0)}
+							disabled
+						/>
+					{/each}
 				</div>
 			</div>
 
 			<div class="stats mt-6 stats-vertical bg-base-100 shadow md:stats-horizontal">
-				<div class="stat">
-					<div class="stat-figure text-secondary">
-						<Calendar />
+				{#if data.tea.harvestYear || data.tea.harvestLabel}
+					<div class="stat">
+						<div class="stat-figure text-secondary">
+							<Calendar />
+						</div>
+						<div class="stat-title">Harvest</div>
+						<div class="stat-value">{data.tea.harvestYear ?? data.tea.harvestLabel}</div>
+						<div class="stat-desc">{data.tea.harvestYear ? data.tea.harvestLabel : ''}</div>
 					</div>
-					<div class="stat-title">Harvest</div>
-					<div class="stat-value">2026</div>
-					<div class="stat-desc">First flush</div>
-				</div>
+				{/if}
 
-				<div class="stat">
-					<div class="stat-figure text-secondary">
-						<Coins />
+				{#if data.tea.weightGrams && data.tea.weightGrams > 0}
+					<div class="stat">
+						<div class="stat-figure text-secondary">
+							<Coins />
+						</div>
+						<div class="stat-title">Average Price</div>
+						<div class="stat-value">
+							{(data.tea.price ?? 0) / data.tea.weightGrams}
+						</div>
+						<div class="stat-desc">$ / g</div>
 					</div>
-					<div class="stat-title">Average Price</div>
-					<div class="stat-value">1.20</div>
-					<div class="stat-desc">$ / g</div>
-				</div>
+				{/if}
 
 				<div class="stat">
 					<div class="stat-figure text-secondary">
@@ -128,7 +106,16 @@ Warming and deeply relaxing experience.
 			</div>
 
 			<div class="my-auto flex items-center justify-around gap-4 md:justify-end">
-				<a class="link"> Buy more </a>
+				{#if data.tea.website}
+					<a
+						href={data.tea.website}
+						rel="external noopener noreferrer"
+						target="_blank"
+						class="link"
+					>
+						Buy more
+					</a>
+				{/if}
 
 				<Button class="btn-ghost" label="Edit" icon={Pen} />
 				<Button class="btn-ghost btn-error" label="Delete" icon={Trash} />
@@ -367,32 +354,18 @@ Warming and deeply relaxing experience.
 {/snippet}
 
 {#snippet stats()}
-	<div class="flex flex-col gap-2 text-xs">
-		<b>Character</b>
-		<p>
-			Als Cold Brew: besonders edelsüß, zugleich angenehm edelbitter, extrem erfrischend, volles
-			Umami, sehr fruchtig, wunderbare Noten nach Melone, Gurke und Zitrone, äußerst vollmundig
-			(Fukamushi) und aromatisch, typischer kräftiger Chiran-Charakter
-		</p>
-		<b>Teefarm</b>
-		<p>Nuruki Seicha, renommierte Bio Teefarm im beliebten Terroir Chiran</p>
-		<b>Terroir</b>
-		<p>Chiran (Region), Kagoshima (Präf.), Japan</p>
-		<b>Cultivar</b>
-		<p>Yutakamidori (100%)</p>
-		<b>Ernte</b>
-		<p>1. Ernte 2026 (Ichibancha), im Mai</p>
-		<b>Höhenlage</b>
-		<p>160m ü.d.M.</p>
-		<b>Dämpfung</b>
-		<p>tief (Fukamushi, ca. 90 Sek.)</p>
-		<b>Beschattung</b>
-		<p>7 Tage vor der Ernte, Jikagise-Technik</p>
-		<b>Anbau</b>
-		<p>Bio-zertifizierter Anbau</p>
-		<b>Labortests</b>
-		<p>Radioaktivität (Jährlicher Test der Region) und Pflanzenschutzmittel</p>
-		<b>Qualität</b>
-		<p>98/100 P. (Kategorie Mizudashi); Contest Grade Sencha 96 P., Super Premium</p>
+	<div class="flex flex-col gap-4 text-xs">
+		{#if data.tea.tastingNotes?.length}
+			<b>Tasting Notes</b>
+			<div class="flex flex-wrap gap-2">
+				{#each data.tea.tastingNotes as tastingNote (tastingNote.id)}
+					<div class="badge badge-accent">
+						{tastingNote.note}
+						<Button class=" btn-accent btn-xs hover:translate-y-0" icon={X} />
+					</div>
+				{/each}
+			</div>
+		{/if}
+		<div>more info coming soon</div>
 	</div>
 {/snippet}

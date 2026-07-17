@@ -1,4 +1,4 @@
-import { breadcrumbFor, type Breadcrumb } from '$lib/routes';
+import { breadcrumbFor, type Breadcrumb } from '$lib/layout/routes';
 
 export const ssr = false;
 

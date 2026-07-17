@@ -25,7 +25,7 @@ public class TeaService {
 
     @Transactional(readOnly = true)
     public List<TeaDTO> findAll() {
-        return TeaDTO.from(teaRepository.findAllWithRelations());
+        return TeaDTO.from(teaRepository.findAll());
     }
 
     @Transactional(readOnly = true)

@@ -121,7 +121,9 @@
 			{#snippet header()}
 				{#if overview.vendor.website}
 					<div>
-						<a href={overview.vendor.website} rel="external" target="_blank"> Visit Shop </a>
+						<a href={overview.vendor.website} rel="external noopener noreferrer" target="_blank">
+							Visit Shop
+						</a>
 					</div>
 				{/if}
 			{/snippet}

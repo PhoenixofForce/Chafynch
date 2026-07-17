@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/basics/Button.svelte';
 	import Input from '$lib/basics/Input.svelte';
+	import { RotateCcw } from '@lucide/svelte';
 	import AuthCard from '../AuthCard.svelte';
 </script>
 
@@ -17,6 +18,6 @@
 	</div>
 
 	<div class="w-full">
-		<Button type="submit" class="w-full btn-primary" label="Reset Password" />
+		<Button type="submit" class="w-full btn-primary" label="Reset Password" icon={RotateCcw} />
 	</div>
 </AuthCard>
