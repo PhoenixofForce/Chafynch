@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { toasts, dismiss, type ToastKind } from '$lib/data/toast.svelte';
+	import { toast, type ToastKind } from '$lib/data/toast.svelte';
 	import { CircleAlert, CircleCheck, CircleX, Info, X } from '@lucide/svelte';
 	import type { Component } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -30,12 +30,16 @@
 </script>
 
 <div class="toast toast-center toast-top z-50">
-	{#each toasts as toast (toast.id)}
-		{@const kind = types[toast.kind]}
+	{#each toast.values as toastMessage (toastMessage.id)}
+		{@const kind = types[toastMessage.kind]}
 		<div class="alert {kind.class}" transition:fade={{ duration: 200 }}>
 			<kind.icon />
-			<span>{toast.message}</span>
-			<Button class="btn btn-xs {kind.btnClass}" onclick={() => dismiss(toast.id)} icon={X} />
+			<span>{toastMessage.message}</span>
+			<Button
+				class="btn btn-xs {kind.btnClass}"
+				onclick={() => toast.dismiss(toastMessage.id)}
+				icon={X}
+			/>
 		</div>
 	{/each}
 </div>

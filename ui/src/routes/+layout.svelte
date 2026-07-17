@@ -7,6 +7,7 @@
 	import Sidebar from '$lib/components/ui/Sidebar.svelte';
 	import Controls from '$lib/components/Controls.svelte';
 	import SidebarMenu from '$lib/components/SidebarMenu.svelte';
+	import ConfirmationModal from '$lib/components/confirmation/ConfirmationModal.svelte';
 
 	let { children } = $props();
 	let drawerOpen = $state(false);
@@ -30,5 +31,6 @@
 	</Sidebar>
 
 	<Toast />
+	<ConfirmationModal />
 	<Controls />
 </div>

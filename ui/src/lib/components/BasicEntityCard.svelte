@@ -3,6 +3,7 @@
 	import type { Snippet } from 'svelte';
 	import { Check, Pen, Trash, X } from '@lucide/svelte';
 	import Button from './ui/Button.svelte';
+	import { confirmation } from './confirmation/confirmation.svelte';
 
 	type Props = {
 		entity: T;
@@ -38,12 +39,22 @@
 	}
 
 	async function handleDelete() {
-		deleting = true;
-		try {
-			await editor.delete(entity, onDelete);
-		} finally {
-			deleting = false;
-		}
+		confirmation.show({
+			title: 'Do you really want to delete this?',
+			confirm: {
+				label: 'Delete',
+				class: 'btn-error',
+				onclick: async () => {
+					deleting = true;
+					try {
+						await editor.delete(entity, onDelete);
+						confirmation.hide();
+					} finally {
+						deleting = false;
+					}
+				}
+			}
+		});
 	}
 </script>
 

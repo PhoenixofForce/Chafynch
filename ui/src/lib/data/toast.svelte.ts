@@ -9,7 +9,7 @@ export type Toast = {
 };
 
 let nextId = 0;
-export const toasts = $state<Toast[]>([]);
+const toasts = $state<Toast[]>([]);
 const timers = new SvelteMap<number, ReturnType<typeof setTimeout>>();
 
 function show(kind: ToastKind, message: string) {
@@ -21,23 +21,23 @@ function show(kind: ToastKind, message: string) {
 	);
 }
 
-export function infoToast(message: string) {
+function infoToast(message: string) {
 	show('info', message);
 }
 
-export function successToast(message: string) {
+function successToast(message: string) {
 	show('success', message);
 }
 
-export function warningToast(message: string) {
+function warningToast(message: string) {
 	show('warning', message);
 }
 
-export function errorToast(message: string) {
+function errorToast(message: string) {
 	show('error', message);
 }
 
-export function dismiss(id: number) {
+function dismiss(id: number) {
 	const timer = timers.get(id);
 	if (timer) {
 		clearTimeout(timer);
@@ -46,3 +46,12 @@ export function dismiss(id: number) {
 	const index = toasts.findIndex((e) => e.id === id);
 	if (index >= 0) toasts.splice(index, 1);
 }
+
+export const toast = {
+	values: toasts,
+	info: infoToast,
+	success: successToast,
+	warning: warningToast,
+	error: errorToast,
+	dismiss
+};

@@ -1,7 +1,7 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './schema';
 import { error, isHttpError } from '@sveltejs/kit';
-import { errorToast, successToast } from '$lib/data/toast.svelte';
+import { toast } from '$lib/data/toast.svelte';
 import { invalidateAll } from '$app/navigation';
 
 export const api = createClient<paths>({
@@ -33,7 +33,7 @@ export async function wrapApi<T>(
 	try {
 		const out = await caller();
 		if (options?.invalidate ?? true) await invalidateAll();
-		if (options.success) successToast(options.success);
+		if (options.success) toast.success(options.success);
 		return out;
 	} catch (e) {
 		handleApiError(e, options.error);
@@ -43,5 +43,5 @@ export async function wrapApi<T>(
 
 export function handleApiError(error: unknown, fallback = '') {
 	console.log(error);
-	errorToast(isHttpError(error) ? (error.body.message ?? fallback) : fallback);
+	toast.error(isHttpError(error) ? (error.body.message ?? fallback) : fallback);
 }
