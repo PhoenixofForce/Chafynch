@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { toast, type ToastKind } from '$lib/data/toast.svelte';
 	import { CircleAlert, CircleCheck, CircleX, Info, X } from '@lucide/svelte';
 	import type { Component } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import Button from './Button.svelte';
+	import Button from '$lib/basics/Button.svelte';
+	import { toast, type ToastKind } from './toast.store.svelte';
 
 	const types: Record<ToastKind, { class: string; btnClass: string; icon: Component }> = {
 		info: {

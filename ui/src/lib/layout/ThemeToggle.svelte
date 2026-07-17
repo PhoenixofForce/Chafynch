@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Moon, Sun } from '@lucide/svelte';
-	import Swap from './ui/Swap.svelte';
+	import Swap from '$lib/basics/Swap.svelte';
 
 	const saved = localStorage.getItem('theme');
 	let isDark = $state(saved === 'forest');

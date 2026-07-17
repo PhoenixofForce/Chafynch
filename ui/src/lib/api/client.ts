@@ -1,8 +1,8 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './schema';
 import { error, isHttpError } from '@sveltejs/kit';
-import { toast } from '$lib/data/toast.svelte';
 import { invalidateAll } from '$app/navigation';
+import { toast } from '$lib/toast/toast.store.svelte';
 
 export const api = createClient<paths>({
 	baseUrl: ''

@@ -1,6 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { Breadcrumb } from '$lib/routes';
+import type { Breadcrumb } from '$lib/layout/routes';
 
 // for information about these interfaces
 declare global {

@@ -1,4 +1,4 @@
-import type { Breadcrumb } from '$lib/routes';
+import { type Breadcrumb } from '$lib/layout/routes';
 import { Plus } from '@lucide/svelte';
 
 export async function load({ parent }) {

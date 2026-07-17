@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Input from './ui/Input.svelte';
+	import Input from './Input.svelte';
+	// Todo: rework
 
 	type Props = {
 		placeholder?: string;

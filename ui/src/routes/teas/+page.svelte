@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import TeaCard from '$lib/components/TeaCard.svelte';
+	import TeaCard from './TeaCard.svelte';
 	import { Plus } from '@lucide/svelte';
 
 	let { data } = $props();
@@ -29,7 +29,7 @@
 <div class="mt-6">
 	<div class="flex justify-between">
 		<h2 class="mb-4 text-xl font-bold text-base-content">Alle Tees</h2>
-		<a href={resolve('/teas/new')} class="btn btn-sm btn-primary">
+		<a href={resolve('/teas/new')} class="btn btn-primary btn-sm">
 			<Plus /> Neuer Tee
 		</a>
 	</div>

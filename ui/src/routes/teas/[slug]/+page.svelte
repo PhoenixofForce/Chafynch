@@ -1,7 +1,7 @@
 <script lang="ts">
-	import CountryMap from '$lib/components/CountryMap.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
-	import Markdown from '$lib/components/ui/Markdown.svelte';
+	import CountryMap from '$lib/geo/CountryMap.svelte';
+	import Button from '$lib/basics/Button.svelte';
+	import Markdown from '$lib/basics/Markdown.svelte';
 	import { Calendar, Coffee, Coins, Pen, Trash, Weight } from '@lucide/svelte';
 
 	let { data } = $props();

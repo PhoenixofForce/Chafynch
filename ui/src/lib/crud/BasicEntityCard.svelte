@@ -1,9 +1,9 @@
 <script generics="T extends {id: number}" lang="ts">
-	import type { createEditor } from '$lib/data/editable.svelte';
+	import type { createEditor } from '$lib/crud/editable.svelte';
 	import type { Snippet } from 'svelte';
 	import { Check, Pen, Trash, X } from '@lucide/svelte';
-	import Button from './ui/Button.svelte';
-	import { confirmation } from './confirmation/confirmation.svelte';
+	import Button from '../basics/Button.svelte';
+	import { confirmation } from '../confirmation/confirmation.store.svelte';
 
 	type Props = {
 		entity: T;

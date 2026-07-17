@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '../ui/Button.svelte';
-	import Modal from '../ui/Modal.svelte';
-	import { confirmation } from './confirmation.svelte';
+	import Button from '../basics/Button.svelte';
+	import Modal from '../basics/Modal.svelte';
+	import { confirmation } from './confirmation.store.svelte';
 </script>
 
 <Modal open={confirmation.state !== null} onclose={() => confirmation.hide()}>

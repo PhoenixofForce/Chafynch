@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { api, wrapApi } from '$lib/api/client.js';
 	import type { VendorDto } from '$lib/api/types.js';
-	import BasicEntityCard from '$lib/components/BasicEntityCard.svelte';
-	import SearchableSelect from '$lib/components/SearchableSelect.svelte';
-	import { createEditor } from '$lib/data/editable.svelte.js';
+	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
+	import SearchableSelect from '$lib/basics/SearchableSelect.svelte';
+	import { createEditor } from '$lib/crud/editable.svelte.js';
 	import { Leaf, MapPin, Plus, Scale } from '@lucide/svelte';
-	import Button from '$lib/components/ui/Button.svelte';
-	import Input from '$lib/components/ui/Input.svelte';
+	import Button from '$lib/basics/Button.svelte';
+	import Input from '$lib/basics/Input.svelte';
 	import { onMount } from 'svelte';
 
 	const { data } = $props();

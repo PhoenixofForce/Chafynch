@@ -1,4 +1,6 @@
 <script lang="ts">
+	// Todo: rework
+
 	type Props = {
 		id?: string;
 		placeholder?: string;

@@ -2,10 +2,10 @@
 	import { onMount } from 'svelte';
 	import { api } from '$lib/api/client';
 	import type { TeaDTO, TeaTypeDto } from '$lib/api/types';
-	import Autocomplete from '$lib/components/Autocomplete.svelte';
-	import SearchableSelect from '$lib/components/SearchableSelect.svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import Autocomplete from '$lib/basics/Autocomplete.svelte';
+	import SearchableSelect from '$lib/basics/SearchableSelect.svelte';
 
 	let form = $state<TeaDTO>({
 		name: '',

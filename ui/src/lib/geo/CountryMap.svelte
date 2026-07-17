@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getCountryCodeMap, getCountryData, type CountryData } from '$lib/data/countryCodes';
+	import { getCountryCodeMap, getCountryData, type CountryData } from '$lib/geo/countryCodes';
 
 	interface Props {
 		country: string;

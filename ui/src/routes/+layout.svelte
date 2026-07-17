@@ -1,13 +1,13 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import Navbar from '$lib/components/Navbar.svelte';
+	import Navbar from '$lib/layout/Navbar.svelte';
 	import { page } from '$app/state';
-	import Toast from '$lib/components/ui/Toast.svelte';
-	import Sidebar from '$lib/components/ui/Sidebar.svelte';
-	import Controls from '$lib/components/Controls.svelte';
-	import SidebarMenu from '$lib/components/SidebarMenu.svelte';
-	import ConfirmationModal from '$lib/components/confirmation/ConfirmationModal.svelte';
+	import Toast from '$lib/toast/Toast.svelte';
+	import Sidebar from '$lib/basics/Sidebar.svelte';
+	import Controls from '$lib/layout/ThemeToggle.svelte';
+	import SidebarMenu from '$lib/layout/SidebarMenu.svelte';
+	import ConfirmationModal from '$lib/confirmation/ConfirmationModal.svelte';
 
 	let { children } = $props();
 	let drawerOpen = $state(false);

@@ -1,7 +1,7 @@
 <script>
 	import { resolve } from '$app/paths';
 	import { PanelLeftClose, PanelLeftOpen } from '@lucide/svelte';
-	import Swap from './ui/Swap.svelte';
+	import Swap from '$lib/basics/Swap.svelte';
 
 	let { drawerOpen = $bindable(), breadcrumbs } = $props();
 </script>

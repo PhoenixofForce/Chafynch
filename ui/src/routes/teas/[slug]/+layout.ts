@@ -1,5 +1,5 @@
 import { api } from '$lib/api/client';
-import type { Breadcrumb } from '$lib/routes';
+import { type Breadcrumb } from '$lib/layout/routes';
 
 export async function load({ params, parent }) {
 	const { breadcrumbs } = await parent();

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { sidebarLinks } from '$lib/routes';
+	import { sidebarLinks } from '$lib/layout/routes';
 
 	const currentPath = $derived(page.url.pathname);
 </script>

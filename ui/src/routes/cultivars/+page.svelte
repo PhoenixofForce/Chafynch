@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { api, wrapApi } from '$lib/api/client.js';
 	import type { CultivarDto } from '$lib/api/types.js';
-	import BasicEntityCard from '$lib/components/BasicEntityCard.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
-	import Input from '$lib/components/ui/Input.svelte';
-	import { createEditor } from '$lib/data/editable.svelte.js';
+	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
+	import Button from '$lib/basics/Button.svelte';
+	import Input from '$lib/basics/Input.svelte';
+	import { createEditor } from '$lib/crud/editable.svelte.js';
 	import { Plus } from '@lucide/svelte';
 
 	const { data } = $props();
