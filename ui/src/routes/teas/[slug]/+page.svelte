@@ -361,7 +361,7 @@
 				{#each data.tea.tastingNotes as tastingNote (tastingNote.id)}
 					<div class="badge badge-accent">
 						{tastingNote.note}
-						<Button class=" btn-accent btn-xs hover:translate-y-0" icon={X} />
+						<Button class=" btn-accent btn-xs" icon={X} noAnimation />
 					</div>
 				{/each}
 			</div>

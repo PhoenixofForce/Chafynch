@@ -9,13 +9,21 @@
 		icon: Icon,
 		class: className,
 		disabled,
+		noAnimation,
 		...rest
-	}: { label?: string; loading?: boolean; icon?: Component } & HTMLButtonAttributes = $props();
+	}: {
+		label?: string;
+		loading?: boolean;
+		icon?: Component;
+		noAnimation?: boolean;
+	} & HTMLButtonAttributes = $props();
 </script>
 
 <button
 	type="button"
-	class="btn {className} transition-transform hover:-translate-y-1 hover:shadow"
+	class="btn {className} transition-transform {noAnimation
+		? ''
+		: 'hover:-translate-y-1'} hover:shadow"
 	class:btn-square={!label}
 	disabled={disabled || loading}
 	{...rest}
