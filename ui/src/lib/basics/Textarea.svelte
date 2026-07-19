@@ -1,39 +1,35 @@
 <script lang="ts">
-	import type { Component } from 'svelte';
-	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type { HTMLTextareaAttributes } from 'svelte/elements';
 
 	let {
 		value = $bindable(),
 		placeholder = 'Placeholder',
 		validity,
 		hint,
-		icon: Icon,
 		class: className,
-		inputClass,
+		textareaClass,
 		...rest
 	}: {
-		value?: string | number;
+		value?: string;
 		placeholder?: string;
 		validity?: string;
 		hint?: string;
-		icon?: Component;
-		inputClass?: string;
-	} & HTMLInputAttributes = $props();
+		textareaClass?: string;
+	} & HTMLTextareaAttributes = $props();
 </script>
 
 <div>
 	<label class="floating-label flex-col {className}">
 		<span>{placeholder}</span>
 
-		<div class="validator input {inputClass}">
-			<Icon color="currentColor" size="21" />
-			<input
-				type="text"
+		<div class="validator">
+			<textarea
+				class="textarea {textareaClass}"
 				{placeholder}
 				bind:value
 				{...rest}
 				{@attach (node) => node.setCustomValidity(validity ?? '')}
-			/>
+			></textarea>
 		</div>
 		<p class="validator-hint mt-0 mb-0">{validity ?? hint}</p>
 	</label>

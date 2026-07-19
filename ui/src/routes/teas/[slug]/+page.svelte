@@ -4,6 +4,8 @@
 	import Markdown from '$lib/basics/Markdown.svelte';
 	import { Calendar, Coffee, Coins, Pen, Trash, Weight, X } from '@lucide/svelte';
 	import { icons } from '$lib/basics/icons.js';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 
 	let { data } = $props();
 </script>
@@ -117,7 +119,12 @@
 					</a>
 				{/if}
 
-				<Button class="btn-ghost" label="Edit" icon={Pen} />
+				<Button
+					class="btn-ghost"
+					label="Edit"
+					icon={Pen}
+					onclick={() => goto(resolve('/teas/[slug]/edit', { slug: data.tea.id + '' }))}
+				/>
 				<Button class="btn-ghost btn-error" label="Delete" icon={Trash} />
 			</div>
 		</div>

@@ -2,12 +2,12 @@
 	import { api, wrapApi } from '$lib/api/client.js';
 	import type { VendorDto } from '$lib/api/types.js';
 	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
-	import SearchableSelect from '$lib/basics/SearchableSelect.svelte';
 	import { createEditor } from '$lib/crud/editable.svelte.js';
 	import { Leaf, MapPin, Plus, Scale } from '@lucide/svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import { onMount } from 'svelte';
+	import Combobox from '$lib/basics/Combobox.svelte';
 
 	const { data } = $props();
 	const editor = createEditor<VendorDto>();
@@ -79,11 +79,12 @@
 	</div>
 
 	<div class="grid grid-cols-3 gap-2">
-		<SearchableSelect
-			placeholder="Land"
+		<Combobox
 			options={countryNames}
+			placeholder="Country"
 			bind:value={draft.locationDto!.country}
 		/>
+
 		<Input placeholder="Provinz" inputClass="w-full" bind:value={draft.locationDto!.province} />
 		<Input placeholder="Stadt" inputClass="w-full" bind:value={draft.locationDto!.city} />
 	</div>

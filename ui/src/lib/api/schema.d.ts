@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/teas/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["findById"];
+        put: operations["update_1"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tea-types/{id}": {
         parameters: {
             query?: never;
@@ -28,7 +44,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["update_1"];
+        put: operations["update_2"];
         post?: never;
         delete: operations["delete"];
         options?: never;
@@ -44,7 +60,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["update_2"];
+        put: operations["update_3"];
         post?: never;
         delete: operations["delete_1"];
         options?: never;
@@ -116,22 +132,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/teas/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["findById"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/locations": {
         parameters: {
             query?: never;
@@ -168,16 +168,6 @@ export interface components {
             website?: string;
             locationDto?: components["schemas"]["LocationDto"];
         };
-        TeaTypeDto: {
-            /** Format: int64 */
-            id: number;
-            name: string;
-        };
-        CultivarDto: {
-            /** Format: int64 */
-            id: number;
-            name: string;
-        };
         TastingNoteDto: {
             /** Format: int64 */
             id: number;
@@ -209,6 +199,16 @@ export interface components {
             /** Format: int32 */
             rating?: number;
             tastingNotes?: components["schemas"]["TastingNoteDto"][];
+        };
+        TeaTypeDto: {
+            /** Format: int64 */
+            id: number;
+            name: string;
+        };
+        CultivarDto: {
+            /** Format: int64 */
+            id: number;
+            name: string;
         };
         VendorOverviewDto: {
             vendor: components["schemas"]["VendorDto"];
@@ -272,7 +272,55 @@ export interface operations {
             };
         };
     };
+    findById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaDTO"];
+                };
+            };
+        };
+    };
     update_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TeaDTO"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeaDTO"];
+                };
+            };
+        };
+    };
+    update_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -318,7 +366,7 @@ export interface operations {
             };
         };
     };
-    update_2: {
+    update_3: {
         parameters: {
             query?: never;
             header?: never;
@@ -536,28 +584,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["CultivarDto"];
-                };
-            };
-        };
-    };
-    findById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeaDTO"];
                 };
             };
         };

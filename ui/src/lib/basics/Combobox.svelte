@@ -51,19 +51,14 @@
 
 	function fetchSuggestions() {
 		clearTimeout(debounceTimer);
-		if (!value) {
-			suggestions = options;
-			return;
-		}
-		const query = value;
 
 		if (!search) {
-			suggestions = options.filter((o) => o.toLowerCase().includes(query.toLowerCase()));
+			suggestions = options.filter((o) => !value || o.toLowerCase().includes(value.toLowerCase()));
 			return;
 		}
 
 		debounceTimer = setTimeout(async () => {
-			suggestions = (await search?.(query)) ?? [];
+			suggestions = (await search?.(value ?? '')) ?? [];
 		}, 200);
 	}
 

@@ -10,14 +10,16 @@
 		after,
 		class: className,
 		...rest
-	}: { md: string; before?: Snippet; after?: Snippet } & Omit<
+	}: { md?: string; before?: Snippet; after?: Snippet } & Omit<
 		HTMLAttributes<HTMLDivElement>,
 		'children'
 	> = $props();
 	const sanitizedHtml = $derived(
 		DOMPurify.sanitize(
 			// eslint-disable-next-line no-misleading-character-class
-			marked.parse(md.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''), { async: false })
+			marked.parse((md ?? '').replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''), {
+				async: false
+			})
 		)
 	);
 </script>
