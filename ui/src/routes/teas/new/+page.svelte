@@ -6,6 +6,7 @@
 	import { resolve } from '$app/paths';
 	import Autocomplete from '$lib/basics/Autocomplete.svelte';
 	import SearchableSelect from '$lib/basics/SearchableSelect.svelte';
+	import Select from '$lib/basics/Select.svelte';
 
 	let form = $state<TeaDTO>({
 		name: '',
@@ -86,13 +87,12 @@
 	</div>
 
 	<div class="form-control">
-		<label class="label" for="teaType">Sorte</label>
-		<select id="teaType" class="select-bordered select w-full" bind:value={form.teaType}>
-			<option value="">-- Waehlen --</option>
-			{#each teaTypes as t (t.id)}
-				<option value={t.name}>{t.name}</option>
-			{/each}
-		</select>
+		<Select
+			label="Tea Type"
+			prompt="Choose a tea type"
+			bind:value={form.teaType}
+			options={teaTypes.map((t) => ({ value: t.name, label: t.name }))}
+		/>
 	</div>
 
 	<div class="form-control">
