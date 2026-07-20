@@ -18,8 +18,8 @@ public record ExtractionDetail(String fieldName, Optional<String> fieldValue, Li
         }
 
         List<String> newErrors = new ArrayList<>();
-        newErrors.addAll(errors);
-        newErrors.addAll(detail.errors);
+        if(errors != null) newErrors.addAll(errors);
+        if(detail.errors != null) newErrors.addAll(detail.errors);
 
         return new ExtractionDetail(fieldName, newValue, newErrors);
     }
