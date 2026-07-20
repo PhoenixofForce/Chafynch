@@ -56,7 +56,7 @@ public class ExtractionService {
 
     ExtractionDetail extractField(String field, Document document, ExtractionFieldSetting settings) {
         if(settings == null) {
-            return new ExtractionDetail(field, Optional.empty(), List.of());
+            return new ExtractionDetail(field, Optional.empty(), List.of("No extraction settings found"));
         }
 
         if(!settings.grabAll()) {
