@@ -2,6 +2,7 @@
 	import type { TeaDTO } from '$lib/api/types';
 	import TeaForm from '../TeaForm.svelte';
 
+	// Todo: dedup state within form
 	let form = $state<TeaDTO>({
 		name: '',
 		cultivar: '',
@@ -19,4 +20,4 @@
 	});
 </script>
 
-<TeaForm />
+<TeaForm bind:form />

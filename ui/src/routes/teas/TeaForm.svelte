@@ -11,6 +11,8 @@
 	import Markdown from '$lib/basics/Markdown.svelte';
 	import Textarea from '$lib/basics/Textarea.svelte';
 	import Loading from '$lib/basics/Loading.svelte';
+	import Button from '$lib/basics/Button.svelte';
+	import { ArrowDownToLine } from '@lucide/svelte';
 
 	let {
 		form = $bindable({
@@ -112,6 +114,25 @@
 		submit();
 	}}
 >
+	{#if !editing}
+		<div class="form-control flex gap-2">
+			<div class="flex-2">
+				<Input
+					type="url"
+					placeholder="Website*"
+					inputClass="w-full"
+					bind:value={form.website}
+					hint="Invalid Website"
+				/>
+			</div>
+			<div>
+				<Button class="btn-primary" label="Fetch Data" icon={ArrowDownToLine} />
+			</div>
+		</div>
+
+		<div class="divider"></div>
+	{/if}
+
 	<div class="form-control">
 		<Input
 			placeholder="Name*"
