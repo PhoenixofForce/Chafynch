@@ -27,13 +27,11 @@ public class TeaController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public TeaDTO create(@Valid @RequestBody TeaDTO dto) {
         return teaService.create(dto);
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public TeaDTO update(@PathVariable long id, @Valid @RequestBody TeaDTO dto) {
         return teaService.update(id, dto);
     }

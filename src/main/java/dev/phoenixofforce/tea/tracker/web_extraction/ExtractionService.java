@@ -10,9 +10,13 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -20,57 +24,81 @@ import java.util.regex.PatternSyntaxException;
 @Service
 public class ExtractionService {
 
-    public ExtractionResult extractTea(String url) throws IOException {
-        ExtractionSettings settings = findSettingsForUrl(url);
-        if (settings == null) {
+    public ExtractionResult extractTea(String url) {
+        ExtractionProfile profile = findSettingsForUrl(url);
+        if (profile == null) {
             return new ExtractionResult(new TeaDTO(), List.of());
         }
 
         TeaDTO teaDTO = new TeaDTO();
-        Document document = Jsoup.connect(url).get();
+        Document document = null;
+        try {
+            document = Jsoup.connect(url).get();
+        } catch (IOException _) {}
+        if(document == null) {
+            //'Todo: throw error
+            return new ExtractionResult(new TeaDTO(), List.of());
+        }
 
-        ExtractionDetail title = extractField("title", document, settings.title());
-        ExtractionDetail description = extractField("description", document, settings.description());
-        ExtractionDetail cultivar = extractField("cultivar", document, settings.cultivar());
-        ExtractionDetail teaType = extractField("teaType", document, settings.teaType());
-        ExtractionDetail harvest = extractField("harvest", document, settings.harvest());
-        ExtractionDetail origin = extractField("origin", document, settings.origin());
+        List<ExtractionDetail> details = new ArrayList<>();
+        for(var setting: profile.settings()) {
+            BiConsumer<TeaDTO, String> fieldSetter = ExtractionFields.FIELD_MAPPER.get(setting.field().toLowerCase());
+            if(fieldSetter == null) {
+                details.add(new ExtractionDetail(setting.field(), Optional.empty(), List.of("Unknown field")));
+                continue;
+            }
+
+            ExtractionDetail detail = extractAndApplyField(document, setting, result -> fieldSetter.accept(teaDTO, result));
+            details.add(detail);
+        }
 
         teaDTO.setWebsite(url);
-        teaDTO.setName(title.fieldValue().orElse(""));
-        teaDTO.setDescriptionMd(description.fieldValue().orElse(""));
-        teaDTO.setCultivar(cultivar.fieldValue().orElse(""));
-        teaDTO.setTeaType(teaType.fieldValue().orElse(""));
-        teaDTO.setHarvestLabel(harvest.fieldValue().orElse(""));
-        teaDTO.setOriginCity(origin.fieldValue().orElse(""));
-
-        return new ExtractionResult(
-                teaDTO,
-                List.of(title, description, cultivar, teaType, harvest, origin)
-        );
+        return new ExtractionResult(teaDTO, details);
     }
 
-    private ExtractionSettings findSettingsForUrl(String url) {
-        return null; // Todo:
+    private ExtractionProfile findSettingsForUrl(String url) {
+        List<ExtractionProfile> allSettings = new ArrayList<>();
+
+        ParsedUrl requestUrl = ParsedUrl.parse(url);
+        if(requestUrl == null) return null;
+
+        for(ExtractionProfile setting: allSettings) {
+            for(String validUrl: setting.validUrls()) {
+                ParsedUrl settingsUrl = ParsedUrl.parse(validUrl);
+                if(settingsUrl == null) continue;
+
+                if(requestUrl.host().equals(settingsUrl.host()) && requestUrl.path().startsWith(settingsUrl.path())) {
+                    return setting;
+                }
+            }
+        }
+
+        return null;
     }
 
-    ExtractionDetail extractField(String field, Document document, ExtractionFieldSetting settings) {
+    ExtractionDetail extractAndApplyField(Document document, ExtractionFieldSetting settings, Consumer<String> consumer) {
+        ExtractionDetail detail = extractField(document, settings);
+        consumer.accept(detail.fieldValue().orElse(""));
+        return detail;
+    }
+
+    ExtractionDetail extractField(Document document, ExtractionFieldSetting settings) {
         if(settings == null) {
-            return new ExtractionDetail(field, Optional.empty(), List.of("No extraction settings found"));
+            return new ExtractionDetail("Unknown", Optional.empty(), List.of("No extraction settings found"));
         }
 
         if(!settings.grabAll()) {
-            Node node = document.selectFirst(settings.jsoupSelector());
-            return processNode(field, node, settings);
+            Node node = document.selectFirst(settings.selector());
+            return processNode(settings.field(), node, settings);
         }
 
-        Elements elements = document.select(settings.jsoupSelector());
+        Elements elements = document.select(settings.selector());
         if(elements.isEmpty()) {
-            return new ExtractionDetail(field, Optional.empty(), List.of("No starting fields found"));
+            return new ExtractionDetail(settings.field(), Optional.empty(), List.of("No starting fields found"));
         }
         return elements.stream()
-                .map(e -> processNode(field, e, settings))
-                .reduce(new ExtractionDetail(field, Optional.empty(), List.of()), ExtractionDetail::merge);
+                .map(e -> processNode(settings.field(), e, settings))
+                .reduce(new ExtractionDetail(settings.field(), Optional.empty(), List.of()), ExtractionDetail::merge);
     }
 
     private ExtractionDetail processNode(String field, Node node, ExtractionFieldSetting settings) {
@@ -86,7 +114,7 @@ public class ExtractionService {
             text = element.text();
         }
 
-        text = extractRegex(text, settings.regexMatcher(), errors);
+        text = extractRegex(text, settings.regex(), errors);
         text = text.replace('\u00A0', ' ').trim(); //nbsp
         if(text.isBlank()) {
             errors.add("Text came back empty");
@@ -139,6 +167,28 @@ public class ExtractionService {
         } catch (PatternSyntaxException _) {
             errors.add("Regex could not be parsed: " + regexMatcher);
             return text;
+        }
+    }
+
+    private record ParsedUrl(String host, String path) {
+        private static ParsedUrl parse(String url) {
+            String host = null;
+            String path = null;
+            try {
+                URI uri = new URI(url);
+                host = uri.getHost();
+                path = uri.getPath();
+            } catch (URISyntaxException _) { }
+
+            if(host == null) return null;
+            if(path == null) path = "";
+
+            host = host.toLowerCase();
+            if(!path.endsWith("/")) {
+                path += "/";
+            }
+
+            return new ParsedUrl(host, path);
         }
     }
 

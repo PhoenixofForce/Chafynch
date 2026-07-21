@@ -27,8 +27,8 @@ class ExtractionServiceTest {
             <div class="target"> Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -41,8 +41,8 @@ class ExtractionServiceTest {
             <div class="target"> Target: Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", "(?:Target: )(.*)", List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", "(?:Target: )(.*)", List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -55,8 +55,8 @@ class ExtractionServiceTest {
             <div class="target"> t 1234 t </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", "\\d+", List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", "\\d+", List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -69,8 +69,8 @@ class ExtractionServiceTest {
             <div class="target"> Target: Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", "(Fail)|(Success)", List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", "(Fail)|(Success)", List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -85,8 +85,8 @@ class ExtractionServiceTest {
             </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting("div:containsOwn(target)", null, List.of("nextSibling"), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", "div:containsOwn(target)", null, List.of("nextSibling"), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -102,8 +102,8 @@ class ExtractionServiceTest {
             </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting("div:containsOwn(target)", null, List.of("nextElementSibling"), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", "div:containsOwn(target)", null, List.of("nextElementSibling"), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -119,8 +119,8 @@ class ExtractionServiceTest {
             </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of(), true);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of(), true);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
@@ -136,7 +136,7 @@ class ExtractionServiceTest {
             </div>
         """);
 
-        ExtractionDetail detail = service.extractField("", document, null);
+        ExtractionDetail detail = service.extractField( document, null);
 
         assertTrue(detail.fieldValue().isEmpty());
         assertEquals(1, detail.errors().size());
@@ -152,8 +152,8 @@ class ExtractionServiceTest {
             </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of(), true);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of(), true);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isEmpty());
         assertEquals(1, detail.errors().size());
@@ -166,8 +166,8 @@ class ExtractionServiceTest {
             <div class="target">  </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isEmpty());
         assertEquals(1, detail.errors().size());
@@ -180,8 +180,8 @@ class ExtractionServiceTest {
             <div class="no-target"> Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isEmpty());
         assertEquals(1, detail.errors().size());
@@ -194,8 +194,8 @@ class ExtractionServiceTest {
             <div class="target"> Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of("foo"), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of("foo"), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertEquals(1, detail.errors().size());
@@ -211,8 +211,8 @@ class ExtractionServiceTest {
             <html><div class="target">Success</div></html>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", null, List.of(operation), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", null, List.of(operation), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isEmpty());
         assertEquals(1, detail.errors().size());
@@ -225,8 +225,8 @@ class ExtractionServiceTest {
             <div class="target"> Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", "[A-Z][A-Z]+", List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", "[A-Z][A-Z]+", List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertEquals("Success",  detail.fieldValue().get());
@@ -240,8 +240,8 @@ class ExtractionServiceTest {
             <div class="target"> Success </div>
         """);
 
-        ExtractionFieldSetting setting = new ExtractionFieldSetting(".target", "[A-Z][A-Z", List.of(), false);
-        ExtractionDetail detail = service.extractField("", document, setting);
+        ExtractionFieldSetting setting = new ExtractionFieldSetting("", ".target", "[A-Z][A-Z", List.of(), false);
+        ExtractionDetail detail = service.extractField( document, setting);
 
         assertTrue(detail.fieldValue().isPresent());
         assertEquals("Success",  detail.fieldValue().get());
