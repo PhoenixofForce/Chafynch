@@ -23,7 +23,7 @@ public class RawProfile {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "profile_id", nullable = false)
     private List<RawFieldSetting> settings;
 
     @Convert(converter = StringSplitConverter.class)

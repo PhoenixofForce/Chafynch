@@ -101,6 +101,22 @@
 		}
 		return api.POST('/api/teas', { body: form });
 	}
+
+	async function scrapeUrl() {
+		if (!form.website) return;
+		const { data } = await api.GET('/api/extract', { params: { query: { url: form.website } } });
+		if (!data || !data.teaDTO) return;
+		for (const k in data.teaDTO) {
+			const key = k as keyof TeaDTO;
+			assignIfEmpty(data.teaDTO, form, key);
+		}
+	}
+
+	function assignIfEmpty<T, K extends keyof T>(source: T, target: T, key: K) {
+		if (source[key] && !target[key]) {
+			target[key] = source[key];
+		}
+	}
 </script>
 
 <h1 class="text-3xl font-bold text-base-content">
@@ -126,7 +142,13 @@
 				/>
 			</div>
 			<div>
-				<Button class="btn-primary" label="Fetch Data" icon={ArrowDownToLine} />
+				<Button
+					class="btn-primary"
+					label="Fetch Data"
+					icon={ArrowDownToLine}
+					onclick={scrapeUrl}
+					disabled={!form.website}
+				/>
 			</div>
 		</div>
 

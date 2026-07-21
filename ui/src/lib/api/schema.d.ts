@@ -116,6 +116,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/extract": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["extract"];
+        put?: never;
+        post: operations["create_2"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/cultivars": {
         parameters: {
             query?: never;
@@ -125,7 +141,7 @@ export interface paths {
         };
         get: operations["search_1"];
         put?: never;
-        post: operations["create_2"];
+        post: operations["create_3"];
         delete?: never;
         options?: never;
         head?: never;
@@ -210,12 +226,33 @@ export interface components {
             id: number;
             name: string;
         };
+        ExtractionFieldSetting: {
+            field?: string;
+            selector?: string;
+            regex?: string;
+            operations?: string[];
+            grabAll?: boolean;
+        };
+        ExtractionProfile: {
+            name?: string;
+            validUrls?: string[];
+            settings?: components["schemas"]["ExtractionFieldSetting"][];
+        };
         VendorOverviewDto: {
             vendor: components["schemas"]["VendorDto"];
             /** Format: double */
             averagePricePerGram?: number;
             /** Format: int64 */
             teas?: number;
+        };
+        ExtractionDetail: {
+            fieldName?: string;
+            fieldValue?: string;
+            errors?: string[];
+        };
+        ExtractionResult: {
+            teaDTO?: components["schemas"]["TeaDTO"];
+            details?: components["schemas"]["ExtractionDetail"][];
         };
     };
     responses: never;
@@ -491,8 +528,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Created */
-            201: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -544,6 +581,50 @@ export interface operations {
             };
         };
     };
+    extract: {
+        parameters: {
+            query: {
+                url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ExtractionResult"];
+                };
+            };
+        };
+    };
+    create_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtractionProfile"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     search_1: {
         parameters: {
             query?: {
@@ -566,7 +647,7 @@ export interface operations {
             };
         };
     };
-    create_2: {
+    create_3: {
         parameters: {
             query: {
                 name: string;

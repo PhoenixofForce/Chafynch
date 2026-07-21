@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/extract")
+@RequestMapping("/api/extract")
 @RequiredArgsConstructor
 public class ExtractionController {
 
