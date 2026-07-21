@@ -18,7 +18,7 @@ class ExtractionServiceTest {
 
     @BeforeAll
     static void setUp() {
-        service = new ExtractionService();
+        service = new ExtractionService(null);
     }
 
     @Test

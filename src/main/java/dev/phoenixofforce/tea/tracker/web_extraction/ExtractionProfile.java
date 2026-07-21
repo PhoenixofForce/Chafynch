@@ -3,6 +3,7 @@ package dev.phoenixofforce.tea.tracker.web_extraction;
 import java.util.List;
 
 public record ExtractionProfile(
+        String name,
         List<String> validUrls,
         List<ExtractionFieldSetting> settings
 ) {
@@ -18,6 +19,7 @@ public record ExtractionProfile(
             )).toList();
 
         return new ExtractionProfile(
+                rawProfile.getName(),
                 rawProfile.getValidUrls(),
                 settings
         );

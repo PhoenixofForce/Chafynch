@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
+@Table(name = "extraction_profile")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,5 +28,7 @@ public class RawProfile {
 
     @Convert(converter = StringSplitConverter.class)
     private List<String> validUrls;
+
+    // Todo: Source url for auto update
 
 }

@@ -1,6 +1,7 @@
 package dev.phoenixofforce.tea.tracker.web_extraction;
 
 import dev.phoenixofforce.tea.tracker.tea.TeaDTO;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,6 +9,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +24,31 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 @Service
+@RequiredArgsConstructor
 public class ExtractionService {
+
+    private final RawProfileRepository repository;
+
+    @Transactional
+    public void create(ExtractionProfile profile) {
+        RawProfile rawProfile = new RawProfile();
+        rawProfile.setName(profile.name());
+        rawProfile.setValidUrls(profile.validUrls());
+
+        List<RawFieldSetting> settings = new ArrayList<>();
+        for(ExtractionFieldSetting setting : profile.settings()) {
+            RawFieldSetting rawSetting = new RawFieldSetting();
+            rawSetting.setField(setting.field());
+            rawSetting.setSelector(setting.selector());
+            rawSetting.setRegex(setting.regex());
+            rawSetting.setOperations(setting.operations());
+            rawSetting.setGrabAll(setting.grabAll());
+
+            settings.add(rawSetting);
+        }
+        rawProfile.setSettings(settings);
+        repository.save(rawProfile);
+    }
 
     public ExtractionResult extractTea(String url) {
         ExtractionProfile profile = findSettingsForUrl(url);
@@ -57,7 +83,10 @@ public class ExtractionService {
     }
 
     private ExtractionProfile findSettingsForUrl(String url) {
-        List<ExtractionProfile> allSettings = new ArrayList<>();
+        List<ExtractionProfile> allSettings = repository.findAll()
+                .stream()
+                .map(ExtractionProfile::from)
+                .toList();
 
         ParsedUrl requestUrl = ParsedUrl.parse(url);
         if(requestUrl == null) return null;
