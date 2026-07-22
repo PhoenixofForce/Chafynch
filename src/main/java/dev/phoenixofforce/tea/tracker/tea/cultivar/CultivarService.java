@@ -1,6 +1,7 @@
 package dev.phoenixofforce.tea.tracker.tea.cultivar;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,12 @@ public class CultivarService {
 
     public Cultivar resolveOrCreate(String name) {
         return cultivarRepository.findByName(name)
-                .orElseGet(() -> {
-                    Cultivar c = new Cultivar();
-                    c.setName(name);
-                    return cultivarRepository.save(c);
-                });
+            .orElseGet(() -> {
+                Cultivar c = new Cultivar();
+                c.setName(name);
+                return cultivarRepository.save(c);
+            });
     }
-
 
     @Transactional
     public CultivarDto update(long id, CultivarDto cultivarDto) {
@@ -50,7 +50,7 @@ public class CultivarService {
     }
 
     public void delete(Long id) {
-        if(!cultivarRepository.existsById(id)) {
+        if (!cultivarRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cultivar not Found");
         }
 

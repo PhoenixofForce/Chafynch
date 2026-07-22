@@ -14,17 +14,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("*")
-                .allowedMethods("*");
+            .allowedOrigins("*")
+            .allowedMethods("*");
     }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
-                );
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(
+                auth -> auth
+                    .anyRequest().permitAll());
 
         return http.build();
     }

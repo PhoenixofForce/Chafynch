@@ -1,10 +1,12 @@
 package dev.phoenixofforce.tea.tracker.vendor;
 
-import jakarta.persistence.*;
+import dev.phoenixofforce.tea.tracker.location.Location;
+
+import org.hibernate.proxy.HibernateProxy;
+
 import lombok.*;
 
-import dev.phoenixofforce.tea.tracker.location.Location;
-import org.hibernate.proxy.HibernateProxy;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -35,8 +37,12 @@ public class Vendor {
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        Class<?> oEffectiveClass = o instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass()
+            : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass()
+            : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         Vendor vendor = (Vendor) o;
         return getId() != null && Objects.equals(getId(), vendor.getId());
@@ -44,6 +50,8 @@ public class Vendor {
 
     @Override
     public final int hashCode() {
-        return this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+        return this instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode()
+            : getClass().hashCode();
     }
 }

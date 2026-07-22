@@ -2,7 +2,9 @@ package dev.phoenixofforce.tea.tracker.geocoding;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -19,13 +21,14 @@ public class NominatimGeocodingService implements GeocodingService {
     private static final String NOMINATIM_URL = "https://nominatim.openstreetmap.org";
 
     private final RestClient restClient;
+
     private final ObjectMapper objectMapper;
 
     public NominatimGeocodingService(RestClient.Builder restClientBuilder, ObjectMapper objectMapper) {
         this.restClient = restClientBuilder
-                .baseUrl(NOMINATIM_URL)
-                .defaultHeader("User-Agent", "TeaTracker/1.0")
-                .build();
+            .baseUrl(NOMINATIM_URL)
+            .defaultHeader("User-Agent", "TeaTracker/1.0")
+            .build();
         this.objectMapper = objectMapper;
     }
 
@@ -47,8 +50,8 @@ public class NominatimGeocodingService implements GeocodingService {
     @Override
     public Optional<GeocodingResult> geocode(String country, String province, String city) {
         String query = Stream.of(city, province, country)
-                .filter(s -> s != null && !s.isBlank())
-                .collect(Collectors.joining(", "));
+            .filter(s -> s != null && !s.isBlank())
+            .collect(Collectors.joining(", "));
 
         if (query.isBlank()) {
             return Optional.empty();
@@ -56,14 +59,15 @@ public class NominatimGeocodingService implements GeocodingService {
 
         try {
             String json = restClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/search")
-                            .queryParam("q", query)
-                            .queryParam("format", "json")
-                            .queryParam("limit", 1)
-                            .build())
-                    .retrieve()
-                    .body(String.class);
+                .uri(
+                    uriBuilder -> uriBuilder
+                        .path("/search")
+                        .queryParam("q", query)
+                        .queryParam("format", "json")
+                        .queryParam("limit", 1)
+                        .build())
+                .retrieve()
+                .body(String.class);
 
             List<Map<String, Object>> results = objectMapper.readValue(json, new TypeReference<>() {});
 

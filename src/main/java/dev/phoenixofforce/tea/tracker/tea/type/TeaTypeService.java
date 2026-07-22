@@ -1,6 +1,7 @@
 package dev.phoenixofforce.tea.tracker.tea.type;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class TeaTypeService {
     }
 
     public void delete(Long id) {
-        if(!teaTypeRepository.existsById(id)) {
+        if (!teaTypeRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tea type not Found");
         }
 

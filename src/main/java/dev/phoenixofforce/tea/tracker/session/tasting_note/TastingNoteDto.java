@@ -12,8 +12,8 @@ public record TastingNoteDto(@NotNull Long id, @NotNull String note) {
 
     public static List<TastingNoteDto> from(List<TastingNote> tastingNotes) {
         return tastingNotes.stream()
-                .map(TastingNoteDto::from)
-                .toList();
+            .map(TastingNoteDto::from)
+            .toList();
     }
 
 }

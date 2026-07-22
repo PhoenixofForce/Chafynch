@@ -12,8 +12,8 @@ public record CultivarDto(@NotNull Long id, @NotNull String name) {
 
     public static List<CultivarDto> from(List<Cultivar> cultivars) {
         return cultivars.stream()
-                .map(CultivarDto::from)
-                .toList();
+            .map(CultivarDto::from)
+            .toList();
     }
 
 }

@@ -3,6 +3,7 @@ package dev.phoenixofforce.tea.tracker.geocoding;
 import java.util.Optional;
 
 public interface GeocodingService {
+
     Optional<GeocodingResult> geocode(String country, String province, String city);
 
     /**

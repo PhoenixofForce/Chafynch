@@ -1,13 +1,16 @@
 package dev.phoenixofforce.tea.tracker.web_extraction;
 
 import dev.phoenixofforce.tea.tracker.tea.TeaDTO;
-import lombok.RequiredArgsConstructor;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +39,7 @@ public class ExtractionService {
         rawProfile.setValidUrls(profile.validUrls());
 
         List<RawFieldSetting> settings = new ArrayList<>();
-        for(ExtractionFieldSetting setting : profile.settings()) {
+        for (ExtractionFieldSetting setting : profile.settings()) {
             RawFieldSetting rawSetting = new RawFieldSetting();
             rawSetting.setField(setting.field());
             rawSetting.setSelector(setting.selector());
@@ -62,20 +65,23 @@ public class ExtractionService {
         try {
             document = Jsoup.connect(url).get();
         } catch (IOException _) {}
-        if(document == null) {
+        if (document == null) {
             //'Todo: throw error
             return new ExtractionResult(new TeaDTO(), List.of());
         }
 
         List<ExtractionDetail> details = new ArrayList<>();
-        for(var setting: profile.settings()) {
+        for (var setting : profile.settings()) {
             BiConsumer<TeaDTO, String> fieldSetter = ExtractionFields.FIELD_MAPPER.get(setting.field().toLowerCase());
-            if(fieldSetter == null) {
+            if (fieldSetter == null) {
                 details.add(new ExtractionDetail(setting.field(), Optional.empty(), List.of("Unknown field")));
                 continue;
             }
 
-            ExtractionDetail detail = extractAndApplyField(document, setting, result -> fieldSetter.accept(teaDTO, result));
+            ExtractionDetail detail = extractAndApplyField(
+                document,
+                setting,
+                result -> fieldSetter.accept(teaDTO, result));
             details.add(detail);
         }
 
@@ -85,19 +91,19 @@ public class ExtractionService {
 
     private ExtractionProfile findSettingsForUrl(String url) {
         List<ExtractionProfile> allSettings = repository.findAll()
-                .stream()
-                .map(ExtractionProfile::from)
-                .toList();
+            .stream()
+            .map(ExtractionProfile::from)
+            .toList();
 
         ParsedUrl requestUrl = ParsedUrl.parse(url);
-        if(requestUrl == null) return null;
+        if (requestUrl == null) return null;
 
-        for(ExtractionProfile setting: allSettings) {
-            for(String validUrl: setting.validUrls()) {
+        for (ExtractionProfile setting : allSettings) {
+            for (String validUrl : setting.validUrls()) {
                 ParsedUrl settingsUrl = ParsedUrl.parse(validUrl);
-                if(settingsUrl == null) continue;
+                if (settingsUrl == null) continue;
 
-                if(requestUrl.host().equals(settingsUrl.host()) && requestUrl.path().startsWith(settingsUrl.path())) {
+                if (requestUrl.host().equals(settingsUrl.host()) && requestUrl.path().startsWith(settingsUrl.path())) {
                     return setting;
                 }
             }
@@ -106,47 +112,48 @@ public class ExtractionService {
         return null;
     }
 
-    ExtractionDetail extractAndApplyField(Document document, ExtractionFieldSetting settings, Consumer<String> consumer) {
+    ExtractionDetail extractAndApplyField(Document document, ExtractionFieldSetting settings,
+        Consumer<String> consumer) {
         ExtractionDetail detail = extractField(document, settings);
         consumer.accept(detail.fieldValue().orElse(""));
         return detail;
     }
 
     ExtractionDetail extractField(Document document, ExtractionFieldSetting settings) {
-        if(settings == null) {
+        if (settings == null) {
             return new ExtractionDetail("Unknown", Optional.empty(), List.of("No extraction settings found"));
         }
 
-        if(!settings.grabAll()) {
+        if (!settings.grabAll()) {
             Node node = document.selectFirst(settings.selector());
             return processNode(settings.field(), node, settings);
         }
 
         Elements elements = document.select(settings.selector());
-        if(elements.isEmpty()) {
+        if (elements.isEmpty()) {
             return new ExtractionDetail(settings.field(), Optional.empty(), List.of("No starting fields found"));
         }
         return elements.stream()
-                .map(e -> processNode(settings.field(), e, settings))
-                .reduce(new ExtractionDetail(settings.field(), Optional.empty(), List.of()), ExtractionDetail::merge);
+            .map(e -> processNode(settings.field(), e, settings))
+            .reduce(new ExtractionDetail(settings.field(), Optional.empty(), List.of()), ExtractionDetail::merge);
     }
 
     private ExtractionDetail processNode(String field, Node node, ExtractionFieldSetting settings) {
         List<String> errors = new ArrayList<>();
 
         node = advanceNode(node, settings.operations(), errors);
-        if(node == null) return new ExtractionDetail(field, Optional.empty(), errors);
+        if (node == null) return new ExtractionDetail(field, Optional.empty(), errors);
 
         String text = "";
-        if(node instanceof TextNode textNode) {
+        if (node instanceof TextNode textNode) {
             text = textNode.text();
-        } else if(node instanceof Element element) {
+        } else if (node instanceof Element element) {
             text = element.text();
         }
 
         text = extractRegex(text, settings.regex(), errors);
         text = text.replace('\u00A0', ' ').trim(); //nbsp
-        if(text.isBlank()) {
+        if (text.isBlank()) {
             errors.add("Text came back empty");
             return new ExtractionDetail(field, Optional.empty(), errors);
         }
@@ -155,22 +162,22 @@ public class ExtractionService {
     }
 
     private Node advanceNode(Node node, List<String> operations, List<String> errors) {
-        if(node == null) {
+        if (node == null) {
             errors.add("No starting node found");
             return node;
         }
-        if(operations == null) {
+        if (operations == null) {
             return node;
         }
 
-        for(int i = 0; i < operations.size(); i++) {
+        for (int i = 0; i < operations.size(); i++) {
             String operation = operations.get(i);
 
-            if("nextSibling".equals(operation)) node = node.nextSibling();
-            else if("nextElementSibling".equals(operation)) node = node.nextElementSibling();
-            else errors.add("Unknown operation "+ i + ": " + operation);
+            if ("nextSibling".equals(operation)) node = node.nextSibling();
+            else if ("nextElementSibling".equals(operation)) node = node.nextElementSibling();
+            else errors.add("Unknown operation " + i + ": " + operation);
 
-            if(node == null) {
+            if (node == null) {
                 errors.add("No node found for operation " + i + ": " + operation);
                 return null;
             }
@@ -179,18 +186,18 @@ public class ExtractionService {
     }
 
     private String extractRegex(String text, String regexMatcher, List<String> errors) {
-        if(regexMatcher == null || regexMatcher.isBlank()) return text;
+        if (regexMatcher == null || regexMatcher.isBlank()) return text;
 
         try {
             Pattern pattern = Pattern.compile(regexMatcher);
             Matcher matcher = pattern.matcher(text);
-            if(!matcher.find()) {
+            if (!matcher.find()) {
                 errors.add("Regex could not be found");
                 return text;
             }
 
-            for(int i = 1; i <= matcher.groupCount(); i++) {
-                if(matcher.group(i) == null) continue;
+            for (int i = 1; i <= matcher.groupCount(); i++) {
+                if (matcher.group(i) == null) continue;
                 return matcher.group(i);
             }
             return matcher.group(0);
@@ -201,6 +208,7 @@ public class ExtractionService {
     }
 
     private record ParsedUrl(String host, String path) {
+
         private static ParsedUrl parse(String url) {
             String host = null;
             String path = null;
@@ -208,13 +216,13 @@ public class ExtractionService {
                 URI uri = new URI(url);
                 host = uri.getHost();
                 path = uri.getPath();
-            } catch (URISyntaxException _) { }
+            } catch (URISyntaxException _) {}
 
-            if(host == null) return null;
-            if(path == null) path = "";
+            if (host == null) return null;
+            if (path == null) path = "";
 
             host = host.toLowerCase();
-            if(!path.endsWith("/")) {
+            if (!path.endsWith("/")) {
                 path += "/";
             }
 

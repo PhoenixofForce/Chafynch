@@ -1,16 +1,18 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
-import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
-import jakarta.persistence.*;
-import lombok.*;
-
 import dev.phoenixofforce.tea.tracker.location.Location;
+import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.Cultivar;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaType;
 import dev.phoenixofforce.tea.tracker.vendor.Vendor;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
+
+import lombok.*;
+
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -73,18 +75,21 @@ public class Tea {
     @ManyToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
     @JoinTable(
-            name = "session_tasting_notes",
-            joinColumns = @JoinColumn(name = "tea_id"),
-            inverseJoinColumns = @JoinColumn(name = "tasting_note_id")
-    )
+        name = "session_tasting_notes",
+        joinColumns = @JoinColumn(name = "tea_id"),
+        inverseJoinColumns = @JoinColumn(name = "tasting_note_id"))
     private List<TastingNote> tastingNotes;
 
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        Class<?> oEffectiveClass = o instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass()
+            : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass()
+            : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         Tea tea = (Tea) o;
         return getId() != null && Objects.equals(getId(), tea.getId());
@@ -92,6 +97,8 @@ public class Tea {
 
     @Override
     public final int hashCode() {
-        return this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+        return this instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode()
+            : getClass().hashCode();
     }
 }

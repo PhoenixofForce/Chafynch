@@ -1,11 +1,11 @@
 package dev.phoenixofforce.tea.tracker.web_extraction;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExtractionDetailTest {
 
@@ -27,7 +27,6 @@ public class ExtractionDetailTest {
         assertTrue(result.fieldValue().isPresent());
         assertEquals("a", result.fieldValue().get());
     }
-
 
     @Test
     public void testMerge_aEmpty() {

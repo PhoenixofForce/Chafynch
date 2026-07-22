@@ -1,8 +1,10 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
-import jakarta.validation.constraints.NotBlank;
+
 import lombok.Data;
+
+import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,24 +19,36 @@ public class TeaDTO {
     private String name;
 
     private String cultivar; //todo: use cultivar dto
+
     private String teaType; // Todo: use teaType dto
+
     private String vendor; //Todo: use vendor dto
 
     // Todo: use LocationDto
     private String originCountry;
+
     private String originProvince;
+
     private String originCity;
+
     private Double originLatitude;
+
     private Double originLongitude;
 
     private BigDecimal price;
+
     private LocalDate purchaseDate;
+
     private BigDecimal weightGrams;
 
     private String descriptionMd;
+
     private Integer harvestYear;
+
     private String harvestLabel;
+
     private String website;
+
     private Integer rating;
 
     private List<TastingNoteDto> tastingNotes;
@@ -57,12 +71,12 @@ public class TeaDTO {
             dto.setOriginLatitude(tea.getOriginLocation().getLatitude());
             dto.setOriginLongitude(tea.getOriginLocation().getLongitude());
         }
-        if(tea.getDescriptionMd() != null) dto.setDescriptionMd(tea.getDescriptionMd());
-        if(tea.getRating() != null) dto.setRating(tea.getRating());
-        if(tea.getWebsite() != null) dto.setWebsite(tea.getWebsite());
-        if(tea.getHarvestYear() != null) dto.setHarvestYear(tea.getHarvestYear());
-        if(tea.getHarvestLabel() != null) dto.setHarvestLabel(tea.getHarvestLabel());
-        if(tea.getTastingNotes() != null){
+        if (tea.getDescriptionMd() != null) dto.setDescriptionMd(tea.getDescriptionMd());
+        if (tea.getRating() != null) dto.setRating(tea.getRating());
+        if (tea.getWebsite() != null) dto.setWebsite(tea.getWebsite());
+        if (tea.getHarvestYear() != null) dto.setHarvestYear(tea.getHarvestYear());
+        if (tea.getHarvestLabel() != null) dto.setHarvestLabel(tea.getHarvestLabel());
+        if (tea.getTastingNotes() != null) {
             dto.setTastingNotes(TastingNoteDto.from(tea.getTastingNotes()));
         } else dto.setTastingNotes(List.of());
 
@@ -71,7 +85,7 @@ public class TeaDTO {
 
     public static List<TeaDTO> from(List<Tea> teas) {
         return teas.stream()
-                .map(TeaDTO::from)
-                .toList();
+            .map(TeaDTO::from)
+            .toList();
     }
 }

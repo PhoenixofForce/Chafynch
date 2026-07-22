@@ -14,7 +14,7 @@
 		"lint-fix": "eslint src --fix",
 		"format": "prettier --check src",
 		"format-fix": "prettier --write src",
-		"ci": "npm run check && npm run lint && npm run build && npm run format",
+		"ci": "npm run check && npm run lint && npm run format && npm run build",
 		"fix": "npm run lint-fix && npm run format-fix",
 		"generate:api": "npx openapi-typescript http://localhost:8080/v3/api-docs -o src/lib/api/schema.d.ts && node scripts/extract-types.cjs",
 		"generate:countries": "node scripts/generate-countries.cjs",

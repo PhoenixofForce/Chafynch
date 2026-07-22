@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CultivarRepository extends JpaRepository<Cultivar, Long> {
+
     Optional<Cultivar> findByName(String name);
+
     List<Cultivar> findByNameContainingIgnoreCaseOrderByNameAsc(String name);
 }

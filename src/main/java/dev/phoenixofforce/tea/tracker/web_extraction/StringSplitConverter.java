@@ -15,13 +15,13 @@ public class StringSplitConverter implements AttributeConverter<List<String>, St
 
     @Override
     public String convertToDatabaseColumn(List<String> attribute) {
-        if(attribute == null) return null;
+        if (attribute == null) return null;
         return String.join(DELIMITER, attribute);
     }
 
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
-        if(dbData == null || dbData.isEmpty()) return new ArrayList<>();
+        if (dbData == null || dbData.isEmpty()) return new ArrayList<>();
         return new ArrayList<>(Arrays.stream(dbData.split(Pattern.quote(DELIMITER))).toList());
     }
 }

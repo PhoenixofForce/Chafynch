@@ -9,17 +9,17 @@ public record ExtractionDetail(String fieldName, Optional<String> fieldValue, Li
     public ExtractionDetail merge(ExtractionDetail detail) {
 
         Optional<String> newValue;
-        if(fieldValue.isEmpty()) {
+        if (fieldValue.isEmpty()) {
             newValue = detail.fieldValue;
-        } else if(detail.fieldValue.isEmpty()) {
+        } else if (detail.fieldValue.isEmpty()) {
             newValue = fieldValue;
         } else {
-            newValue = Optional.of(fieldValue.get() + "\n"  + detail.fieldValue.get());
+            newValue = Optional.of(fieldValue.get() + "\n" + detail.fieldValue.get());
         }
 
         List<String> newErrors = new ArrayList<>();
-        if(errors != null) newErrors.addAll(errors);
-        if(detail.errors != null) newErrors.addAll(detail.errors);
+        if (errors != null) newErrors.addAll(errors);
+        if (detail.errors != null) newErrors.addAll(detail.errors);
 
         return new ExtractionDetail(fieldName, newValue, newErrors);
     }

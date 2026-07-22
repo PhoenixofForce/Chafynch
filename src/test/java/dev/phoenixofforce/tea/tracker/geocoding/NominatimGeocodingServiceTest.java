@@ -1,14 +1,15 @@
 package dev.phoenixofforce.tea.tracker.geocoding;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.web.client.RestClient;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Disabled("Manual integration test — calls the live Nominatim API")
 class NominatimGeocodingServiceTest {
@@ -75,8 +76,8 @@ class NominatimGeocodingServiceTest {
 
     private void printResult(String query, Optional<GeocodingResult> result) {
         String value = result
-                .map(r -> "lat=%.4f, lon=%.4f".formatted(r.latitude(), r.longitude()))
-                .orElse("empty");
+            .map(r -> "lat=%.4f, lon=%.4f".formatted(r.latitude(), r.longitude()))
+            .orElse("empty");
         System.out.println("[geocode] %s => %s".formatted(query, value));
     }
 }

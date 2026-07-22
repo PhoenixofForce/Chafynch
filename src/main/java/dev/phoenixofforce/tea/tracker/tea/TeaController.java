@@ -1,10 +1,11 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 

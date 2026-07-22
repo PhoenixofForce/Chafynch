@@ -1,7 +1,9 @@
 package dev.phoenixofforce.tea.tracker.location;
 
 import dev.phoenixofforce.tea.tracker.geocoding.GeocodingService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public class LocationService {
 
     private final LocationRepository locationRepository;
+
     private final GeocodingService geocodingService;
 
     public List<LocationDto> find(String query) {
@@ -21,23 +24,23 @@ public class LocationService {
     }
 
     public Location resolveOrCreate(String country, String province, String city) {
-        if(country == null || province == null || city == null) return null;
-        if(country.isBlank() && province.isBlank() && city.isBlank()) return null;
+        if (country == null || province == null || city == null) return null;
+        if (country.isBlank() && province.isBlank() && city.isBlank()) return null;
 
         return locationRepository.findByCountryAndProvinceAndCity(country, province, city)
-                .orElseGet(() -> {
-                    Location l = new Location();
-                    l.setCountry(country);
-                    l.setProvince(province);
-                    l.setCity(city);
+            .orElseGet(() -> {
+                Location l = new Location();
+                l.setCountry(country);
+                l.setProvince(province);
+                l.setCity(city);
 
-                    geocodingService.coarsenedGeocode(country, province, city)
-                            .ifPresent(result -> {
-                                l.setLatitude(result.latitude());
-                                l.setLongitude(result.longitude());
-                            });
+                geocodingService.coarsenedGeocode(country, province, city)
+                    .ifPresent(result -> {
+                        l.setLatitude(result.latitude());
+                        l.setLongitude(result.longitude());
+                    });
 
-                    return locationRepository.save(l);
-                });
+                return locationRepository.save(l);
+            });
     }
 }

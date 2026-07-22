@@ -4,8 +4,9 @@ import dev.phoenixofforce.tea.tracker.location.LocationService;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.CultivarService;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeService;
 import dev.phoenixofforce.tea.tracker.vendor.VendorService;
-import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,13 @@ import java.util.List;
 public class TeaService {
 
     private final TeaRepository teaRepository;
+
     private final CultivarService cultivarService;
+
     private final TeaTypeService teaTypeService;
+
     private final VendorService vendorService;
+
     private final LocationService locationService;
 
     @Transactional(readOnly = true)
@@ -31,7 +36,7 @@ public class TeaService {
     @Transactional(readOnly = true)
     public TeaDTO findById(Long id) {
         Tea tea = teaRepository.findById(id)
-                .orElseThrow();
+            .orElseThrow();
         return TeaDTO.from(tea);
     }
 
@@ -45,7 +50,8 @@ public class TeaService {
 
     @Transactional
     public TeaDTO update(long id, TeaDTO dto) {
-        Tea tea = teaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tea Not Found"));
+        Tea tea = teaRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tea Not Found"));
         applyDto(dto, tea);
 
         tea = teaRepository.save(tea);
@@ -69,8 +75,11 @@ public class TeaService {
         }
 
         if (dto.getTeaType() != null && !dto.getTeaType().isBlank()) {
-            tea.setTeaType(teaTypeService.findByName(dto.getTeaType())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            tea.setTeaType(
+                teaTypeService.findByName(dto.getTeaType())
+                    .orElseThrow(
+                        () -> new ResponseStatusException(
+                            HttpStatus.BAD_REQUEST,
                             "Unknown tea type: " + dto.getTeaType())));
         }
 
@@ -79,8 +88,11 @@ public class TeaService {
         }
 
         if (dto.getOriginCountry() != null && !dto.getOriginCountry().isBlank()) {
-            tea.setOriginLocation(locationService.resolveOrCreate(
-                    dto.getOriginCountry(), dto.getOriginProvince(), dto.getOriginCity()));
+            tea.setOriginLocation(
+                locationService.resolveOrCreate(
+                    dto.getOriginCountry(),
+                    dto.getOriginProvince(),
+                    dto.getOriginCity()));
         }
     }
 }
