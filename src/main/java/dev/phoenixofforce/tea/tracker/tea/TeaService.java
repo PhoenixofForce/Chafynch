@@ -7,6 +7,7 @@ import dev.phoenixofforce.tea.tracker.vendor.VendorService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,19 @@ public class TeaService {
         return TeaDTO.from(tea);
     }
 
+    @Transactional
+    public void delete(long id) {
+        if (!teaRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tea not Found");
+        }
+
+        try {
+            teaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException _) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Tea in use");
+        }
+    }
+
     //Todo: move into mapper/ dto
     private void applyDto(TeaDTO dto, Tea tea) {
         tea.setName(dto.getName());
@@ -72,6 +86,8 @@ public class TeaService {
 
         if (dto.getCultivar() != null && !dto.getCultivar().isBlank()) {
             tea.setCultivar(cultivarService.resolveOrCreate(dto.getCultivar()));
+        } else {
+            tea.setCultivar(null);
         }
 
         if (dto.getTeaType() != null && !dto.getTeaType().isBlank()) {
@@ -81,10 +97,14 @@ public class TeaService {
                         () -> new ResponseStatusException(
                             HttpStatus.BAD_REQUEST,
                             "Unknown tea type: " + dto.getTeaType())));
+        } else {
+            tea.setTeaType(null);
         }
 
         if (dto.getVendor() != null && !dto.getVendor().isBlank()) {
             tea.setVendor(vendorService.resolveOrCreate(dto.getVendor()));
+        } else {
+            tea.setVendor(null);
         }
 
         if (dto.getOriginCountry() != null && !dto.getOriginCountry().isBlank()) {
@@ -93,6 +113,8 @@ public class TeaService {
                     dto.getOriginCountry(),
                     dto.getOriginProvince(),
                     dto.getOriginCity()));
+        } else {
+            tea.setOriginLocation(null);
         }
     }
 }

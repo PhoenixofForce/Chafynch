@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { api } from '$lib/api/client';
-	import type { TeaDTO, TeaTypeDto } from '$lib/api/types';
+	import type { TeaDTO, TeaTypeDto } from '$lib/api/gen/types';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import Select from '$lib/basics/Select.svelte';
@@ -12,6 +11,12 @@
 	import Textarea from '$lib/basics/Textarea.svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import { ArrowDownToLine } from '@lucide/svelte';
+	import { teaService } from '$lib/api/tea.service';
+	import { teaTypeService } from '$lib/api/teaType.service';
+	import { cultivarService } from '$lib/api/cultivar.service';
+	import { vendorService } from '$lib/api/vendor.service';
+	import { extractionService } from '$lib/api/extraction.service';
+	import { toast } from '$lib/toast/toast.store.svelte';
 
 	let {
 		form = $bindable({
@@ -40,10 +45,8 @@
 	let submitting = $state(false);
 	let loading = $state(false);
 
-	onMount(() => {
-		api.GET('/api/tea-types').then(({ data }) => {
-			if (data) teaTypes = data;
-		});
+	onMount(async () => {
+		teaTypes = await teaTypeService.getAll();
 
 		// Todo: turn into simple import instead of fetch
 		fetch('/countries/index.json').then(async (res) => {
@@ -55,13 +58,13 @@
 	});
 
 	async function searchCultivars(q: string): Promise<string[]> {
-		const { data } = await api.GET('/api/cultivars', { params: { query: { q } } });
-		return data?.map((c) => c.name ?? '') ?? [];
+		const data = await cultivarService.getAll(q);
+		return data.map((c) => c.name ?? '');
 	}
 
 	async function searchVendors(q: string): Promise<string[]> {
-		const { data } = await api.GET('/api/vendors', { params: { query: { q } } });
-		return data?.map((v) => v.vendor.name ?? '') ?? [];
+		const data = await vendorService.getAll(q);
+		return data.map((v) => v.vendor.name ?? '');
 	}
 
 	async function submit() {
@@ -70,16 +73,15 @@
 			return;
 		}
 		submitting = true;
-		error = '';
 
-		const { data, error: err } = await save();
-		let id = form.id ?? data?.id;
+		let tea = await save().catch(() => undefined);
 
 		submitting = false;
-		if (err) {
-			error = 'Error saving tea.';
-			return;
-		}
+		if (!tea) return;
+
+		let id = form.id ?? tea?.id;
+
+		toast.success(`Successfully ${editing ? 'updated' : 'created'} '${tea.name}'`);
 
 		await invalidateAll();
 		await goto(backlink(id));
@@ -94,25 +96,23 @@
 
 	function save() {
 		if (editing) {
-			return api.PUT('/api/teas/{id}', {
-				body: form,
-				params: { path: { id: form.id! } }
-			});
+			return teaService.update(form);
 		}
-		return api.POST('/api/teas', { body: form });
+		return teaService.create(form);
 	}
 
 	async function scrapeUrl() {
 		if (!form.website) return;
 		loading = true;
 
-		const { data } = await api.GET('/api/extract', { params: { query: { url: form.website } } });
-		loading = false;
+		let result = await extractionService.extract(form.website).catch(() => undefined);
 
-		if (!data || !data.teaDTO) return;
-		for (const k in data.teaDTO) {
+		loading = false;
+		if (!result || !result.teaDTO) return;
+
+		for (const k in result.teaDTO) {
 			const key = k as keyof TeaDTO;
-			assignIfEmpty(data.teaDTO, form, key);
+			assignIfEmpty(result.teaDTO, form, key);
 		}
 	}
 
@@ -196,7 +196,7 @@
 			options={[]}
 			placeholder="Cultivar z.B. Da Bai"
 			search={searchCultivars}
-			bind:value={form.cultivar!}
+			bind:value={form.cultivar}
 			icon={icons.cultivar}
 		/>
 	</div>

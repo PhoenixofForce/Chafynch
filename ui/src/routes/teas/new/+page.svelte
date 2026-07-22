@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TeaDTO } from '$lib/api/types';
+	import type { TeaDTO } from '$lib/api/gen/types';
 	import TeaForm from '../TeaForm.svelte';
 
 	// Todo: dedup state within form

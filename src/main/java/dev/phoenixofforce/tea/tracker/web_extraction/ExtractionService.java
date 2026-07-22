@@ -66,7 +66,7 @@ public class ExtractionService {
             document = Jsoup.connect(url).get();
         } catch (IOException _) {
         }
-        if ( document == null) {
+        if (document == null) {
             //'Todo: throw error
             return new ExtractionResult(new TeaDTO(), List.of());
         }
@@ -221,7 +221,7 @@ public class ExtractionService {
             } catch (URISyntaxException _) {
             }
 
-            if ( host == null) return null;
+            if (host == null) return null;
             if (path == null) path = "";
 
             host = host.toLowerCase();

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { api } from '$lib/api/client';
+	import { extractionService } from '$lib/api/extraction.service';
 	import Button from '$lib/basics/Button.svelte';
 	import Textarea from '$lib/basics/Textarea.svelte';
 
 	let scraperState = $state('');
 	async function save() {
-		await api.POST('/api/extract', { body: JSON.parse(scraperState) });
+		await extractionService.create(JSON.parse(scraperState));
 	}
 </script>
 

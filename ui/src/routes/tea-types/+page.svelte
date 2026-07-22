@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { api, wrapApi } from '$lib/api/client.js';
-	import type { TeaTypeDto } from '$lib/api/types.js';
+	import type { TeaTypeDto } from '$lib/api/gen/types.js';
 	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import { createEditor } from '$lib/crud/editable.svelte.js';
 	import { Plus } from '@lucide/svelte';
+	import { teaTypeService } from '$lib/api/teaType.service.js';
+	import { toast } from '$lib/toast/toast.store.svelte.js';
 
 	const { data } = $props();
 	const editor = createEditor<TeaTypeDto>();
@@ -20,29 +21,17 @@
 
 	async function onSave(teaType: TeaTypeDto, isNew: boolean) {
 		if (isNew) {
-			return wrapApi(
-				() => api.POST('/api/tea-types', { params: { query: { name: teaType.name } } }),
-				{
-					success: `Successfully created tea type '${teaType.name}'`
-				}
-			);
+			await teaTypeService.create(teaType);
+			return toast.success(`Successfully created '${teaType.name}'`);
 		}
 
-		return wrapApi(
-			() => api.PUT('/api/tea-types/{id}', { body: teaType, params: { path: { id: teaType.id } } }),
-			{
-				success: `Successfully updated tea type '${teaType.name}'`
-			}
-		);
+		await teaTypeService.update(teaType);
+		return toast.success(`Successfully updated '${teaType.name}'`);
 	}
 
 	async function onDelete(teaType: TeaTypeDto) {
-		return wrapApi(
-			() => api.DELETE('/api/tea-types/{id}', { params: { path: { id: teaType.id } } }),
-			{
-				success: `Successfully deleted tea type '${teaType.name}'`
-			}
-		);
+		await teaTypeService.delete(teaType.id);
+		toast.success(`Successfully deleted '${teaType.name}'`);
 	}
 </script>
 

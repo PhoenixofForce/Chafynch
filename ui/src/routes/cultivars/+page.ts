@@ -1,6 +1,6 @@
-import { api } from '$lib/api/client';
+import { cultivarService } from '$lib/api/cultivar.service';
 
 export async function load() {
-	const { data: cultivars } = await api.GET('/api/cultivars');
+	const cultivars = await cultivarService.getAll();
 	return { cultivars };
 }

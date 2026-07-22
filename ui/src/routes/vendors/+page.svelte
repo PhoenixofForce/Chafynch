@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { api, wrapApi } from '$lib/api/client.js';
-	import type { VendorDto } from '$lib/api/types.js';
+	import type { VendorDto } from '$lib/api/gen/types.js';
 	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
 	import { createEditor } from '$lib/crud/editable.svelte.js';
 	import { Leaf, MapPin, Plus, Scale } from '@lucide/svelte';
@@ -8,6 +7,8 @@
 	import Input from '$lib/basics/Input.svelte';
 	import { onMount } from 'svelte';
 	import Combobox from '$lib/basics/Combobox.svelte';
+	import { vendorService } from '$lib/api/vendor.service.js';
+	import { toast } from '$lib/toast/toast.store.svelte.js';
 
 	const { data } = $props();
 	const editor = createEditor<VendorDto>();
@@ -23,23 +24,17 @@
 
 	async function onSave(vendor: VendorDto, isNew: boolean) {
 		if (isNew) {
-			return wrapApi(() => api.POST('/api/vendors', { body: vendor }), {
-				success: `Successfully created vendor '${vendor.name}'`
-			});
+			await vendorService.create(vendor);
+			return toast.success(`Successfully created '${vendor.name}'`);
 		}
 
-		return wrapApi(
-			() => api.PUT('/api/vendors/{id}', { body: vendor, params: { path: { id: vendor.id } } }),
-			{
-				success: `Successfully updated vendor '${vendor.name}'`
-			}
-		);
+		await vendorService.update(vendor);
+		return toast.success(`Successfully updated '${vendor.name}'`);
 	}
 
 	async function onDelete(vendor: VendorDto) {
-		return wrapApi(() => api.DELETE('/api/vendors/{id}', { params: { path: { id: vendor.id } } }), {
-			success: `Successfully deleted vendor '${vendor.name}'`
-		});
+		await vendorService.delete(vendor.id);
+		toast.success(`Successfully deleted '${vendor.name}'`);
 	}
 
 	let countryNames: string[] = $state([]);

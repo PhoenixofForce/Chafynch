@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TeaDTO } from '$lib/api/types';
+	import type { TeaDTO } from '$lib/api/gen/types';
 	import CountryMap from '../../lib/geo/CountryMap.svelte';
 	import { Leaf, Store, Scale } from '@lucide/svelte';
 

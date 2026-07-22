@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const schemaPath = path.resolve(__dirname, '../src/lib/api/schema.d.ts');
-const outputPath = path.resolve(__dirname, '../src/lib/api/types.ts');
+const schemaPath = path.resolve(__dirname, '../src/lib/api/gen/schema.d.ts');
+const outputPath = path.resolve(__dirname, '../src/lib/api/gen/types.ts');
 
 const content = fs.readFileSync(schemaPath, 'utf-8');
 

@@ -1,12 +1,13 @@
-import { api } from '$lib/api/client';
+import { teaService } from '$lib/api/tea.service';
+import { teaTypeService } from '$lib/api/teaType.service';
 
 export async function load() {
-	const { data: teas } = await api.GET('/api/teas');
-	const { data: types } = await api.GET('/api/tea-types');
+	const teas = await teaService.getAll();
+	const types = await teaTypeService.getAll();
 
-	const countries = unique(teas?.map((e) => e.originCountry).filter((e) => !!e) ?? []);
+	const countries = unique(teas.map((e) => e.originCountry).filter((e) => !!e));
 
-	return { teas: teas?.reverse().slice(0, 8) ?? [], types, countries };
+	return { teas: teas.reverse().slice(0, 8), types, countries };
 }
 
 function unique<T>(array: T[]): T[] {

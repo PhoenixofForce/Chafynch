@@ -1,6 +1,6 @@
-import { api } from '$lib/api/client';
+import { teaTypeService } from '$lib/api/teaType.service';
 
 export async function load() {
-	const { data: types } = await api.GET('/api/tea-types');
+	const types = await teaTypeService.getAll();
 	return { types };
 }

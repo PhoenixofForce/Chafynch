@@ -6,11 +6,39 @@
 	import { icons } from '$lib/basics/icons.js';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { teaService } from '$lib/api/tea.service.js';
+	import { toast } from '$lib/toast/toast.store.svelte.js';
+	import { confirmation } from '$lib/confirmation/confirmation.store.svelte.js';
 
 	let { data } = $props();
+	let deleting = $state(false);
+
+	async function deleteTea() {
+		confirmation.show({
+			title: 'Do you really want to delete tea?',
+			confirm: {
+				label: 'Delete',
+				class: 'btn-error',
+				onclick: () => {
+					deleting = true;
+					teaService
+						.delete(data.tea.id!)
+						.then(() => {
+							toast.success(`Successfully deleted '${data.tea.name}'`);
+							goto(resolve('/teas'));
+							confirmation.hide();
+						})
+						.catch(() => undefined)
+						.finally(() => {
+							deleting = false;
+						});
+				}
+			}
+		});
+	}
 </script>
 
-<div class="grid w-full grid-cols-1 gap-8 md:grid-cols-[2fr_5fr] md:gap-12">
+<div class="grid w-full max-w-full grid-cols-1 gap-8 md:grid-cols-[2fr_5fr] md:gap-12">
 	<div class="md:col-start-2 md:row-start-1">{@render header()}</div>
 	<div class="md:relative md:col-start-1 md:row-start-1">{@render country()}</div>
 
@@ -124,8 +152,15 @@
 					label="Edit"
 					icon={Pen}
 					onclick={() => goto(resolve('/teas/[slug]/edit', { slug: data.tea.id + '' }))}
+					disabled={deleting}
 				/>
-				<Button class="btn-ghost btn-error" label="Delete" icon={Trash} />
+				<Button
+					class="btn-ghost btn-error"
+					label="Delete"
+					icon={Trash}
+					onclick={deleteTea}
+					loading={deleting}
+				/>
 			</div>
 		</div>
 	</div>

@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { api, wrapApi } from '$lib/api/client.js';
-	import type { CultivarDto } from '$lib/api/types.js';
+	import type { CultivarDto } from '$lib/api/gen/types.js';
 	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import { createEditor } from '$lib/crud/editable.svelte.js';
 	import { Plus } from '@lucide/svelte';
+	import { cultivarService } from '$lib/api/cultivar.service.js';
+	import { toast } from '$lib/toast/toast.store.svelte.js';
 
 	const { data } = $props();
 	const editor = createEditor<CultivarDto>();
@@ -20,30 +21,17 @@
 
 	async function onSave(cultivar: CultivarDto, isNew: boolean) {
 		if (isNew) {
-			return wrapApi(
-				() => api.POST('/api/cultivars', { params: { query: { name: cultivar.name } } }),
-				{
-					success: `Successfully created cultivar '${cultivar.name}'`
-				}
-			);
+			await cultivarService.create(cultivar.name);
+			return toast.success(`Successfully created '${cultivar.name}'`);
 		}
 
-		return wrapApi(
-			() =>
-				api.PUT('/api/cultivars/{id}', { body: cultivar, params: { path: { id: cultivar.id } } }),
-			{
-				success: `Successfully updated cultivar '${cultivar.name}'`
-			}
-		);
+		await cultivarService.update(cultivar);
+		return toast.success(`Successfully updated '${cultivar.name}'`);
 	}
 
 	async function onDelete(cultivar: CultivarDto) {
-		return wrapApi(
-			() => api.DELETE('/api/cultivars/{id}', { params: { path: { id: cultivar.id } } }),
-			{
-				success: `Successfully deleted cultivar '${cultivar.name}'`
-			}
-		);
+		await cultivarService.delete(cultivar.id);
+		toast.success(`Successfully deleted '${cultivar.name}'`);
 	}
 </script>
 

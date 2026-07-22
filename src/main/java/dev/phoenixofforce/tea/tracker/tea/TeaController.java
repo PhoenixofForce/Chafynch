@@ -36,4 +36,9 @@ public class TeaController {
     public TeaDTO update(@PathVariable long id, @Valid @RequestBody TeaDTO dto) {
         return teaService.update(id, dto);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) {
+        teaService.delete(id);
+    }
 }
