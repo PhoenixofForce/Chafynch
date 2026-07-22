@@ -45,7 +45,6 @@ public class ExtractionService {
             rawSetting.setGrabAll(setting.grabAll());
 
             settings.add(rawSetting);
-            rawSetting.setRawProfile(rawProfile);
         }
 
         rawProfile.setSettings(settings);

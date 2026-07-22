@@ -25,6 +25,7 @@ RUN jlink \
     --strip-java-debug-attributes \
     --no-header-files \
     --no-man-pages \
+    --compress=zip-6 \
     --output /jre-minimalist
 
 FROM alpine:3.21
