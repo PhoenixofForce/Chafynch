@@ -64,8 +64,9 @@ public class ExtractionService {
         Document document = null;
         try {
             document = Jsoup.connect(url).get();
-        } catch (IOException _) {}
-        if (document == null) {
+        } catch (IOException _) {
+        }
+        if ( document == null) {
             //'Todo: throw error
             return new ExtractionResult(new TeaDTO(), List.of());
         }
@@ -86,6 +87,7 @@ public class ExtractionService {
         }
 
         teaDTO.setWebsite(url);
+        teaDTO.setVendor(profile.name());
         return new ExtractionResult(teaDTO, details);
     }
 
@@ -216,9 +218,10 @@ public class ExtractionService {
                 URI uri = new URI(url);
                 host = uri.getHost();
                 path = uri.getPath();
-            } catch (URISyntaxException _) {}
+            } catch (URISyntaxException _) {
+            }
 
-            if (host == null) return null;
+            if ( host == null) return null;
             if (path == null) path = "";
 
             host = host.toLowerCase();

@@ -10,7 +10,6 @@
 	import Input from '$lib/basics/Input.svelte';
 	import Markdown from '$lib/basics/Markdown.svelte';
 	import Textarea from '$lib/basics/Textarea.svelte';
-	import Loading from '$lib/basics/Loading.svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import { ArrowDownToLine } from '@lucide/svelte';
 
@@ -36,8 +35,10 @@
 
 	let teaTypes = $state<TeaTypeDto[]>([]);
 	let countryNames = $state<string[]>([]);
-	let submitting = $state(false);
 	let error = $state('');
+
+	let submitting = $state(false);
+	let loading = $state(false);
 
 	onMount(() => {
 		api.GET('/api/tea-types').then(({ data }) => {
@@ -103,7 +104,11 @@
 
 	async function scrapeUrl() {
 		if (!form.website) return;
+		loading = true;
+
 		const { data } = await api.GET('/api/extract', { params: { query: { url: form.website } } });
+		loading = false;
+
 		if (!data || !data.teaDTO) return;
 		for (const k in data.teaDTO) {
 			const key = k as keyof TeaDTO;
@@ -122,19 +127,20 @@
 	{editing ? 'Updating a tea' : 'Adding a new tea'}
 </h1>
 
-<form
-	class="mt-6 space-y-4"
-	onsubmit={(e) => {
-		e.preventDefault();
-		submit();
-	}}
->
-	{#if !editing}
+{#if !editing}
+	<form
+		class="mt-6 w-full space-y-4 md:w-60/100"
+		onsubmit={(e) => {
+			e.preventDefault();
+			scrapeUrl();
+		}}
+	>
 		<div class="form-control flex gap-2">
 			<div class="flex-2">
 				<Input
+					disabled={loading || submitting}
 					type="url"
-					placeholder="Website*"
+					placeholder="Website"
 					inputClass="w-full"
 					bind:value={form.website}
 					hint="Invalid Website"
@@ -142,20 +148,30 @@
 			</div>
 			<div>
 				<Button
+					type="submit"
 					class="btn-primary"
 					label="Fetch Data"
 					icon={ArrowDownToLine}
-					onclick={scrapeUrl}
-					disabled={!form.website}
+					disabled={!form.website || submitting}
+					{loading}
 				/>
 			</div>
 		</div>
 
 		<div class="divider"></div>
-	{/if}
+	</form>
+{/if}
 
+<form
+	class="mt-6 w-full space-y-4 md:w-60/100"
+	onsubmit={(e) => {
+		e.preventDefault();
+		submit();
+	}}
+>
 	<div class="form-control">
 		<Input
+			disabled={loading || submitting}
 			placeholder="Name*"
 			inputClass="w-full"
 			bind:value={form.name}
@@ -166,6 +182,7 @@
 
 	<div class="form-control">
 		<Select
+			disabled={loading || submitting}
 			label="Tea Type"
 			prompt="Choose a tea type"
 			bind:value={form.teaType}
@@ -175,6 +192,7 @@
 
 	<div class="form-control">
 		<Combobox
+			disabled={loading || submitting}
 			options={[]}
 			placeholder="Cultivar z.B. Da Bai"
 			search={searchCultivars}
@@ -185,6 +203,7 @@
 
 	<div class="form-control">
 		<Combobox
+			disabled={loading || submitting}
 			options={[]}
 			placeholder="Vendor"
 			search={searchVendors}
@@ -193,9 +212,23 @@
 		/>
 	</div>
 
+	{#if editing}
+		<div class="form-control">
+			<Input
+				disabled={loading || submitting}
+				type="url"
+				placeholder="Website"
+				inputClass="w-full"
+				bind:value={form.website}
+				hint="Invalid Website"
+			/>
+		</div>
+	{/if}
+
 	<div class="form-control">
 		<div class="grid grid-cols-2 gap-4">
 			<Input
+				disabled={loading || submitting}
 				type="number"
 				placeholder="Harvest Year"
 				step="1"
@@ -206,15 +239,24 @@
 				bind:value={form.harvestYear}
 			/>
 
-			<Input placeholder="Harvest Label" inputClass="w-full" bind:value={form.harvestLabel} />
+			<Input
+				disabled={loading || submitting}
+				placeholder="Harvest Label"
+				inputClass="w-full"
+				bind:value={form.harvestLabel}
+			/>
 		</div>
 	</div>
 
 	<div class="form-control">
 		<div class="grid grid-cols-2 gap-4">
-			<Textarea placeholder="Description" bind:value={form.descriptionMd} />
+			<Textarea
+				disabled={loading || submitting}
+				placeholder="Description"
+				bind:value={form.descriptionMd}
+			/>
 
-			<Markdown md={form.descriptionMd}>
+			<Markdown md={form.descriptionMd} class="overflow-auto">
 				{#snippet before()}
 					<h3>Preview</h3>
 				{/snippet}
@@ -226,13 +268,28 @@
 		<legend class="fieldset-legend flex items-start">Origin</legend>
 		<div class="grid grid-cols-3 gap-4">
 			<div class="form-control">
-				<Combobox options={countryNames} placeholder="Country" bind:value={form.originCountry!} />
+				<Combobox
+					disabled={loading || submitting}
+					options={countryNames}
+					placeholder="Country"
+					bind:value={form.originCountry!}
+				/>
 			</div>
 			<div class="form-control">
-				<Input inputClass=" w-full" placeholder="Province" bind:value={form.originProvince} />
+				<Input
+					disabled={loading || submitting}
+					inputClass=" w-full"
+					placeholder="Province"
+					bind:value={form.originProvince}
+				/>
 			</div>
 			<div class="form-control">
-				<Input inputClass="w-full" placeholder="City" bind:value={form.originCity} />
+				<Input
+					disabled={loading || submitting}
+					inputClass="w-full"
+					placeholder="City"
+					bind:value={form.originCity}
+				/>
 			</div>
 		</div>
 	</fieldset>
@@ -242,6 +299,7 @@
 		<div class="grid grid-cols-3 gap-4">
 			<div class="form-control">
 				<Input
+					disabled={loading || submitting}
 					type="number"
 					placeholder="Price"
 					step="0.01"
@@ -253,6 +311,7 @@
 			</div>
 			<div class="form-control">
 				<Input
+					disabled={loading || submitting}
 					type="number"
 					placeholder="Weight"
 					step="0.01"
@@ -264,6 +323,7 @@
 			</div>
 			<div class="form-control">
 				<Input
+					disabled={loading || submitting}
 					type="date"
 					placeholder="Date of Purchase"
 					inputClass="w-full"
@@ -278,10 +338,13 @@
 	{/if}
 
 	<div class="flex gap-2">
-		<button type="submit" class="btn btn-primary" disabled={submitting}>
-			<Loading class={!submitting ? 'hidden' : ''} />
-			{submitting ? 'Saving...' : editing ? 'Update' : 'Create'}
-		</button>
+		<Button
+			type="submit"
+			class="btn-primary"
+			loading={submitting}
+			disabled={loading}
+			label={submitting ? 'Saving...' : editing ? 'Update' : 'Create'}
+		/>
 		<a href={backlink(form.id)} class="btn btn-ghost">Cancel</a>
 	</div>
 </form>
