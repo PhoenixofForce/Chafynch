@@ -37,6 +37,9 @@ jobs:
           java-version: 25
           cache: maven
 
+      - name: Check formatting
+        run: mvn spotless:check
+
       - name: Build and test backend
         run: mvn verify
 
