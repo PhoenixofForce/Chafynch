@@ -1,4 +1,5 @@
 FROM node:22-alpine AS build
+ARG APP_VERSION=0.0.1-SNAPSHOT
 
 WORKDIR /app
 
@@ -6,6 +7,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
+RUN npm pkg set version="$APP_VERSION"
 RUN npm run build
 
 FROM nginx:alpine-slim

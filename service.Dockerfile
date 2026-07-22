@@ -1,4 +1,5 @@
 FROM eclipse-temurin:25-jdk-alpine AS build
+ARG APP_VERSION=0.0.1-SNAPSHOT
 
 WORKDIR /app
 
@@ -8,7 +9,7 @@ RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
 
 COPY src src
-RUN ./mvnw package -DskipTests -B
+RUN ./mvnw package -DskipTests -B -Drevision=${APP_VERSION}
 
 RUN jar xf target/*.jar
 
