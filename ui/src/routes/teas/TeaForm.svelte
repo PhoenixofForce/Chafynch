@@ -71,9 +71,8 @@
 		submitting = true;
 		error = '';
 
-		let id = form.id;
 		const { data, error: err } = await save();
-		id = data?.id;
+		let id = form.id ?? data?.id;
 
 		submitting = false;
 		if (err) {

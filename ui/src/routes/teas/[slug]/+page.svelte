@@ -59,7 +59,7 @@
 				</div>
 
 				<div class="rating">
-					{#each { length: 5 } as _, i (i)}
+					{#each { length: 5 }, i (i)}
 						<input
 							type="radio"
 							name="rating"

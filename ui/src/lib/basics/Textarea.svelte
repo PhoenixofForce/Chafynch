@@ -28,8 +28,7 @@
 				{placeholder}
 				bind:value
 				{...rest}
-				{@attach (node) => node.setCustomValidity(validity ?? '')}
-			></textarea>
+				{@attach (node) => node.setCustomValidity(validity ?? '')}></textarea>
 		</div>
 		<p class="validator-hint mt-0 mb-0">{validity ?? hint}</p>
 	</label>
