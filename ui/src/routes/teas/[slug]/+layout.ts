@@ -8,9 +8,6 @@ export async function load({ params, parent }) {
 
 	return {
 		tea: tea,
-		breadcrumbs: [
-			...breadcrumbs,
-			{ label: tea.name, path: `/teas/${slug}` }
-		] satisfies Breadcrumb[]
+		breadcrumbs: [...breadcrumbs, { label: tea.name, path: `/teas/${slug}` }] satisfies Breadcrumb[]
 	};
 }

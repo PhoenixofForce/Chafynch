@@ -69,7 +69,8 @@ public class NominatimGeocodingService implements GeocodingService {
                 .retrieve()
                 .body(String.class);
 
-            List<Map<String, Object>> results = objectMapper.readValue(json, new TypeReference<>() {});
+            List<Map<String, Object>> results = objectMapper.readValue(json, new TypeReference<>() {
+            });
 
             if (results == null || results.isEmpty()) {
                 log.warn("Geocoding had no result for query '{}'", query);
