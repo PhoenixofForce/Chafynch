@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: tea_tracker
+      POSTGRES_USER: tea_tracker
+      POSTGRES_PASSWORD: tea_tracker
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  service:
+    image: ghcr.io/phoenixofforce/teatracker-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  ui:
+    image: ghcr.io/phoenixofforce/teatracker-ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - service
+
+volumes:
+  postgres_data:
