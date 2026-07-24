@@ -15,12 +15,12 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<div class="w-full">
+<div class="flex h-svh w-full flex-col">
 	<!-- Navbar -->
 	<Navbar breadcrumbs={page.data.breadcrumbs} bind:drawerOpen />
 	<Sidebar bind:drawerOpen>
 		{#snippet pageContent()}
-			<div class="mx-auto flex w-full max-w-6xl flex-col items-center p-6">
+			<div class="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center p-6">
 				{@render children()}
 			</div>
 		{/snippet}
