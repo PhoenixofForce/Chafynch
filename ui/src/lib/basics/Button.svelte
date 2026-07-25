@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { Component } from 'svelte';
+	import type { Component, Snippet } from 'svelte';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 	import Loading from './Loading.svelte';
 
 	let {
 		label,
+		children,
 		loading,
 		icon: Icon,
 		class: className,
@@ -13,6 +14,7 @@
 		...rest
 	}: {
 		label?: string;
+		children?: Snippet;
 		loading?: boolean;
 		icon?: Component;
 		noAnimation?: boolean;
@@ -34,4 +36,5 @@
 		<Loading class="loading-sm" />
 	{/if}
 	{label}
+	{@render children?.()}
 </button>
