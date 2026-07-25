@@ -2,14 +2,23 @@
 	import Button from '$lib/basics/Button.svelte';
 	import { Flag, Leaf, Plus } from '@lucide/svelte';
 	import { tick } from 'svelte';
+	import type { Infusion } from './types';
 
-	let infusions = $state(0);
-	let activeInfusion = $state(0);
+	let {
+		disabled = false,
+		infusions = $bindable([]),
+		activeInfusion = $bindable(0)
+	}: { disabled?: boolean; infusions: Infusion[]; activeInfusion: number } = $props();
+
 	let scrollable: HTMLDivElement;
 
 	async function addInfusion() {
-		infusions++;
-		activeInfusion = infusions - 1;
+		infusions.push({
+			startTime: new Date(),
+			tastingCategories: []
+		});
+
+		activeInfusion = infusions.length - 1;
 		await tick();
 		scrollable.scrollTo({
 			left: scrollable.scrollWidth,
@@ -20,25 +29,30 @@
 
 <div class="flex w-full gap-6">
 	<div class="py-4">
-		<Button class="h-20 w-16 btn-ghost" icon={Leaf} />
+		<Button {disabled} class="h-20 w-16 btn-ghost" icon={Leaf} />
 	</div>
 	<div class="flex flex-1 gap-4 overflow-x-auto py-4" bind:this={scrollable}>
-		{#each { length: infusions }, i (i)}
+		{#each infusions as infusion, i (infusion.startTime)}
 			<Button
 				class="h-20 w-16 {i == activeInfusion ? 'btn-primary' : 'btn-dash'}"
 				onclick={() => (activeInfusion = i)}
+				{disabled}
 			>
 				<div class="flex flex-col">
 					<b>{i + 1}</b>
-					<span class="text-xs text-neutral/80">25s</span>
-					<span class="text-xs text-neutral/80">★★★</span>
+					<span class="text-xs text-neutral/80"
+						>{infusion.infusionTime ? infusion.infusionTime.toFixed(2) + 's' : ''}
+					</span>
+					<span class="text-xs text-neutral/80">
+						{'★'.repeat(infusion.rating ?? 0)}
+					</span>
 				</div>
 			</Button>
 		{/each}
-		<Button class="h-20 w-16 btn-dash" icon={Plus} onclick={addInfusion} />
+		<Button {disabled} class="h-20 w-16 btn-dash" icon={Plus} onclick={addInfusion} />
 	</div>
 
 	<div class="py-4">
-		<Button class="h-20 w-16 btn-ghost" icon={Flag} />
+		<Button {disabled} class="h-20 w-16 btn-ghost" icon={Flag} />
 	</div>
 </div>

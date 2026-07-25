@@ -2,6 +2,13 @@
 	import Button from '$lib/basics/Button.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import { Pause, Play, X } from '@lucide/svelte';
+	import type { Infusion } from './types';
+
+	let {
+		activeInfusion,
+		// eslint-disable-next-line no-useless-assignment
+		isTimerRunning = $bindable(false)
+	}: { activeInfusion?: Infusion; isTimerRunning: boolean } = $props();
 
 	let mode = $state(0);
 	let timer = $state(0);
@@ -12,7 +19,7 @@
 	let blindMode = $state(false);
 
 	let interval: ReturnType<typeof setInterval> | null = $state(null);
-	let timingDone = $derived(interval == null && totalTime > 0);
+	let timingDone = $derived(interval == null && (activeInfusion?.infusionTime ?? 0) > 0);
 
 	function startTimer() {
 		if (interval) {
@@ -20,6 +27,7 @@
 			return;
 		}
 
+		isTimerRunning = true;
 		if (mode == 0) {
 			timer = targetTime;
 			direction = -1;
@@ -31,7 +39,9 @@
 		interval = setInterval(() => {
 			timer += 0.1 * direction;
 			totalTime += 0.1;
+
 			if (timer <= 0) {
+				totalTime += timer;
 				timer = 0;
 				stopTimer();
 			}
@@ -39,8 +49,19 @@
 	}
 
 	function stopTimer() {
+		if (activeInfusion) {
+			activeInfusion!.infusionTime = totalTime;
+		}
 		clearInterval(interval!);
 		interval = null;
+		isTimerRunning = false;
+	}
+
+	function resetTimer() {
+		totalTime = 0;
+		if (activeInfusion) {
+			activeInfusion!.infusionTime = undefined;
+		}
 	}
 </script>
 
@@ -52,10 +73,10 @@
 					inputClass="w-full"
 					disabled
 					placeholder="Brewing Time (s)"
-					value={totalTime.toFixed(2)}
+					value={(activeInfusion?.infusionTime ?? 0).toFixed(2)}
 				/>
 			</div>
-			<Button class="join-item" icon={X} onclick={() => (totalTime = 0)} />
+			<Button class="join-item" icon={X} onclick={resetTimer} />
 		</div>
 	{:else}
 		<div class="flex w-full items-center gap-6 md:w-fit">
