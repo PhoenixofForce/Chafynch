@@ -20,3 +20,9 @@ export interface Infusion {
 export interface Session {
 	infusions: Infusion[];
 }
+
+export const categories = [
+	{ name: 'Eye', subCategories: ['Wet Leaf', 'Liquor'] },
+	{ name: 'Nose', subCategories: ['Wet Leaf', 'Liquor', 'Empty Cup'] },
+	{ name: 'Mouth', subCategories: ['Texture', 'Taste', 'Finish'] }
+];

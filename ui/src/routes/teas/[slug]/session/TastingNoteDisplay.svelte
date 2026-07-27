@@ -3,7 +3,8 @@
 	import { Plus } from '@lucide/svelte';
 	import type { TastingNoteSubCategory } from './types';
 
-	let { subCategory }: { subCategory: TastingNoteSubCategory } = $props();
+	let { subCategory, openModal }: { subCategory: TastingNoteSubCategory; openModal: () => void } =
+		$props();
 </script>
 
 <div class="flex w-full items-center gap-4 rounded-full bg-base-200 px-4 py-2">
@@ -13,5 +14,5 @@
 			<div class="badge badge-xs badge-accent">{tag}</div>
 		{/each}
 	</span>
-	<Button class="h-4 w-4" noAnimation icon={Plus} />
+	<Button class="h-4 w-4" noAnimation icon={Plus} onclick={openModal} />
 </div>
