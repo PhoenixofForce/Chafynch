@@ -4,7 +4,7 @@
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
 	import TastingNoteModal from './TastingNoteModal.svelte';
 	import TimerBar from './TimerBar.svelte';
-	import type { Session, TastingNoteCategory } from './types';
+	import { categories, type Session } from './types';
 
 	let activeInfusionCounter = $state(0);
 	let sessions = $state<Session>({
@@ -13,12 +13,9 @@
 				startTime: new Date(),
 				infusionTime: 24,
 				rating: 3,
-				tastingCategories: [
-					{
-						name: 'Eye',
-						subCategories: [{ name: 'Wet Leaf', notes: ['Green', 'Curly'] }]
-					}
-				]
+				tastingNotes: {
+					'Eye/Wet Leaf': ['Sweet', 'Smooth']
+				}
 			}
 		]
 	});
@@ -27,11 +24,8 @@
 	let isTimerRunning = $state(false);
 
 	let tastingNoteModal = $state<ReturnType<typeof TastingNoteModal>>();
-
-	let visibleTastingNoteCategories = $derived<TastingNoteCategory[]>(
-		activeInfusion?.tastingCategories.filter((category) =>
-			category.subCategories.some((sub) => sub.notes.length > 0)
-		) ?? []
+	let hasNotes = $derived(
+		Object.values(activeInfusion?.tastingNotes ?? {}).some((notes) => notes.length > 0)
 	);
 </script>
 
@@ -39,14 +33,18 @@
 <div class="flex w-full flex-1 flex-col items-center justify-between gap-6">
 	<div>header</div>
 	<div class="flex w-full flex-1 flex-col gap-2">
-		{#if visibleTastingNoteCategories.length > 0}
-			{#each visibleTastingNoteCategories as category (category.name)}
-				<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
-				{#each category.subCategories.filter((subCategory) => subCategory.notes.length > 0) as subCategory (subCategory.name)}
-					<TastingNoteDisplay
-						{subCategory}
-						openModal={() => tastingNoteModal?.open(category.name, subCategory.name)}
-					/>
+		{#if hasNotes}
+			{#each categories as category (category.name)}
+				{#each category.subCategories as subCategory (subCategory)}
+					{@const notes = activeInfusion?.tastingNotes[category.name + '/' + subCategory] ?? []}
+					{#if notes.length > 0}
+						<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
+						<TastingNoteDisplay
+							name={subCategory}
+							{notes}
+							openModal={() => tastingNoteModal?.open(category.name, subCategory)}
+						/>
+					{/if}
 				{/each}
 			{/each}
 		{:else}

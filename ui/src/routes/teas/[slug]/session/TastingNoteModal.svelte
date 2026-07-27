@@ -15,11 +15,8 @@
 	let selectedSubCategoryIndex = $state(0);
 	let selectedSubCategory = $derived(selectedCategory.subCategories[selectedSubCategoryIndex]);
 
-	let selectedNotes = $derived<string[]>(
-		infusion?.tastingCategories
-			.find((e) => e.name === selectedCategory.name)
-			?.subCategories.find((e) => e.name === selectedSubCategory)?.notes ?? []
-	);
+	let categoryKey = $derived(selectedCategory.name + '/' + selectedSubCategory);
+	let selectedNotes = $derived<string[]>(infusion?.tastingNotes[categoryKey] ?? []);
 
 	let noteSuggestions = $derived(
 		allNotes
@@ -29,30 +26,10 @@
 
 	function toggle(tag: string) {
 		if (!infusion) return;
-
-		let category = infusion.tastingCategories.find((e) => e.name === selectedCategory.name);
-		if (!category) {
-			infusion.tastingCategories.push({
-				name: selectedCategory.name,
-				subCategories: [{ name: selectedSubCategory, notes: [] }]
-			});
-			category = infusion.tastingCategories.at(-1);
-		}
-		if (!category) return;
-
-		let subCategory = category.subCategories.find((e) => e.name === selectedSubCategory);
-		if (!subCategory) {
-			category.subCategories.push({ name: selectedSubCategory, notes: [] });
-			subCategory = category.subCategories.at(-1);
-		}
-		if (!subCategory) return;
-
-		if (subCategory.notes.includes(tag)) {
-			subCategory.notes = subCategory.notes.filter((e) => e !== tag);
-			return;
-		}
-
-		subCategory.notes.push(tag);
+		let notes = infusion.tastingNotes[categoryKey] ?? [];
+		infusion.tastingNotes[categoryKey] = notes.includes(tag)
+			? notes.filter((e) => e !== tag)
+			: [tag, ...notes];
 	}
 
 	let modalOpen = $state(false);

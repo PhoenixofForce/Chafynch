@@ -15,7 +15,7 @@
 	async function addInfusion() {
 		infusions.push({
 			startTime: new Date(),
-			tastingCategories: []
+			tastingNotes: {}
 		});
 
 		activeInfusion = infusions.length - 1;

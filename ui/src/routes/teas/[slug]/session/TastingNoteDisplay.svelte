@@ -1,16 +1,15 @@
 <script lang="ts">
 	import Button from '$lib/basics/Button.svelte';
 	import { Plus } from '@lucide/svelte';
-	import type { TastingNoteSubCategory } from './types';
 
-	let { subCategory, openModal }: { subCategory: TastingNoteSubCategory; openModal: () => void } =
+	let { name, notes, openModal }: { name: string; notes: string[]; openModal: () => void } =
 		$props();
 </script>
 
 <div class="flex w-full items-center gap-4 rounded-full bg-base-200 px-4 py-2">
-	<span class="min-w-1/10 text-xs text-base-content/80">{subCategory.name}</span>
+	<span class="min-w-1/10 text-xs text-base-content/80">{name}</span>
 	<span class="flex flex-1 gap-2">
-		{#each subCategory.notes as tag (tag)}
+		{#each notes as tag (tag)}
 			<div class="badge badge-xs badge-accent">{tag}</div>
 		{/each}
 	</span>
