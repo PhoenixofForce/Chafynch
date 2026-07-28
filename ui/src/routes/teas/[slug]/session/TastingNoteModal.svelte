@@ -56,7 +56,7 @@
 			<h3>Add Tasting Notes</h3>
 		</div>
 
-		<div class="join w-full">
+		<div class="join w-full" data-testid="Category-Picker">
 			{#each categories as category, i (category.name)}
 				<input
 					class="btn join-item flex-1 btn-md"
