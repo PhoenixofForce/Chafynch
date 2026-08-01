@@ -30,15 +30,18 @@
 </script>
 
 <TastingNoteModal bind:this={tastingNoteModal} infusion={activeInfusion} />
-<div class="flex w-full flex-1 flex-col items-center justify-between gap-6">
+<div class="flex min-h-0 w-full flex-1 flex-col items-center justify-between gap-6">
 	<div>header</div>
-	<div class="flex w-full flex-1 flex-col gap-2">
+	<div class="flex min-h-0 w-full flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto">
 		{#if hasNotes}
 			{#each categories as category (category.name)}
+				{#if category.subCategories.some((sub) => (activeInfusion?.tastingNotes[category.name + '/' + sub] ?? []).length > 0)}
+					<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
+				{/if}
+
 				{#each category.subCategories as subCategory (subCategory)}
 					{@const notes = activeInfusion?.tastingNotes[category.name + '/' + subCategory] ?? []}
 					{#if notes.length > 0}
-						<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
 						<TastingNoteDisplay
 							name={subCategory}
 							{notes}
@@ -50,7 +53,7 @@
 		{:else}
 			<Button
 				label="Add your first tasting note"
-				class="btn-dash"
+				class="w-full btn-dash"
 				onclick={() => tastingNoteModal?.open()}
 			/>
 		{/if}

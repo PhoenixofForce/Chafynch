@@ -89,13 +89,15 @@
 			<h4>Notes</h4>
 		</div>
 
-		<div class="flex gap-2">
-			{#each selectedNotes as tag (tag)}
-				<button class="badge badge-accent" onclick={() => toggle(tag)}>{tag}</button>
-			{/each}
-		</div>
+		{#if selectedNotes.length}
+			<div class="flex gap-2">
+				{#each selectedNotes as tag (tag)}
+					<button class="badge badge-accent" onclick={() => toggle(tag)}>{tag}</button>
+				{/each}
+			</div>
 
-		<div class="divider my-0"></div>
+			<div class="divider my-0"></div>
+		{/if}
 
 		<div class="flex gap-2">
 			{#if noteSuggestions.length > 0}

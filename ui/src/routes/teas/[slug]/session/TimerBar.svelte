@@ -17,9 +17,9 @@
 
 	let targetTime = $state(20);
 	let blindMode = $state(false);
+	let timingDone = $derived((activeInfusion?.infusionTime ?? 0) > 0);
 
 	let interval: ReturnType<typeof setInterval> | null = $state(null);
-	let timingDone = $derived(interval == null && (activeInfusion?.infusionTime ?? 0) > 0);
 
 	function startTimer() {
 		if (interval) {
@@ -27,6 +27,7 @@
 			return;
 		}
 
+		timingDone = false;
 		isTimerRunning = true;
 		if (mode == 0) {
 			timer = targetTime;
@@ -50,14 +51,16 @@
 
 	function stopTimer() {
 		if (activeInfusion) {
-			activeInfusion!.infusionTime = totalTime;
+			activeInfusion!.infusionTime = parseFloat(totalTime.toFixed(2));
 		}
 		clearInterval(interval!);
 		interval = null;
 		isTimerRunning = false;
+		timingDone = true;
 	}
 
 	function resetTimer() {
+		timingDone = false;
 		totalTime = 0;
 		if (activeInfusion) {
 			activeInfusion!.infusionTime = undefined;
@@ -70,10 +73,11 @@
 		<div class="join flex">
 			<div class="flex-1">
 				<Input
+					type="number"
+					step={0.01}
 					inputClass="w-full"
-					disabled
 					placeholder="Brewing Time (s)"
-					value={(activeInfusion?.infusionTime ?? 0).toFixed(2)}
+					bind:value={activeInfusion!.infusionTime}
 				/>
 			</div>
 			<Button class="join-item" icon={X} onclick={resetTimer} />
