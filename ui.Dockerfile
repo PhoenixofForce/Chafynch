@@ -1,4 +1,4 @@
-FROM node:24-alpine AS build
+FROM node:24.12.0-alpine AS build
 ARG APP_VERSION=0.0.1-SNAPSHOT
 
 WORKDIR /app
