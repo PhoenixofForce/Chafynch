@@ -39,9 +39,9 @@
 				{disabled}
 			>
 				<div class="flex flex-col">
-					<b>{i + 1}</b>
-					<span class="text-xs text-neutral/80"
-						>{infusion.infusionTime ? infusion.infusionTime.toFixed(2) + 's' : ''}
+					<b>{infusion.isRinse ? '~' : i + 1}</b>
+					<span class="text-xs text-neutral/80">
+						{infusion.infusionTime ? infusion.infusionTime.toFixed(2) + 's' : ''}
 					</span>
 					<span class="text-xs text-neutral/80">
 						{'★'.repeat(infusion.rating ?? 0)}

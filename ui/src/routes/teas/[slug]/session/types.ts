@@ -3,8 +3,10 @@
 export interface Infusion {
 	startTime: Date;
 	infusionTime?: number;
+	temperature?: number;
 	rating?: number;
 	tastingNotes: Record<string, string[]>;
+	isRinse?: boolean;
 }
 
 export interface Session {

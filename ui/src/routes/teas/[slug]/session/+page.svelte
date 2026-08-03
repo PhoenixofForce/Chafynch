@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/basics/Button.svelte';
+	import Checkbox from '$lib/basics/Checkbox.svelte';
+	import Input from '$lib/basics/Input.svelte';
+	import Rating from '$lib/basics/Rating.svelte';
 	import SessionBottomBar from './SessionBottomBar.svelte';
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
 	import TastingNoteModal from './TastingNoteModal.svelte';
@@ -57,6 +60,16 @@
 				onclick={() => tastingNoteModal?.open()}
 			/>
 		{/if}
+		<div class="flex flex-wrap items-center justify-between gap-2 md:justify-start">
+			<Input
+				type="number"
+				bind:value={activeInfusion!.temperature}
+				step="0.5"
+				placeholder="Temperature (°C)"
+			/>
+			<Checkbox bind:value={activeInfusion!.isRinse} label="Rinse?" />
+			<Rating bind:value={activeInfusion!.rating} />
+		</div>
 	</div>
 	<TimerBar {activeInfusion} bind:isTimerRunning />
 	<SessionBottomBar

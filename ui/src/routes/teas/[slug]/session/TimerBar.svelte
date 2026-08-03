@@ -3,6 +3,7 @@
 	import Input from '$lib/basics/Input.svelte';
 	import { Pause, Play, X } from '@lucide/svelte';
 	import type { Infusion } from './types';
+	import Checkbox from '$lib/basics/Checkbox.svelte';
 
 	let {
 		activeInfusion,
@@ -37,6 +38,7 @@
 			direction = 1;
 		}
 
+		totalTime = 0;
 		interval = setInterval(() => {
 			timer += 0.1 * direction;
 			totalTime += 0.1;
@@ -61,7 +63,6 @@
 
 	function resetTimer() {
 		timingDone = false;
-		totalTime = 0;
 		if (activeInfusion) {
 			activeInfusion!.infusionTime = undefined;
 		}
@@ -113,15 +114,7 @@
 					disabled={interval !== null}
 				/>
 			{:else}
-				<label class="label">
-					<input
-						type="checkbox"
-						class="checkbox"
-						disabled={interval !== null}
-						bind:checked={blindMode}
-					/>
-					Blind Mode
-				</label>
+				<Checkbox label="Blind Mode" disabled={interval !== null} bind:value={blindMode} />
 			{/if}
 		</div>
 		<Button class="w-full btn-primary md:w-18" icon={interval ? Pause : Play} onclick={startTimer}>
