@@ -170,7 +170,14 @@
 	<div class="flex flex-col items-center gap-4 md:items-end">
 		<div class="prose mb-3 flex min-w-full items-center justify-between">
 			<h2 class="mb-0">Session Logs</h2>
-			<Button class="btn-primary" label="Drink now" icon={Coffee} />
+			<Button
+				onclick={() => goto(resolve('/teas/[slug]/session', { slug: data.tea.id + '' }))}
+				class="btn-primary"
+				label="Drink now"
+				icon={Coffee}
+
+
+			/>
 		</div>
 		<div class="w-full overflow-x-auto">
 			<table class="table table-zebra table-xs">

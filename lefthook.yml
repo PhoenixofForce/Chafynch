@@ -1,0 +1,16 @@
+pre-commit:
+  jobs:
+    - name: backend spotless
+      glob: "*.java"
+      run: ./mvnw -q com.diffplug.spotless:spotless-maven-plugin:apply
+      stage_fixed: true
+    - name: frontend eslint
+      root: "ui/"
+      glob: "ui/*"
+      run: npx eslint --fix {staged_files}
+      stage_fixed: true
+    - name: frontend prettier
+      root: "ui/"
+      glob: "ui/*"
+      run: npx prettier --fix {staged_files}
+      stage_fixed: true
