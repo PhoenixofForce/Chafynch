@@ -6,11 +6,11 @@ pre-commit:
       stage_fixed: true
     - name: frontend eslint
       root: "ui/"
-      glob: "ui/*"
+      glob: "ui/src/*.{js,ts,svelte}"
       run: npx eslint --fix {staged_files}
       stage_fixed: true
     - name: frontend prettier
       root: "ui/"
-      glob: "ui/*"
-      run: npx prettier --fix {staged_files}
+      glob: "ui/src/*.{js,ts,svelte,css,html,json,md}"
+      run: npx prettier --write {staged_files}
       stage_fixed: true

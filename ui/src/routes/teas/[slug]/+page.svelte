@@ -175,8 +175,6 @@
 				class="btn-primary"
 				label="Drink now"
 				icon={Coffee}
-
-
 			/>
 		</div>
 		<div class="w-full overflow-x-auto">
