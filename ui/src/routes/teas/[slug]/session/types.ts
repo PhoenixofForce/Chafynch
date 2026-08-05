@@ -18,3 +18,15 @@ export const categories = [
 	{ name: 'Nose', subCategories: ['Wet Leaf', 'Liquor', 'Empty Cup'] },
 	{ name: 'Mouth', subCategories: ['Texture', 'Taste', 'Finish'] }
 ];
+
+export type Tabs =
+	| {
+			tab: 'infusion';
+			index: number;
+	  }
+	| {
+			tab: 'start';
+	  }
+	| {
+			tab: 'end';
+	  };

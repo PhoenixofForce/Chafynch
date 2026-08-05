@@ -2,15 +2,22 @@
 	import Button from '$lib/basics/Button.svelte';
 	import { Flag, Leaf, Plus } from '@lucide/svelte';
 	import { tick } from 'svelte';
-	import type { Infusion } from './types';
+	import type { Infusion, Tabs } from './types';
 
 	let {
 		disabled = false,
 		infusions = $bindable([]),
-		activeInfusion = $bindable(0)
-	}: { disabled?: boolean; infusions: Infusion[]; activeInfusion: number } = $props();
+		activeTab = $bindable()
+	}: { disabled?: boolean; infusions: Infusion[]; activeTab: Tabs } = $props();
 
 	let scrollable: HTMLDivElement;
+
+	function setInfusion(index: number) {
+		activeTab = {
+			tab: 'infusion',
+			index
+		};
+	}
 
 	async function addInfusion() {
 		infusions.push({
@@ -18,7 +25,7 @@
 			tastingNotes: {}
 		});
 
-		activeInfusion = infusions.length - 1;
+		setInfusion(infusions.length - 1);
 		await tick();
 		scrollable.scrollTo({
 			left: scrollable.scrollWidth,
@@ -29,13 +36,20 @@
 
 <div class="flex w-full gap-6">
 	<div class="py-4">
-		<Button {disabled} class="h-20 w-16 btn-ghost" icon={Leaf} />
+		<Button
+			{disabled}
+			class="h-20 w-16 btn-ghost"
+			icon={Leaf}
+			onclick={() => (activeTab = { tab: 'start' })}
+		/>
 	</div>
 	<div class="flex flex-1 gap-4 overflow-x-auto py-4" bind:this={scrollable}>
 		{#each infusions as infusion, i (infusion.startTime)}
 			<Button
-				class="h-20 w-16 {i == activeInfusion ? 'btn-primary' : 'btn-dash'}"
-				onclick={() => (activeInfusion = i)}
+				class="h-20 w-16 {activeTab.tab === 'infusion' && i == activeTab.index!
+					? 'btn-primary'
+					: 'btn-dash'}"
+				onclick={() => setInfusion(i)}
 				{disabled}
 			>
 				<div class="flex flex-col">
@@ -53,6 +67,11 @@
 	</div>
 
 	<div class="py-4">
-		<Button {disabled} class="h-20 w-16 btn-ghost" icon={Flag} />
+		<Button
+			{disabled}
+			class="h-20 w-16 btn-ghost"
+			icon={Flag}
+			onclick={() => (activeTab = { tab: 'end' })}
+		/>
 	</div>
 </div>
