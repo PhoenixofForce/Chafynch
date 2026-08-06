@@ -10,7 +10,18 @@ export interface Infusion {
 }
 
 export interface Session {
+	grams?: number;
+	volume?: number;
+	brewingMethod?: string;
+	location?: string;
+	people?: string;
+	tastingNotes: Record<string, string[]>; // dry leaf eyes and nose
+
 	infusions: Infusion[];
+
+	rating?: number;
+	sessionSummary?: string;
+	nextSessionHint?: string;
 }
 
 export const categories = [
