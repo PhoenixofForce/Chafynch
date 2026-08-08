@@ -51,11 +51,11 @@
 {#snippet editTitle(draft: VendorDto)}
 	<div class="mr-4 flex-1">
 		<Input
-			required
-			placeholder="Name*"
-			bind:value={draft.name}
 			hint="Name is required"
 			inputClass="w-full"
+			placeholder="Name*"
+			required
+			bind:value={draft.name}
 		/>
 	</div>
 {/snippet}
@@ -63,13 +63,13 @@
 {#snippet editHeader(draft: VendorDto)}
 	<div>
 		<Input
-			type="url"
+			class="mb-2"
+			hint="Must be a valid URL"
+			inputClass="w-full"
 			pattern="(http(s?):\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]+(\/.*)?"
 			placeholder="Website"
+			type="url"
 			bind:value={draft.website}
-			hint="Must be a valid URL"
-			class="mb-2"
-			inputClass="w-full"
 		/>
 	</div>
 
@@ -80,8 +80,8 @@
 			bind:value={draft.locationDto!.country}
 		/>
 
-		<Input placeholder="Provinz" inputClass="w-full" bind:value={draft.locationDto!.province} />
-		<Input placeholder="Stadt" inputClass="w-full" bind:value={draft.locationDto!.city} />
+		<Input inputClass="w-full" placeholder="Provinz" bind:value={draft.locationDto!.province} />
+		<Input inputClass="w-full" placeholder="Stadt" bind:value={draft.locationDto!.city} />
 	</div>
 {/snippet}
 
@@ -93,15 +93,15 @@
 	{#if !editor.isNew}
 		<Button
 			class="btn btn-dash btn-primary"
-			onclick={create}
-			label="Add Vendor"
-			icon={Plus}
 			disabled={editor.editingAny()}
+			icon={Plus}
+			label="Add Vendor"
+			onclick={create}
 		/>
 	{/if}
 
 	{#if editor.isNew}
-		<BasicEntityCard entity={editor.draft!} {editor} {onSave} {onDelete} {editTitle} {editHeader}>
+		<BasicEntityCard {editHeader} {editTitle} {editor} entity={editor.draft!} {onDelete} {onSave}>
 			{#snippet title()}
 				<div class="text-lg font-bold">New Vendor</div>
 			{/snippet}
@@ -109,7 +109,7 @@
 	{/if}
 
 	{#each data.vendors as overview (overview.vendor.id)}
-		<BasicEntityCard entity={overview.vendor} {editor} {onSave} {onDelete} {editTitle} {editHeader}>
+		<BasicEntityCard {editHeader} {editTitle} {editor} entity={overview.vendor} {onDelete} {onSave}>
 			{#snippet title()}
 				<div class="m-0 text-lg font-bold">{overview.vendor.name}</div>
 			{/snippet}

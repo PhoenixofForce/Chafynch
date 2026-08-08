@@ -4,15 +4,15 @@
 	import AuthCard from '../AuthCard.svelte';
 </script>
 
-<AuthCard title="Register" backPath="/login" backTitle="Already have an account?">
+<AuthCard backPath="/login" backTitle="Already have an account?" title="Register">
 	<div class="w-full">
 		<Input
 			name="username"
 			autocomplete="username"
-			placeholder="Username*"
-			required
 			hint="Username is required"
 			inputClass="w-full"
+			placeholder="Username*"
+			required
 		/>
 	</div>
 
@@ -20,38 +20,38 @@
 		<Input
 			name="email"
 			autocomplete="email"
-			placeholder="E-Mail*"
-			required
 			hint="E-Mail is required"
 			inputClass="w-full"
+			placeholder="E-Mail*"
+			required
 		/>
 	</div>
 
 	<div class="w-full">
 		<Input
-			type="password"
 			name="password"
 			autocomplete="new-password"
-			required
-			placeholder="Password*"
 			hint="Password is required"
 			inputClass="w-full"
+			placeholder="Password*"
+			required
+			type="password"
 		/>
 	</div>
 
 	<div class="w-full">
 		<Input
-			type="password"
 			name="confirmedPassword"
 			autocomplete="new-password"
-			required
-			placeholder="Repeat Password*"
 			hint="Password is required"
 			inputClass="w-full"
+			placeholder="Repeat Password*"
+			required
+			type="password"
 		/>
 	</div>
 
 	<div class="mt-4 w-full">
-		<Button type="submit" class="w-full btn-primary" label="Register" />
+		<Button class="w-full btn-primary" label="Register" type="submit" />
 	</div>
 </AuthCard>

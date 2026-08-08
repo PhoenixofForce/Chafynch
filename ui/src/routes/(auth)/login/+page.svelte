@@ -5,44 +5,44 @@
 	import AuthCard from '../AuthCard.svelte';
 </script>
 
-<AuthCard title="Login" backPath="/register" backTitle="Create new user">
+<AuthCard backPath="/register" backTitle="Create new user" title="Login">
 	<div class="w-full">
 		<Input
 			name="username"
 			autocomplete="username"
-			placeholder="Username or E-Mail*"
-			required
 			hint="Username is required"
 			inputClass="w-full"
+			placeholder="Username or E-Mail*"
+			required
 		/>
 	</div>
 
 	<div class="w-full">
 		<Input
-			type="password"
 			name="password"
 			autocomplete="current-password"
-			required
-			placeholder="Password*"
 			hint="Password is required"
 			inputClass="w-full"
+			placeholder="Password*"
+			required
+			type="password"
 		/>
 	</div>
 
 	<div class="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center sm:gap-0">
 		<div>
 			<label class="label">
-				<input type="checkbox" checked={false} class="checkbox checkbox-secondary" />
+				<input class="checkbox checkbox-secondary" checked={false} type="checkbox" />
 				Stay logged in
 			</label>
 		</div>
 		<div>
-			<a href={resolve('/forgot-password')} class="link link-primary"> Forgot Password? </a>
+			<a class="link link-primary" href={resolve('/forgot-password')}> Forgot Password? </a>
 		</div>
 	</div>
 
 	<div class="mt-4 w-full">
-		<Button type="submit" class="w-full btn-primary" label="Login" />
+		<Button class="w-full btn-primary" label="Login" type="submit" />
 	</div>
 
 	{#snippet afterForm()}

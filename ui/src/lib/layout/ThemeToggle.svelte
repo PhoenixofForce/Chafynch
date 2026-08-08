@@ -21,7 +21,7 @@
 </script>
 
 <div class="fixed right-4 bottom-4 z-50 flex flex-row gap-4">
-	<Swap value={isDark} onchange={toggleDarkMode}>
+	<Swap onchange={toggleDarkMode} value={isDark}>
 		{#snippet on()}
 			<Moon />
 		{/snippet}

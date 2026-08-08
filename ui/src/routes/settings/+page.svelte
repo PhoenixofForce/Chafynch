@@ -56,11 +56,11 @@
 <!-- name of each tab group should be unique -->
 <div class="tabs-border tabs w-full">
 	<input
-		type="radio"
 		name="my_tabs_2"
 		class="tab checked:text-primary"
 		aria-label="Scraper Settings"
 		checked={true}
+		type="radio"
 	/>
 	<div class="tab-content px-12 py-8">
 		<div class="flex flex-col gap-8">
@@ -82,9 +82,9 @@
 		</div>
 	</div>
 
-	<input type="radio" name="my_tabs_2" class="tab checked:text-primary" aria-label="Tab 2" />
+	<input name="my_tabs_2" class="tab checked:text-primary" aria-label="Tab 2" type="radio" />
 	<div class="tab-content px-6 py-4">Tab content 2</div>
 
-	<input type="radio" name="my_tabs_2" class="tab checked:text-primary" aria-label="Tab 3" />
+	<input name="my_tabs_2" class="tab checked:text-primary" aria-label="Tab 3" type="radio" />
 	<div class="tab-content px-6 py-4">Tab content 3</div>
 </div>

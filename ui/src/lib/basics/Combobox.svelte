@@ -69,13 +69,13 @@
 
 <div class="relative {className}">
 	<Input
-		validity={validity ?? (!valid ? 'Choose an object from the list' : '')}
-		{placeholder}
-		{value}
-		oninput={onInput}
-		onfocus={onFocus}
-		onblur={() => (open = false)}
 		autocomplete="off"
+		onblur={() => (open = false)}
+		onfocus={onFocus}
+		oninput={onInput}
+		{placeholder}
+		validity={validity ?? (!valid ? 'Choose an object from the list' : '')}
+		{value}
 		{...rest}
 		inputClass="w-full {rest.inputClass ?? ''}"
 	/>
@@ -91,11 +91,11 @@
 				<li>
 					<button
 						class="hover:bg-primary"
-						type="button"
 						onmousedown={(e) => {
 							e.preventDefault();
 							select(option);
 						}}
+						type="button"
 					>
 						{option}
 					</button>

@@ -25,10 +25,10 @@
 		<div class="validator">
 			<textarea
 				class="textarea {textareaClass}"
+				{@attach (node) => node.setCustomValidity(validity ?? '')}
 				{placeholder}
 				bind:value
-				{...rest}
-				{@attach (node) => node.setCustomValidity(validity ?? '')}></textarea>
+				{...rest}></textarea>
 		</div>
 		<p class="validator-hint mt-0 mb-0">{validity ?? hint}</p>
 	</label>

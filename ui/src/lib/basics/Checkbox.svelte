@@ -11,6 +11,6 @@
 </script>
 
 <label class="label {className}" {...rest}>
-	<input type="checkbox" bind:checked={value} {disabled} class="checkbox" />
+	<input class="checkbox" {disabled} type="checkbox" bind:checked={value} />
 	{label}
 </label>

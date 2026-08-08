@@ -37,8 +37,8 @@
 			<span>{toastMessage.message}</span>
 			<Button
 				class="btn btn-xs {kind.btnClass}"
-				onclick={() => toast.dismiss(toastMessage.id)}
 				icon={X}
+				onclick={() => toast.dismiss(toastMessage.id)}
 			/>
 		</div>
 	{/each}

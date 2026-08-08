@@ -60,22 +60,22 @@
 		{/each}
 	{:else}
 		<Button
-			label="Add your first tasting note"
 			class="w-full btn-dash"
+			label="Add your first tasting note"
 			onclick={() => tastingNoteModal?.open()}
 		/>
 	{/if}
 	<div class="flex flex-wrap items-center justify-between gap-2 md:justify-start">
-		<Input type="number" step="0.5" placeholder="Temperature (°C)" />
-		<Checkbox bind:value={activeInfusion!.isRinse} label="Rinse?" />
+		<Input placeholder="Temperature (°C)" step="0.5" type="number" />
+		<Checkbox label="Rinse?" bind:value={activeInfusion!.isRinse} />
 		<Rating bind:value={activeInfusion!.rating} />
 	</div>
 {/snippet}
 
-<TastingNoteModal {categories} bind:this={tastingNoteModal} infusion={activeInfusion} />
+<TastingNoteModal bind:this={tastingNoteModal} {categories} infusion={activeInfusion} />
 <TastingNoteModal
-	categories={globalCategories}
 	bind:this={globalTastingNoteModal}
+	categories={globalCategories}
 	infusion={sessions}
 />
 
@@ -105,7 +105,7 @@
 		{#if activeTab.tab === 'infusion'}
 			{@render infusionTab()}
 		{:else if activeTab.tab === 'start'}
-			<StartSetting bind:session={sessions} {globalTastingNoteModal} />
+			<StartSetting {globalTastingNoteModal} bind:session={sessions} />
 		{:else if activeTab.tab === 'end'}
 			<span>end settings here</span>
 		{/if}

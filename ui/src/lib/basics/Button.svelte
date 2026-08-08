@@ -22,12 +22,12 @@
 </script>
 
 <button
-	type="button"
 	class="btn {className} transition-transform {noAnimation
 		? ''
 		: 'hover:-translate-y-1'} hover:shadow"
 	class:btn-square={!label}
 	disabled={disabled || loading}
+	type="button"
 	{...rest}
 >
 	{#if !loading}

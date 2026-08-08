@@ -74,10 +74,10 @@
 		<div class="join flex">
 			<div class="flex-1">
 				<Input
-					type="number"
-					step={0.01}
 					inputClass="w-full"
 					placeholder="Brewing Time (s)"
+					step={0.01}
+					type="number"
 					bind:value={activeInfusion!.infusionTime}
 				/>
 			</div>
@@ -87,34 +87,34 @@
 		<div class="flex w-full items-center gap-6 md:w-fit">
 			<div class="join">
 				<input
-					class="btn join-item"
-					type="radio"
 					name="options"
+					class="btn join-item"
 					aria-label="Timer"
 					checked={mode == 0}
-					onclick={() => (mode = 0)}
 					disabled={interval !== null}
+					onclick={() => (mode = 0)}
+					type="radio"
 				/>
 				<input
-					class="btn join-item"
-					type="radio"
 					name="options"
+					class="btn join-item"
 					aria-label="Stopwatch"
 					checked={mode == 1}
-					onclick={() => (mode = 1)}
 					disabled={interval !== null}
+					onclick={() => (mode = 1)}
+					type="radio"
 				/>
 			</div>
 
 			{#if mode == 0}
 				<Input
-					type="number"
-					placeholder="Target Time (s)"
-					bind:value={targetTime}
 					disabled={interval !== null}
+					placeholder="Target Time (s)"
+					type="number"
+					bind:value={targetTime}
 				/>
 			{:else}
-				<Checkbox label="Blind Mode" disabled={interval !== null} bind:value={blindMode} />
+				<Checkbox disabled={interval !== null} label="Blind Mode" bind:value={blindMode} />
 			{/if}
 		</div>
 		<Button class="w-full btn-primary md:w-18" icon={interval ? Pause : Play} onclick={startTimer}>

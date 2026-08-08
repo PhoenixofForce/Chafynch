@@ -71,29 +71,29 @@
 					{#if !editing}
 						<Button
 							disabled={editor.editingAny() || editor.isPending}
-							onclick={() => editor.edit(entity)}
 							icon={Pen}
+							onclick={() => editor.edit(entity)}
 						/>
 						<Button
-							disabled={editor.editingAny() || editor.isPending}
-							onclick={handleDelete}
 							class="btn-error"
+							disabled={editor.editingAny() || editor.isPending}
 							icon={Trash}
 							loading={deleting}
+							onclick={handleDelete}
 						/>
 					{:else}
 						<Button
-							disabled={editor.isPending}
-							onclick={handleSave}
 							class=" btn-success"
-							loading={saving}
+							disabled={editor.isPending}
 							icon={Check}
+							loading={saving}
+							onclick={handleSave}
 						/>
 						<Button
-							disabled={editor.isPending}
-							onclick={() => editor.cancel()}
 							class="btn-error"
+							disabled={editor.isPending}
 							icon={X}
+							onclick={() => editor.cancel()}
 						/>
 					{/if}
 				</div>

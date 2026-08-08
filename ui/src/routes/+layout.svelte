@@ -13,7 +13,7 @@
 	let drawerOpen = $state(false);
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head><link href={favicon} rel="icon" /></svelte:head>
 
 <div class="flex h-svh w-full flex-col">
 	<!-- Navbar -->

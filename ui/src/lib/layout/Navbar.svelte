@@ -30,10 +30,10 @@
 		</div>
 	</div>
 	<div class="dropdown dropdown-end">
-		<div tabindex="0" class="mr-2 h-10 w-10 rounded-full bg-primary"></div>
+		<div class="mr-2 h-10 w-10 rounded-full bg-primary" tabindex="0"></div>
 		<ul
-			tabindex="-1"
 			class="dropdown-content menu z-1 mt-2 w-52 rounded-box bg-base-100 p-2 shadow-sm"
+			tabindex="-1"
 		>
 			<li><a>Item 1</a></li>
 			<li><a>Item 2</a></li>

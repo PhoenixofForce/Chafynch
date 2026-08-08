@@ -22,33 +22,33 @@
 
 	<Input
 		icon={Scale}
-		type="number"
 		inputClass="w-full"
-		bind:value={session.weight}
-		step="0.01"
 		placeholder="Weight (g)"
+		step="0.01"
+		type="number"
+		bind:value={session.weight}
 	/>
 
 	<Input
 		icon={Beaker}
-		type="number"
 		inputClass="w-full"
-		bind:value={session.volume}
-		step="1"
 		placeholder="Volume (ml)"
+		step="1"
+		type="number"
+		bind:value={session.volume}
 	/>
 
 	<Combobox
-		icon={CookingPot}
 		class="col-span-full"
-		bind:value={session.brewingMethod}
-		placeholder="Brewing Method"
+		icon={CookingPot}
 		options={['Gongfu', 'Western', 'Grandpa', 'Coldbrew']}
+		placeholder="Brewing Method"
+		bind:value={session.brewingMethod}
 	/>
 
 	<div class="col-span-full w-full text-xs text-base-content/50 uppercase">Surrounding</div>
-	<Input icon={User} inputClass="w-full" bind:value={session.people} placeholder="People" />
-	<Input icon={MapPin} inputClass="w-full" bind:value={session.location} placeholder="Location" />
+	<Input icon={User} inputClass="w-full" placeholder="People" bind:value={session.people} />
+	<Input icon={MapPin} inputClass="w-full" placeholder="Location" bind:value={session.location} />
 </div>
 {#if hasNotes}
 	{#each globalCategories as category (category.name)}
@@ -69,8 +69,8 @@
 	{/each}
 {:else}
 	<Button
-		label="Add your first tasting note"
 		class="w-full btn-dash"
+		label="Add your first tasting note"
 		onclick={() => globalTastingNoteModal?.open()}
 	/>
 {/if}

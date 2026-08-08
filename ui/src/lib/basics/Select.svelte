@@ -1,4 +1,4 @@
-<script lang="ts" generics="ID">
+<script generics="ID" lang="ts">
 	import type { HTMLSelectAttributes } from 'svelte/elements';
 
 	interface OptionType {
@@ -31,18 +31,18 @@
 		<div class="validator">
 			<select
 				class="select w-full {selectClass}"
-				bind:value
-				{...rest}
 				{@attach (node) =>
 					node.setCustomValidity(
 						value === '' || options.find((e) => e.value === value)
 							? ''
 							: 'Please choose a valid object'
 					)}
+				bind:value
+				{...rest}
 			>
-				<option value="" disabled>{prompt ?? 'Choose an option'}</option>
+				<option disabled value="">{prompt ?? 'Choose an option'}</option>
 				{#each options as t (t.value)}
-					<option value={t.value} disabled={t.disabled}>{t.label}</option>
+					<option disabled={t.disabled} value={t.value}>{t.label}</option>
 				{/each}
 			</select>
 		</div>

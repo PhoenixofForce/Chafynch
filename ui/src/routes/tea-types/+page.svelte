@@ -36,7 +36,7 @@
 </script>
 
 {#snippet editTitle(draft: TeaTypeDto)}
-	<Input required placeholder="Name*" bind:value={draft.name} hint="Name is required" />
+	<Input hint="Name is required" placeholder="Name*" required bind:value={draft.name} />
 {/snippet}
 
 <div class="flex w-full flex-col gap-8 p-8">
@@ -47,15 +47,15 @@
 	{#if !editor.isNew}
 		<Button
 			class="btn btn-dash btn-primary"
-			onclick={create}
-			label="Add Tea Type"
-			icon={Plus}
 			disabled={editor.editingAny()}
+			icon={Plus}
+			label="Add Tea Type"
+			onclick={create}
 		/>
 	{/if}
 
 	{#if editor.isNew}
-		<BasicEntityCard entity={editor.draft!} {editor} {onSave} {onDelete} {editTitle}>
+		<BasicEntityCard {editTitle} {editor} entity={editor.draft!} {onDelete} {onSave}>
 			{#snippet title()}
 				<div class="text-lg font-bold">New Tea Type</div>
 			{/snippet}
@@ -63,7 +63,7 @@
 	{/if}
 
 	{#each data.types as type (type.id)}
-		<BasicEntityCard entity={type} {editor} {onSave} {onDelete} {editTitle}>
+		<BasicEntityCard {editTitle} {editor} entity={type} {onDelete} {onSave}>
 			{#snippet title()}
 				<div class="m-0 text-lg font-bold">{type.name}</div>
 			{/snippet}

@@ -12,22 +12,22 @@
 
 <div class="rating {className}" {...rest}>
 	<input
-		type="radio"
 		name="rating-10"
 		class="rating-hidden"
 		aria-label="clear"
-		onclick={() => (value = 0)}
 		{disabled}
+		onclick={() => (value = 0)}
+		type="radio"
 	/>
 	{#each { length: 5 }, i}
 		<input
-			type="radio"
 			name="rating-{uid}"
 			class="mask mask-star"
 			aria-label="{i + 1} star"
 			checked={i === value - 1}
-			onclick={() => (value = i + 1)}
 			{disabled}
+			onclick={() => (value = i + 1)}
+			type="radio"
 		/>
 	{/each}
 </div>

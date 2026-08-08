@@ -13,8 +13,8 @@
 				{#if tea.originCountry}
 					<CountryMap
 						country={tea.originCountry}
-						markerLon={tea.originLongitude}
 						markerLat={tea.originLatitude}
+						markerLon={tea.originLongitude}
 						showNeighbors={false}
 					/>
 				{/if}

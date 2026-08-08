@@ -50,10 +50,8 @@
 			>
 				{#each trace as line, i (i)}
 					<pre
-						data-prefix={i + 1}
-						class="mt-0 mb-0 overflow-x-visible bg-warning py-0 text-warning-content"><code
-							>{line}</code
-						></pre>
+						class="mt-0 mb-0 overflow-x-visible bg-warning py-0 text-warning-content"
+						data-prefix={i + 1}><code>{line}</code></pre>
 				{/each}
 				<div
 					class="tooltip absolute tooltip-left top-3 right-6 tooltip-primary"

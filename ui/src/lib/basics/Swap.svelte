@@ -21,7 +21,7 @@
 	class="swap swap-rotate opacity-50 transition-all duration-300 will-change-transform hover:scale-110 hover:opacity-100 active:scale-90 {className}"
 	{...rest}
 >
-	<input type="checkbox" bind:checked={value} {onchange} />
+	<input {onchange} type="checkbox" bind:checked={value} />
 	<div class="swap-off">
 		{@render off()}
 	</div>

@@ -29,7 +29,7 @@
 <div class="mt-6">
 	<div class="flex justify-between">
 		<h2 class="mb-4 text-xl font-bold text-base-content">Recent Tees</h2>
-		<a href={resolve('/teas')} class="btn btn-primary btn-sm">
+		<a class="btn btn-primary btn-sm" href={resolve('/teas')}>
 			<Leaf /> Alle Tees
 		</a>
 	</div>

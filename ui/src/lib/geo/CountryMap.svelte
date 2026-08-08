@@ -129,25 +129,25 @@
 	{#if country}
 		{@const { viewBox, strokeWidth, radius } = calculateLayout(country)}
 
-		<svg {viewBox} xmlns="http://www.w3.org/2000/svg" class="h-full w-full">
+		<svg class="h-full w-full" {viewBox} xmlns="http://www.w3.org/2000/svg">
 			<!-- Neighbor countries (faint) -->
 			{#if showNeighbors}
 				{#each neighborPaths as np (np)}
-					<path d={np} class="fill-base-300/50 stroke-base-300" stroke-width={strokeWidth} />
+					<path class="fill-base-300/50 stroke-base-300" d={np} stroke-width={strokeWidth} />
 				{/each}
 			{/if}
 
 			<!-- Main country fill -->
-			<path d={country.path} class="fill-primary/20 stroke-primary" stroke-width={strokeWidth} />
+			<path class="fill-primary/20 stroke-primary" d={country.path} stroke-width={strokeWidth} />
 
 			<!-- Province borders -->
 			{#each country.provinces as prov (prov)}
-				<path d={prov} fill="none" class="stroke-primary/30" stroke-width={strokeWidth * 0.5} />
+				<path class="stroke-primary/30" d={prov} fill="none" stroke-width={strokeWidth * 0.5} />
 			{/each}
 
 			<!-- Marker -->
 			{#if marker}
-				<circle cx={marker.x} cy={marker.y} r={radius} class="fill-accent" />
+				<circle class="fill-accent" cx={marker.x} cy={marker.y} r={radius} />
 			{/if}
 		</svg>
 	{/if}

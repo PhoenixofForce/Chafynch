@@ -13,5 +13,5 @@
 			<div class="badge badge-xs badge-accent">{tag}</div>
 		{/each}
 	</span>
-	<Button class="h-4 w-4" noAnimation icon={Plus} onclick={openModal} />
+	<Button class="h-4 w-4" icon={Plus} noAnimation onclick={openModal} />
 </div>

@@ -4,7 +4,7 @@
 	import { confirmation } from './confirmation.store.svelte';
 </script>
 
-<Modal open={confirmation.state !== null} onclose={() => confirmation.hide()}>
+<Modal onclose={() => confirmation.hide()} open={confirmation.state !== null}>
 	<h3 class="text-lg font-bold">
 		{confirmation.state?.title ?? 'Do you really want to perform this action'}
 	</h3>
@@ -14,16 +14,16 @@
 
 	{#snippet actions()}
 		<Button
-			type="submit"
-			label={confirmation.state?.cancel?.label ?? 'Cancel'}
 			icon={confirmation.state?.cancel?.icon}
+			label={confirmation.state?.cancel?.label ?? 'Cancel'}
+			type="submit"
 		/>
 		{#if confirmation.state?.confirm}
 			{@const btn = confirmation.state.confirm}
 			<Button
 				class={btn.class ?? 'btn-success'}
-				label={btn.label}
 				icon={btn.icon}
+				label={btn.label}
 				onclick={btn.onclick}
 			/>
 		{/if}

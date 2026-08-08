@@ -54,7 +54,7 @@
 	}
 </script>
 
-<Modal bind:open={modalOpen} class="modal-bottom sm:modal-middle">
+<Modal class="modal-bottom sm:modal-middle" bind:open={modalOpen}>
 	<div class="flex flex-col gap-4">
 		<div class="prose">
 			<h3>Add Tasting Notes</h3>
@@ -63,15 +63,15 @@
 		<div class="join w-full" data-testid="Category-Picker">
 			{#each categories as category, i (category.name)}
 				<input
-					class="btn join-item flex-1 btn-md"
-					type="radio"
 					name="category"
+					class="btn join-item flex-1 btn-md"
 					aria-label={category.name}
 					checked={selectedCategoryIndex == i}
 					onclick={() => {
 						selectedCategoryIndex = i;
 						selectedSubCategoryIndex = 0;
 					}}
+					type="radio"
 				/>
 			{/each}
 		</div>
@@ -79,12 +79,12 @@
 		<div class="join w-full">
 			{#each selectedCategory.subCategories as subCategory, i (subCategory)}
 				<input
-					class="btn join-item flex-1 btn-sm"
-					type="radio"
 					name="subCategory"
+					class="btn join-item flex-1 btn-sm"
 					aria-label={subCategory}
 					checked={selectedSubCategoryIndex == i}
 					onclick={() => (selectedSubCategoryIndex = i)}
+					type="radio"
 				/>
 			{/each}
 		</div>
@@ -114,15 +114,15 @@
 		</div>
 
 		<Input
-			bind:value={filter}
-			placeholder="Search Note (Enter to add)"
-			inputClass="w-full mb-20 sm:mb-0"
+			inputClass="mb-20 w-full sm:mb-0"
 			onkeydown={(e) => {
 				if (e.key === 'Enter') {
 					toggle(filter);
 					filter = '';
 				}
 			}}
+			placeholder="Search Note (Enter to add)"
+			bind:value={filter}
 		/>
 	</div>
 </Modal>

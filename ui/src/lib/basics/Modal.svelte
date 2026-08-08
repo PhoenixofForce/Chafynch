@@ -24,9 +24,9 @@
 </script>
 
 <dialog
+	bind:this={modal}
 	class="modal {className}"
 	{...rest}
-	bind:this={modal}
 	onclose={(e) => {
 		open = false;
 		onclose?.(e);
@@ -44,7 +44,7 @@
 			{/if}
 		{/if}
 	</div>
-	<form method="dialog" class="modal-backdrop">
+	<form class="modal-backdrop" method="dialog">
 		<button>close</button>
 	</form>
 </dialog>

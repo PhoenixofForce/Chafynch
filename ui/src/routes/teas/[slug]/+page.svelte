@@ -89,12 +89,12 @@
 				<div class="rating">
 					{#each { length: 5 }, i (i)}
 						<input
-							type="radio"
 							name="rating"
 							class="mask bg-primary mask-star"
 							aria-label="{i} star"
 							checked={i + 1 === (data.tea.rating ?? 0)}
 							disabled
+							type="radio"
 						/>
 					{/each}
 				</div>
@@ -138,10 +138,10 @@
 			<div class="my-auto flex items-center justify-around gap-4 md:justify-end">
 				{#if data.tea.website}
 					<a
+						class="link"
 						href={data.tea.website}
 						rel="external noopener noreferrer"
 						target="_blank"
-						class="link"
 					>
 						Buy more
 					</a>
@@ -149,17 +149,17 @@
 
 				<Button
 					class="btn-ghost"
-					label="Edit"
-					icon={Pen}
-					onclick={() => goto(resolve('/teas/[slug]/edit', { slug: data.tea.id + '' }))}
 					disabled={deleting}
+					icon={Pen}
+					label="Edit"
+					onclick={() => goto(resolve('/teas/[slug]/edit', { slug: data.tea.id + '' }))}
 				/>
 				<Button
 					class="btn-ghost btn-error"
-					label="Delete"
 					icon={Trash}
-					onclick={deleteTea}
+					label="Delete"
 					loading={deleting}
+					onclick={deleteTea}
 				/>
 			</div>
 		</div>
@@ -171,10 +171,10 @@
 		<div class="prose mb-3 flex min-w-full items-center justify-between">
 			<h2 class="mb-0">Session Logs</h2>
 			<Button
-				onclick={() => goto(resolve('/teas/[slug]/session', { slug: data.tea.id + '' }))}
 				class="btn-primary"
-				label="Drink now"
 				icon={Coffee}
+				label="Drink now"
+				onclick={() => goto(resolve('/teas/[slug]/session', { slug: data.tea.id + '' }))}
 			/>
 		</div>
 		<div class="w-full overflow-x-auto">
@@ -388,8 +388,8 @@
 		<div class="min-h-0 flex-1">
 			<CountryMap
 				country={data.tea.originCountry ?? ''}
-				markerLon={data.tea.originLongitude}
 				markerLat={data.tea.originLatitude}
+				markerLon={data.tea.originLongitude}
 				showNeighbors={false}
 			/>
 		</div>

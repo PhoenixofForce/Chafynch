@@ -37,20 +37,20 @@
 <div class="flex w-full gap-6">
 	<div class="py-4">
 		<Button
-			{disabled}
 			class="h-20 w-16 {activeTab.tab === 'start' ? 'btn-primary' : 'btn-ghost'}"
+			{disabled}
 			icon={Leaf}
 			onclick={() => (activeTab = { tab: 'start' })}
 		/>
 	</div>
-	<div class="flex flex-1 gap-4 overflow-x-auto py-4" bind:this={scrollable}>
+	<div bind:this={scrollable} class="flex flex-1 gap-4 overflow-x-auto py-4">
 		{#each infusions as infusion, i (infusion.startTime)}
 			<Button
 				class="h-20 w-16 {activeTab.tab === 'infusion' && i == activeTab.index!
 					? 'btn-primary'
 					: 'btn-dash'}"
-				onclick={() => setInfusion(i)}
 				{disabled}
+				onclick={() => setInfusion(i)}
 			>
 				<div class="flex flex-col">
 					<b>{infusion.isRinse ? '~' : i + 1}</b>
@@ -63,13 +63,13 @@
 				</div>
 			</Button>
 		{/each}
-		<Button {disabled} class="h-20 w-16 btn-dash" icon={Plus} onclick={addInfusion} />
+		<Button class="h-20 w-16 btn-dash" {disabled} icon={Plus} onclick={addInfusion} />
 	</div>
 
 	<div class="py-4">
 		<Button
-			{disabled}
 			class="h-20 w-16 {activeTab.tab === 'end' ? 'btn-primary' : 'btn-ghost'}"
+			{disabled}
 			icon={Flag}
 			onclick={() => (activeTab = { tab: 'end' })}
 		/>

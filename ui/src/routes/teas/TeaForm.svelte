@@ -139,21 +139,21 @@
 			<div class="flex-2">
 				<Input
 					disabled={loading || submitting}
-					type="url"
-					placeholder="Website"
-					inputClass="w-full"
-					bind:value={form.website}
 					hint="Invalid Website"
+					inputClass="w-full"
+					placeholder="Website"
+					type="url"
+					bind:value={form.website}
 				/>
 			</div>
 			<div>
 				<Button
-					type="submit"
 					class="btn-primary"
-					label="Fetch Data"
-					icon={ArrowDownToLine}
 					disabled={!form.website || submitting}
+					icon={ArrowDownToLine}
+					label="Fetch Data"
 					{loading}
+					type="submit"
 				/>
 			</div>
 		</div>
@@ -172,11 +172,11 @@
 	<div class="form-control">
 		<Input
 			disabled={loading || submitting}
-			placeholder="Name*"
-			inputClass="w-full"
-			bind:value={form.name}
-			required
 			hint="Name is required"
+			inputClass="w-full"
+			placeholder="Name*"
+			required
+			bind:value={form.name}
 		/>
 	</div>
 
@@ -184,31 +184,31 @@
 		<Select
 			disabled={loading || submitting}
 			label="Tea Type"
+			options={teaTypes.map((t) => ({ value: t.name, label: t.name }))}
 			prompt="Choose a tea type"
 			bind:value={form.teaType}
-			options={teaTypes.map((t) => ({ value: t.name, label: t.name }))}
 		/>
 	</div>
 
 	<div class="form-control">
 		<Combobox
 			disabled={loading || submitting}
+			icon={icons.cultivar}
 			options={[]}
 			placeholder="Cultivar z.B. Da Bai"
 			search={searchCultivars}
 			bind:value={form.cultivar}
-			icon={icons.cultivar}
 		/>
 	</div>
 
 	<div class="form-control">
 		<Combobox
 			disabled={loading || submitting}
+			icon={icons.vendor}
 			options={[]}
 			placeholder="Vendor"
 			search={searchVendors}
 			bind:value={form.vendor!}
-			icon={icons.vendor}
 		/>
 	</div>
 
@@ -216,11 +216,11 @@
 		<div class="form-control">
 			<Input
 				disabled={loading || submitting}
-				type="url"
-				placeholder="Website"
-				inputClass="w-full"
-				bind:value={form.website}
 				hint="Invalid Website"
+				inputClass="w-full"
+				placeholder="Website"
+				type="url"
+				bind:value={form.website}
 			/>
 		</div>
 	{/if}
@@ -229,20 +229,20 @@
 		<div class="grid grid-cols-2 gap-4">
 			<Input
 				disabled={loading || submitting}
-				type="number"
+				hint="Cant be in the future"
+				inputClass="w-full"
+				max={new Date().getFullYear()}
+				min={0}
 				placeholder="Harvest Year"
 				step="1"
-				inputClass="w-full"
-				min={0}
-				max={new Date().getFullYear()}
-				hint="Cant be in the future"
+				type="number"
 				bind:value={form.harvestYear}
 			/>
 
 			<Input
 				disabled={loading || submitting}
-				placeholder="Harvest Label"
 				inputClass="w-full"
+				placeholder="Harvest Label"
 				bind:value={form.harvestLabel}
 			/>
 		</div>
@@ -256,7 +256,7 @@
 				bind:value={form.descriptionMd}
 			/>
 
-			<Markdown md={form.descriptionMd} class="overflow-auto">
+			<Markdown class="overflow-auto" md={form.descriptionMd}>
 				{#snippet before()}
 					<h3>Preview</h3>
 				{/snippet}
@@ -300,33 +300,33 @@
 			<div class="form-control">
 				<Input
 					disabled={loading || submitting}
-					type="number"
-					placeholder="Price"
-					step="0.01"
+					hint="Must be at least 0"
 					inputClass="w-full"
 					min={0}
-					hint="Must be at least 0"
+					placeholder="Price"
+					step="0.01"
+					type="number"
 					bind:value={form.price}
 				/>
 			</div>
 			<div class="form-control">
 				<Input
 					disabled={loading || submitting}
-					type="number"
-					placeholder="Weight"
-					step="0.01"
+					hint="Must be at least 0"
 					inputClass="w-full"
 					min={0}
-					hint="Must be at least 0"
+					placeholder="Weight"
+					step="0.01"
+					type="number"
 					bind:value={form.weightGrams}
 				/>
 			</div>
 			<div class="form-control">
 				<Input
 					disabled={loading || submitting}
-					type="date"
-					placeholder="Date of Purchase"
 					inputClass="w-full"
+					placeholder="Date of Purchase"
+					type="date"
 					bind:value={form.purchaseDate}
 				/>
 			</div>
@@ -339,12 +339,12 @@
 
 	<div class="flex gap-2">
 		<Button
-			type="submit"
 			class="btn-primary"
-			loading={submitting}
 			disabled={loading}
 			label={submitting ? 'Saving...' : editing ? 'Update' : 'Create'}
+			loading={submitting}
+			type="submit"
 		/>
-		<a href={backlink(form.id)} class="btn btn-ghost">Cancel</a>
+		<a class="btn btn-ghost" href={backlink(form.id)}>Cancel</a>
 	</div>
 </form>

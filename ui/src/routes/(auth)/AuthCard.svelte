@@ -32,5 +32,5 @@
 	</div>
 </div>
 <div class="mt-2 text-sm">
-	<a href={resolve(backPath)} class="link link-neutral"> {backTitle} </a>
+	<a class="link link-neutral" href={resolve(backPath)}> {backTitle} </a>
 </div>

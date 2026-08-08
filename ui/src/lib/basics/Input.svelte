@@ -28,11 +28,11 @@
 		<div class="validator input {inputClass}">
 			<Icon color="currentColor" size="21" />
 			<input
-				type="text"
+				{@attach (node) => node.setCustomValidity(validity ?? '')}
 				{placeholder}
+				type="text"
 				bind:value
 				{...rest}
-				{@attach (node) => node.setCustomValidity(validity ?? '')}
 			/>
 		</div>
 		<p class="validator-hint mt-0 mb-0">{validity ?? hint}</p>
