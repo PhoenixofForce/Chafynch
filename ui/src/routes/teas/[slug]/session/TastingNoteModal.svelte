@@ -1,9 +1,13 @@
 <script lang="ts">
 	import Input from '$lib/basics/Input.svelte';
 	import Modal from '$lib/basics/Modal.svelte';
-	import { categories, type Infusion } from './types';
+	import { type TastingNoteCategory } from './types';
 
-	let { infusion }: { infusion?: Infusion } = $props();
+	let {
+		infusion,
+		categories
+	}: { infusion?: { tastingNotes: Record<string, string[]> }; categories: TastingNoteCategory[] } =
+		$props();
 
 	let allNotes = ['Smooth', 'Sweet'];
 

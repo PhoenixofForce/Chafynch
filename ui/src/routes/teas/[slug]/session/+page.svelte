@@ -4,12 +4,13 @@
 	import Input from '$lib/basics/Input.svelte';
 	import Rating from '$lib/basics/Rating.svelte';
 	import SessionBottomBar from './SessionBottomBar.svelte';
+	import StartSetting from './StartSetting.svelte';
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
 	import TastingNoteModal from './TastingNoteModal.svelte';
 	import TimerBar from './TimerBar.svelte';
-	import { categories, type Session, type Tabs } from './types';
+	import { categories, globalCategories, type Session, type Tabs } from './types';
 
-	let activeTab = $state<Tabs>({ tab: 'infusion', index: 0 });
+	let activeTab = $state<Tabs>({ tab: 'start' });
 	let sessions = $state<Session>({
 		infusions: [
 			{
@@ -20,7 +21,8 @@
 					'Eye/Wet Leaf': ['Sweet', 'Smooth']
 				}
 			}
-		]
+		],
+		tastingNotes: {}
 	});
 
 	let activeInfusion = $derived(
@@ -29,6 +31,7 @@
 	let isTimerRunning = $state(false);
 
 	let tastingNoteModal = $state<ReturnType<typeof TastingNoteModal>>();
+	let globalTastingNoteModal = $state<ReturnType<typeof TastingNoteModal>>();
 	let hasNotes = $derived(
 		Object.values(activeInfusion?.tastingNotes ?? {}).some((notes) => notes.length > 0)
 	);
@@ -66,14 +69,20 @@
 	</div>
 {/snippet}
 
-<TastingNoteModal bind:this={tastingNoteModal} infusion={activeInfusion} />
+<TastingNoteModal {categories} bind:this={tastingNoteModal} infusion={activeInfusion} />
+<TastingNoteModal
+	categories={globalCategories}
+	bind:this={globalTastingNoteModal}
+	infusion={sessions}
+/>
+
 <div class="flex min-h-0 w-full flex-1 flex-col items-center justify-between gap-6">
 	<div>header</div>
 	<div class="flex min-h-0 w-full flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto">
 		{#if activeTab.tab === 'infusion'}
 			{@render infusionTab()}
 		{:else if activeTab.tab === 'start'}
-			<span>start settings here</span>
+			<StartSetting bind:session={sessions} {globalTastingNoteModal} />
 		{:else if activeTab.tab === 'end'}
 			<span>end settings here</span>
 		{/if}

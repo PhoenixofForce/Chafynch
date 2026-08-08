@@ -38,7 +38,7 @@
 	<div class="py-4">
 		<Button
 			{disabled}
-			class="h-20 w-16 btn-ghost"
+			class="h-20 w-16 {activeTab.tab === 'start' ? 'btn-primary' : 'btn-ghost'}"
 			icon={Leaf}
 			onclick={() => (activeTab = { tab: 'start' })}
 		/>
@@ -69,7 +69,7 @@
 	<div class="py-4">
 		<Button
 			{disabled}
-			class="h-20 w-16 btn-ghost"
+			class="h-20 w-16 {activeTab.tab === 'end' ? 'btn-primary' : 'btn-ghost'}"
 			icon={Flag}
 			onclick={() => (activeTab = { tab: 'end' })}
 		/>
