@@ -22,6 +22,7 @@ export interface Session {
 	rating?: number;
 	sessionSummary?: string;
 	nextSessionHint?: string;
+	startTime?: Date;
 }
 
 export type TastingNoteCategory = {

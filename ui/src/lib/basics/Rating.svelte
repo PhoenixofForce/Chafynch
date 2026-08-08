@@ -3,7 +3,7 @@
 
 	const uid = $props.id();
 	let {
-		value = $bindable(0),
+		value = $bindable(),
 		disabled,
 		class: className,
 		...rest
@@ -12,7 +12,7 @@
 
 <div class="rating {className}" {...rest}>
 	<input
-		name="rating-10"
+		name="rating-{uid}"
 		class="rating-hidden"
 		aria-label="clear"
 		{disabled}
@@ -24,7 +24,7 @@
 			name="rating-{uid}"
 			class="mask mask-star"
 			aria-label="{i + 1} star"
-			checked={i === value - 1}
+			checked={i === (value ?? 0) - 1}
 			{disabled}
 			onclick={() => (value = i + 1)}
 			type="radio"

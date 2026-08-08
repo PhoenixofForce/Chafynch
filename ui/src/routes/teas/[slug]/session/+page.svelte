@@ -5,11 +5,12 @@
 	import Rating from '$lib/basics/Rating.svelte';
 	import { MapPin, User } from '@lucide/svelte';
 	import SessionBottomBar from './SessionBottomBar.svelte';
-	import StartSetting from './StartSetting.svelte';
+	import StartSettings from './StartSettings.svelte';
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
 	import TastingNoteModal from './TastingNoteModal.svelte';
 	import TimerBar from './TimerBar.svelte';
 	import { categories, globalCategories, type Session, type Tabs } from './types';
+	import EndSettings from './EndSettings.svelte';
 
 	let { data } = $props();
 
@@ -66,7 +67,12 @@
 		/>
 	{/if}
 	<div class="flex flex-wrap items-center justify-between gap-2 md:justify-start">
-		<Input placeholder="Temperature (°C)" step="0.5" type="number" />
+		<Input
+			placeholder="Temperature (°C)"
+			step="0.5"
+			type="number"
+			bind:value={activeInfusion!.temperature}
+		/>
 		<Checkbox label="Rinse?" bind:value={activeInfusion!.isRinse} />
 		<Rating bind:value={activeInfusion!.rating} />
 	</div>
@@ -105,9 +111,9 @@
 		{#if activeTab.tab === 'infusion'}
 			{@render infusionTab()}
 		{:else if activeTab.tab === 'start'}
-			<StartSetting {globalTastingNoteModal} bind:session={sessions} />
+			<StartSettings {globalTastingNoteModal} bind:session={sessions} />
 		{:else if activeTab.tab === 'end'}
-			<span>end settings here</span>
+			<EndSettings bind:session={sessions} />
 		{/if}
 	</div>
 	{#if activeTab.tab === 'infusion'}
