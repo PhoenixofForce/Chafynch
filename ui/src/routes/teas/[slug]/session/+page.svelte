@@ -3,12 +3,15 @@
 	import Checkbox from '$lib/basics/Checkbox.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import Rating from '$lib/basics/Rating.svelte';
+	import { MapPin, User } from '@lucide/svelte';
 	import SessionBottomBar from './SessionBottomBar.svelte';
 	import StartSetting from './StartSetting.svelte';
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
 	import TastingNoteModal from './TastingNoteModal.svelte';
 	import TimerBar from './TimerBar.svelte';
 	import { categories, globalCategories, type Session, type Tabs } from './types';
+
+	let { data } = $props();
 
 	let activeTab = $state<Tabs>({ tab: 'start' });
 	let sessions = $state<Session>({
@@ -77,8 +80,28 @@
 />
 
 <div class="flex min-h-0 w-full flex-1 flex-col items-center justify-between gap-6">
-	<div>header</div>
-	<div class="flex min-h-0 w-full flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto">
+	<div class="w-full px-2">
+		<div>
+			<b>{data.tea.name}</b>
+			<span class="ml-2 text-sm text-base-content/80 italic">Session 48</span>
+		</div>
+		<div class="flex gap-2 text-sm">
+			{#if sessions.weight || sessions.volume}
+				<span
+					>{sessions.weight ? sessions.weight + 'g' : ''}
+					{sessions.weight && sessions.volume ? '/' : ''}
+					{sessions.volume ? sessions.volume + 'ml' : ''}</span
+				>
+			{/if}
+			{#if sessions.people}
+				<span class="flex items-center"><User /> {sessions.people}</span>
+			{/if}
+			{#if sessions.location}
+				<span class="flex items-center"><MapPin /> {sessions.location}</span>
+			{/if}
+		</div>
+	</div>
+	<div class="flex min-h-0 w-full flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto px-2">
 		{#if activeTab.tab === 'infusion'}
 			{@render infusionTab()}
 		{:else if activeTab.tab === 'start'}
