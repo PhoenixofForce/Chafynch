@@ -175,9 +175,11 @@ public class ExtractionService {
         for (int i = 0; i < operations.size(); i++) {
             String operation = operations.get(i);
 
-            if ("nextSibling".equals(operation)) node = node.nextSibling();
-            else if ("nextElementSibling".equals(operation)) node = node.nextElementSibling();
-            else errors.add("Unknown operation " + i + ": " + operation);
+            switch (operation) {
+                case "nextSibling" -> node = node.nextSibling();
+                case "nextElementSibling" -> node = node.nextElementSibling();
+                default -> errors.add("Unknown operation " + i + ": " + operation);
+            }
 
             if (node == null) {
                 errors.add("No node found for operation " + i + ": " + operation);

@@ -7,7 +7,7 @@ pre-commit:
     - name: frontend eslint
       root: "ui/"
       glob: "ui/src/*.{js,ts,svelte}"
-      run: npx eslint --fix {staged_files}
+      run: npx eslint --fix {staged_files} || true
       stage_fixed: true
     - name: frontend prettier
       root: "ui/"

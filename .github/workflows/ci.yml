@@ -41,7 +41,7 @@ jobs:
         run: mvn spotless:check
 
       - name: Build and test backend
-        run: mvn verify
+        run: mvn verify -Dcheckstyle.failOnViolation=true
 
   frontend:
     needs: changes
