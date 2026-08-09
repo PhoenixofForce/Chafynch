@@ -19,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -66,6 +67,7 @@ public class ExtractionService {
             document = Jsoup.connect(url).get();
         } catch (IOException _) {
         }
+
         if (document == null) {
             //'Todo: throw error
             return new ExtractionResult(new TeaDTO(), List.of());
@@ -73,7 +75,8 @@ public class ExtractionService {
 
         List<ExtractionDetail> details = new ArrayList<>();
         for (var setting : profile.settings()) {
-            BiConsumer<TeaDTO, String> fieldSetter = ExtractionFields.FIELD_MAPPER.get(setting.field().toLowerCase());
+            BiConsumer<TeaDTO, String> fieldSetter = ExtractionFields.FIELD_MAPPER
+                .get(setting.field().toLowerCase(Locale.ROOT));
             if (fieldSetter == null) {
                 details.add(new ExtractionDetail(setting.field(), Optional.empty(), List.of("Unknown field")));
                 continue;
@@ -226,7 +229,7 @@ public class ExtractionService {
             if (host == null) return null;
             if (path == null) path = "";
 
-            host = host.toLowerCase();
+            host = host.toLowerCase(Locale.ROOT);
             if (!path.endsWith("/")) {
                 path += "/";
             }
