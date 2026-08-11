@@ -189,7 +189,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<configLocation>${project.basedir}/checkstyle.xml</configLocation>
+					<configLocation>${project.basedir}/.config/checkstyle.xml</configLocation>
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 					<consoleOutput>true</consoleOutput>
 					<violationSeverity>error</violationSeverity>
@@ -213,7 +213,7 @@
 					<java>
 						<eclipse>
 							<version>4.36</version>
-							<file>${project.basedir}/eclipse-formatter.xml</file>
+							<file>${project.basedir}/.config/eclipse-formatter.xml</file>
 						</eclipse>
 						<removeUnusedImports/>
 						<importOrder>

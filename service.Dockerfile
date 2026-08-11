@@ -8,6 +8,7 @@ COPY .mvn .mvn
 RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
 
+COPY .config .config
 COPY src src
 RUN ./mvnw package -DskipTests -B -Drevision=${APP_VERSION}
 
