@@ -1,0 +1,6 @@
+*
+!.config
+!.mvn
+!mvnw
+!pom.xml
+!src

@@ -1,0 +1,8 @@
+*
+!ui
+!docker/nginx.conf
+
+ui/node_modules
+ui/build
+ui/.svelte-kit
+**/.env

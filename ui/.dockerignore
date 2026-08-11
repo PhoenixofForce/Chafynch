@@ -1,7 +1,0 @@
-.git
-.idea
-.vscode
-node_modules
-build
-.env
-.svelte-kit

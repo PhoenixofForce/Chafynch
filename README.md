@@ -28,9 +28,9 @@ and uses
 
 ## Side Services
 
-Start the `docker-compose.dev.yml` to start the database. 
+Start the `docker/compose.dev.yml` to start the database. 
 ```bash
-docker compose --file ./docker-compose.dev.yml up -d
+docker compose --file docker/compose.dev.yml up -d
 ```
 
 ## Backend

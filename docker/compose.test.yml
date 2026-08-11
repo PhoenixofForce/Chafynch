@@ -10,8 +10,8 @@ services:
 
   service:
     build:
-      context: .
-      dockerfile: ./service.Dockerfile
+      context: ..
+      dockerfile: ./docker/service.Dockerfile
     ports:
       - "8080:8080"
     depends_on:
@@ -19,8 +19,8 @@ services:
 
   ui:
     build:
-      context: ./ui
-      dockerfile: ../ui.Dockerfile
+      context: ..
+      dockerfile: ./docker/ui.Dockerfile
     ports:
       - "3000:3000"
     depends_on:
