@@ -1,7 +1,6 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
 import dev.phoenixofforce.tea.tracker.location.Location;
-import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.Cultivar;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaType;
 import dev.phoenixofforce.tea.tracker.vendor.Vendor;
@@ -16,7 +15,6 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -71,14 +69,6 @@ public class Tea {
     private String website;
 
     private Integer rating;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @JoinTable(
-        name = "session_tasting_notes",
-        joinColumns = @JoinColumn(name = "tea_id"),
-        inverseJoinColumns = @JoinColumn(name = "tasting_note_id"))
-    private List<TastingNote> tastingNotes;
 
     @Override
     public final boolean equals(Object o) {

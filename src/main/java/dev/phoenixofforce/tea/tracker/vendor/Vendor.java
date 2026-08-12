@@ -45,7 +45,7 @@ public class Vendor {
             : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         Vendor vendor = (Vendor) o;
-        return getId() != null && Objects.equals(getId(), vendor.getId());
+        return Objects.equals(getId(), vendor.getId());
     }
 
     @Override

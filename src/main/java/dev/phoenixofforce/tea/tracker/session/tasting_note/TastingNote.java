@@ -35,7 +35,7 @@ public class TastingNote {
             : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         TastingNote tastingNote = (TastingNote) o;
-        return getId() != null && Objects.equals(getId(), tastingNote.getId());
+        return Objects.equals(getId(), tastingNote.getId());
     }
 
     @Override

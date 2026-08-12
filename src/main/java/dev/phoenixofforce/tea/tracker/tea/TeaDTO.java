@@ -1,7 +1,5 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
-import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
-
 import lombok.Data;
 
 import jakarta.validation.constraints.NotBlank;
@@ -51,8 +49,6 @@ public class TeaDTO {
 
     private Integer rating;
 
-    private List<TastingNoteDto> tastingNotes;
-
     public static TeaDTO from(Tea tea) {
         TeaDTO dto = new TeaDTO();
         dto.setId(tea.getId());
@@ -76,9 +72,6 @@ public class TeaDTO {
         if (tea.getWebsite() != null) dto.setWebsite(tea.getWebsite());
         if (tea.getHarvestYear() != null) dto.setHarvestYear(tea.getHarvestYear());
         if (tea.getHarvestLabel() != null) dto.setHarvestLabel(tea.getHarvestLabel());
-        if (tea.getTastingNotes() != null) {
-            dto.setTastingNotes(TastingNoteDto.from(tea.getTastingNotes()));
-        } else dto.setTastingNotes(List.of());
 
         return dto;
     }

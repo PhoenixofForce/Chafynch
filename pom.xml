@@ -215,7 +215,9 @@
 							<version>4.36</version>
 							<file>${project.basedir}/.config/eclipse-formatter.xml</file>
 						</eclipse>
-						<removeUnusedImports/>
+						<removeUnusedImports>
+							<engine>cleanthat-javaparser-unnecessaryimport</engine>
+						</removeUnusedImports>
 						<importOrder>
 							<order>dev.phoenixofforce,,lombok,org.springframework,jakarta,java</order>
 						</importOrder>

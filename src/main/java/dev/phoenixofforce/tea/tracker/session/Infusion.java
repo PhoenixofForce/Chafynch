@@ -1,42 +1,53 @@
-package dev.phoenixofforce.tea.tracker.location;
+package dev.phoenixofforce.tea.tracker.session;
 
 import org.hibernate.proxy.HibernateProxy;
 
 import lombok.*;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "location")
+@Table(name = "infusion")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Location {
+public class Infusion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String country;
+    private Instant startTime;
 
-    private String province;
+    private BigDecimal infusionTime;
 
-    private String city;
+    private BigDecimal temperature;
 
-    @Min(-180)
-    @Max(180)
-    private Double longitude;
+    private Integer rating;
 
-    @Min(-90)
-    @Max(90)
-    private Double latitude;
+    private boolean isRinse;
+
+    @OneToMany(mappedBy = "infusion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<InfusionTastingNote> tastingNotes = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "session_id", nullable = false)
+    @ToString.Exclude
+    private Session session;
+
+    public void addTastingNote(InfusionTastingNote tastingNote) {
+        this.tastingNotes.add(tastingNote);
+        tastingNote.setInfusion(this);
+    }
 
     @Override
     public final boolean equals(Object o) {
@@ -49,8 +60,8 @@ public class Location {
             ? proxy.getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Location location = (Location) o;
-        return Objects.equals(getId(), location.getId());
+        Infusion infusion = (Infusion) o;
+        return Objects.equals(getId(), infusion.getId());
     }
 
     @Override
@@ -59,4 +70,5 @@ public class Location {
             ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode()
             : getClass().hashCode();
     }
+
 }

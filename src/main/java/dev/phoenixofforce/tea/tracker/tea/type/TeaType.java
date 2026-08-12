@@ -36,7 +36,7 @@ public class TeaType {
             : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         TeaType teaType = (TeaType) o;
-        return getId() != null && Objects.equals(getId(), teaType.getId());
+        return Objects.equals(getId(), teaType.getId());
     }
 
     @Override
