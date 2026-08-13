@@ -4,12 +4,12 @@ import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.proxy.HibernateProxy;
 
 import lombok.*;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -21,19 +21,18 @@ import java.util.Objects;
 @AllArgsConstructor
 public class SessionTastingNote {
 
-    @EmbeddedId
-    private SessionTastingNoteId id = new SessionTastingNoteId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "session_id", nullable = false)
-    @MapsId("sessionId")
     @ToString.Exclude
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Session session;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tasting_note_id", nullable = false)
-    @MapsId("tastingNoteId")
     @ToString.Exclude
     @OnDelete(action = OnDeleteAction.CASCADE)
     private TastingNote tastingNote;
@@ -42,31 +41,25 @@ public class SessionTastingNote {
 
     private String subCategory;
 
-    @Embeddable
-    @Getter
-    @Setter
-    @ToString
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class SessionTastingNoteId implements Serializable {
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass()
+            : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass()
+            : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        SessionTastingNote tastingNote = (SessionTastingNote) o;
+        return Objects.equals(getId(), tastingNote.getId());
+    }
 
-        private Long sessionId;
-
-        private Long tastingNoteId;
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null) return false;
-            if (!(o instanceof SessionTastingNoteId id)) return false;
-
-            return Objects.equals(getSessionId(), id.getSessionId()) &&
-                Objects.equals(getTastingNoteId(), id.getTastingNoteId());
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(getSessionId(), getTastingNoteId());
-        }
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy proxy
+            ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode()
+            : getClass().hashCode();
     }
 }

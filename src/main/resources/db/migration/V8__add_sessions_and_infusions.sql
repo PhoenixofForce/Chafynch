@@ -15,12 +15,14 @@ CREATE INDEX idx_session_tea ON session (tea_id);
 
 DROP TABLE session_tasting_notes;
 CREATE TABLE session_tasting_notes (
+	id BIGSERIAL PRIMARY KEY,
 	session_id BIGINT NOT NULL REFERENCES session(id) ON DELETE CASCADE,
 	tasting_note_id BIGINT NOT NULL REFERENCES tasting_note(id) ON DELETE CASCADE,
 	category VARCHAR(255),
-	sub_category VARCHAR(255),
-	PRIMARY KEY (session_id, tasting_note_id)
+	sub_category VARCHAR(255)
 );
+ALTER TABLE session_tasting_notes ADD CONSTRAINT uq_session_tasting_notes UNIQUE (session_id, tasting_note_id, category, sub_category);
+CREATE INDEX idx_session_tasting_notes_session ON session_tasting_notes (session_id);
 CREATE INDEX idx_session_tasting_notes_tasting_note ON session_tasting_notes (tasting_note_id);
 
 CREATE TABLE infusion (
@@ -35,11 +37,12 @@ CREATE TABLE infusion (
 CREATE INDEX idx_infusion_session ON infusion (session_id);
 
 CREATE TABLE infusion_tasting_notes (
+	id BIGSERIAL PRIMARY KEY,
 	infusion_id BIGINT NOT NULL REFERENCES infusion(id) ON DELETE CASCADE,
 	tasting_note_id BIGINT NOT NULL REFERENCES tasting_note(id) ON DELETE CASCADE,
 	category VARCHAR(255),
-	sub_category VARCHAR(255),
-	PRIMARY KEY (infusion_id, tasting_note_id)
+	sub_category VARCHAR(255)
 );
+ALTER TABLE infusion_tasting_notes ADD CONSTRAINT uq_infusion_tasting_notes UNIQUE (infusion_id, tasting_note_id, category, sub_category);
 CREATE INDEX idx_infusion_tasting_notes_infusion ON infusion_tasting_notes (infusion_id);
 CREATE INDEX idx_infusion_tasting_notes_tasting_note ON infusion_tasting_notes (tasting_note_id);
