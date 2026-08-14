@@ -1,5 +1,8 @@
 package dev.phoenixofforce.tea.tracker.session;
 
+import dev.phoenixofforce.tea.tracker.session.infusion.Infusion;
+import dev.phoenixofforce.tea.tracker.session.infusion.InfusionDto;
+import dev.phoenixofforce.tea.tracker.session.infusion.InfusionTastingNote;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteService;
@@ -8,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
@@ -18,6 +22,34 @@ import java.util.*;
 public class SessionService {
 
     private final TastingNoteService tastingNoteService;
+
+    private final SessionRepository repository;
+
+    @Transactional(readOnly = true)
+    public List<SessionDto> findAll() {
+        return repository.findAll().stream()
+            .map(SessionDto::from)
+            .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public SessionDto getById(Long id) {
+        Session session = repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
+        return SessionDto.from(session);
+    }
+
+    @Transactional
+    public SessionDto createOrUpdateSession(SessionDto dto) {
+        Session session = new Session();
+        if (dto.getId() != null) {
+            session = repository.findById(dto.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
+        }
+        applyDto(dto, session);
+        session = repository.save(session);
+        return SessionDto.from(session);
+    }
 
     private void applyDto(SessionDto dto, Session session) {
         session.setStartTime(dto.getStartTime());

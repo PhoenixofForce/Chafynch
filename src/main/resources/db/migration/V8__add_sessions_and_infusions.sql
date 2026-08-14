@@ -13,7 +13,7 @@ CREATE TABLE session (
 );
 CREATE INDEX idx_session_tea ON session (tea_id);
 
-DROP TABLE session_tasting_notes;
+DROP TABLE IF EXISTS session_tasting_notes;
 CREATE TABLE session_tasting_notes (
 	id BIGSERIAL PRIMARY KEY,
 	session_id BIGINT NOT NULL REFERENCES session(id) ON DELETE CASCADE,

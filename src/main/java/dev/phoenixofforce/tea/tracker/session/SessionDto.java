@@ -1,5 +1,6 @@
 package dev.phoenixofforce.tea.tracker.session;
 
+import dev.phoenixofforce.tea.tracker.session.infusion.InfusionDto;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
 
 import lombok.Data;
@@ -41,7 +42,13 @@ public class SessionDto {
         SessionDto dto = new SessionDto();
 
         dto.setId(session.getId());
-        dto.setStartTime(session.getStartTime());
+
+        if (session.getStartTime() != null) {
+            dto.setStartTime(session.getStartTime());
+        } else {
+            dto.setStartTime(Instant.now());
+        }
+
         dto.setLastUpdated(session.getLastUpdated());
         dto.setWeight(session.getWeight());
         dto.setVolume(session.getVolume());

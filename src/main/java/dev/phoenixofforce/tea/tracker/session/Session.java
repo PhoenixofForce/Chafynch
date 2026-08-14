@@ -1,5 +1,6 @@
 package dev.phoenixofforce.tea.tracker.session;
 
+import dev.phoenixofforce.tea.tracker.session.infusion.Infusion;
 import dev.phoenixofforce.tea.tracker.tea.Tea;
 
 import org.hibernate.annotations.OnDelete;

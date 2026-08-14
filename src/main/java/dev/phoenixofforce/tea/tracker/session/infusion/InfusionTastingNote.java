@@ -1,53 +1,45 @@
-package dev.phoenixofforce.tea.tracker.session;
+package dev.phoenixofforce.tea.tracker.session.infusion;
 
+import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
 
 import lombok.*;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "infusion")
+@Table(name = "infusion_tasting_notes")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Infusion {
+public class InfusionTastingNote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Instant startTime;
-
-    private BigDecimal infusionTime;
-
-    private BigDecimal temperature;
-
-    private Integer rating;
-
-    private boolean isRinse;
-
-    @OneToMany(mappedBy = "infusion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "infusion_id", nullable = false)
     @ToString.Exclude
-    private List<InfusionTastingNote> tastingNotes = new ArrayList<>();
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Infusion infusion;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "session_id", nullable = false)
+    @JoinColumn(name = "tasting_note_id", nullable = false)
     @ToString.Exclude
-    private Session session;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private TastingNote tastingNote;
 
-    public void addTastingNote(InfusionTastingNote tastingNote) {
-        this.tastingNotes.add(tastingNote);
-        tastingNote.setInfusion(this);
-    }
+    private String category;
+
+    private String subCategory;
 
     @Override
     public final boolean equals(Object o) {
@@ -60,8 +52,8 @@ public class Infusion {
             ? proxy.getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Infusion infusion = (Infusion) o;
-        return Objects.equals(getId(), infusion.getId());
+        InfusionTastingNote tastingNote = (InfusionTastingNote) o;
+        return Objects.equals(getId(), tastingNote.getId());
     }
 
     @Override
@@ -70,5 +62,4 @@ public class Infusion {
             ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode()
             : getClass().hashCode();
     }
-
 }

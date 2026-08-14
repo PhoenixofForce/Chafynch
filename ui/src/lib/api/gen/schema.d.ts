@@ -52,6 +52,22 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
+	'/api/sessions/{id}': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get: operations['getById'];
+		put: operations['updateSession'];
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
 	'/api/cultivars/{id}': {
 		parameters: {
 			query?: never;
@@ -110,6 +126,22 @@ export interface paths {
 		get: operations['findAll_1'];
 		put?: never;
 		post: operations['create_1'];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	'/api/sessions': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get: operations['getAll'];
+		put?: never;
+		post: operations['createSession'];
 		delete?: never;
 		options?: never;
 		head?: never;
@@ -184,11 +216,6 @@ export interface components {
 			website?: string;
 			locationDto?: components['schemas']['LocationDto'];
 		};
-		TastingNoteDto: {
-			/** Format: int64 */
-			id: number;
-			note: string;
-		};
 		TeaDTO: {
 			/** Format: int64 */
 			id?: number;
@@ -214,12 +241,47 @@ export interface components {
 			website?: string;
 			/** Format: int32 */
 			rating?: number;
-			tastingNotes?: components['schemas']['TastingNoteDto'][];
 		};
 		TeaTypeDto: {
 			/** Format: int64 */
 			id: number;
 			name: string;
+		};
+		InfusionDto: {
+			/** Format: int64 */
+			id?: number;
+			/** Format: date-time */
+			startTime?: string;
+			infusionTime?: number;
+			temperature?: number;
+			/** Format: int32 */
+			rating?: number;
+			tastingNotes?: components['schemas']['TastingNoteDto'][];
+			rinse?: boolean;
+		};
+		SessionDto: {
+			/** Format: int64 */
+			id?: number;
+			/** Format: date-time */
+			startTime?: string;
+			/** Format: date-time */
+			lastUpdated?: string;
+			weight?: number;
+			volume?: number;
+			location?: string;
+			people?: string;
+			/** Format: int32 */
+			rating?: number;
+			sessionSummary?: string;
+			nextSessionHint?: string;
+			hintFromLastSession?: string;
+			infusions?: components['schemas']['InfusionDto'][];
+			tastingNotes?: components['schemas']['TastingNoteDto'][];
+		};
+		TastingNoteDto: {
+			category?: string;
+			subCategory?: string;
+			note?: string;
 		};
 		CultivarDto: {
 			/** Format: int64 */
@@ -423,6 +485,54 @@ export interface operations {
 			};
 		};
 	};
+	getById: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				id: number;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['SessionDto'];
+				};
+			};
+		};
+	};
+	updateSession: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				id: number;
+			};
+			cookie?: never;
+		};
+		requestBody: {
+			content: {
+				'application/json': components['schemas']['SessionDto'];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['SessionDto'];
+				};
+			};
+		};
+	};
 	update_3: {
 		parameters: {
 			query?: never;
@@ -597,6 +707,50 @@ export interface operations {
 				};
 				content: {
 					'*/*': components['schemas']['TeaTypeDto'];
+				};
+			};
+		};
+	};
+	getAll: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['SessionDto'][];
+				};
+			};
+		};
+	};
+	createSession: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody: {
+			content: {
+				'application/json': components['schemas']['SessionDto'];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['SessionDto'];
 				};
 			};
 		};

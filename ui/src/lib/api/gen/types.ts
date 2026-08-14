@@ -4,9 +4,11 @@ import type { components } from './schema';
 
 export type LocationDto = components['schemas']['LocationDto'];
 export type VendorDto = components['schemas']['VendorDto'];
-export type TastingNoteDto = components['schemas']['TastingNoteDto'];
 export type TeaDTO = components['schemas']['TeaDTO'];
 export type TeaTypeDto = components['schemas']['TeaTypeDto'];
+export type InfusionDto = components['schemas']['InfusionDto'];
+export type SessionDto = components['schemas']['SessionDto'];
+export type TastingNoteDto = components['schemas']['TastingNoteDto'];
 export type CultivarDto = components['schemas']['CultivarDto'];
 export type ExtractionFieldSetting = components['schemas']['ExtractionFieldSetting'];
 export type ExtractionProfile = components['schemas']['ExtractionProfile'];

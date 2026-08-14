@@ -1,4 +1,4 @@
-package dev.phoenixofforce.tea.tracker.session;
+package dev.phoenixofforce.tea.tracker.session.infusion;
 
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
 
