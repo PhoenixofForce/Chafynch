@@ -18,6 +18,7 @@
 		<java.version>25</java.version>
 		<revision>0.0.1-SNAPSHOT</revision>
 		<checkstyle.failOnViolation>false</checkstyle.failOnViolation>
+		<errorprone.args>-XepAllErrorsAsWarnings</errorprone.args>
 	</properties>
 
 	<dependencies>
@@ -144,7 +145,7 @@
 					<compilerArgs>
 						<arg>-XDcompilePolicy=simple</arg>
 						<arg>--should-stop=ifError=FLOW</arg>
-						<arg>-Xplugin:ErrorProne -XepAllErrorsAsWarnings -XepDisableWarningsInGeneratedCode -Xep:EqualsGetClass:OFF -Xep:EmptyCatch:OFF -Xep:LexicographicalAnnotationListing:OFF -Xep:LexicographicalAnnotationAttributeListing:OFF -Xep:LexicographicalPermitsListing:OFF -Xep:CanonicalAnnotationSyntax:OFF -Xep:StaticImport:OFF</arg>
+						<arg>-Xplugin:ErrorProne ${errorprone.args} -XepDisableWarningsInGeneratedCode -Xep:EqualsGetClass:OFF -Xep:EmptyCatch:OFF -Xep:LexicographicalAnnotationListing:OFF -Xep:LexicographicalAnnotationAttributeListing:OFF -Xep:LexicographicalPermitsListing:OFF -Xep:CanonicalAnnotationSyntax:OFF -Xep:StaticImport:OFF</arg>
 					</compilerArgs>
 					<annotationProcessorPaths>
 						<path>
