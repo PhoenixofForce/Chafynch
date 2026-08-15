@@ -9,6 +9,7 @@ import java.time.Clock;
 public class ClockConfig {
 
     @Bean
+    @SuppressWarnings("TimeZoneUsage")
     public Clock getClock() {
         return Clock.systemUTC();
     }

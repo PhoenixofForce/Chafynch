@@ -2,14 +2,14 @@
 	import Button from '$lib/basics/Button.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import { Pause, Play, X } from '@lucide/svelte';
-	import type { Infusion } from './types';
 	import Checkbox from '$lib/basics/Checkbox.svelte';
+	import type { InfusionDto } from '$lib/api/gen/types';
 
 	let {
 		activeInfusion,
 		// eslint-disable-next-line no-useless-assignment
 		isTimerRunning = $bindable(false)
-	}: { activeInfusion?: Infusion; isTimerRunning: boolean } = $props();
+	}: { activeInfusion?: InfusionDto; isTimerRunning: boolean } = $props();
 
 	let mode = $state(0);
 	let timer = $state(0);
