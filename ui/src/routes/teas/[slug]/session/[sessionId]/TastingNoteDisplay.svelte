@@ -1,8 +1,9 @@
 <script lang="ts">
+	import type { TastingNoteDto } from '$lib/api/gen/types';
 	import Button from '$lib/basics/Button.svelte';
 	import { Plus } from '@lucide/svelte';
 
-	let { name, notes, openModal }: { name: string; notes: string[]; openModal: () => void } =
+	let { name, notes, openModal }: { name: string; notes: TastingNoteDto[]; openModal: () => void } =
 		$props();
 </script>
 
@@ -10,7 +11,7 @@
 	<span class="min-w-1/10 text-xs text-base-content/80">{name}</span>
 	<span class="flex flex-1 flex-wrap gap-2">
 		{#each notes as tag (tag)}
-			<div class="badge badge-xs badge-accent">{tag}</div>
+			<div class="badge badge-xs badge-accent">{tag.note}</div>
 		{/each}
 	</span>
 	<Button class="h-4 w-4" icon={Plus} noAnimation onclick={openModal} />

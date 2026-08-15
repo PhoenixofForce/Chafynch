@@ -6,6 +6,7 @@ import dev.phoenixofforce.tea.tracker.session.infusion.InfusionTastingNote;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNote;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteDto;
 import dev.phoenixofforce.tea.tracker.session.tasting_note.TastingNoteService;
+import dev.phoenixofforce.tea.tracker.tea.TeaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,12 +15,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Instant;
+import java.time.Clock;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class SessionService {
+
+    private final Clock clock;
+
+    private final TeaRepository teaRepository;
 
     private final TastingNoteService tastingNoteService;
 
@@ -40,12 +45,17 @@ public class SessionService {
     }
 
     @Transactional
-    public SessionDto createOrUpdateSession(SessionDto dto) {
+    public SessionDto createOrUpdateSession(Long teaId, SessionDto dto) {
         Session session = new Session();
         if (dto.getId() != null) {
             session = repository.findById(dto.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
+        } else {
+            session.setTea(
+                teaRepository.findById(teaId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tea not found")));
         }
+
         applyDto(dto, session);
         session = repository.save(session);
         return SessionDto.from(session);
@@ -53,7 +63,7 @@ public class SessionService {
 
     private void applyDto(SessionDto dto, Session session) {
         session.setStartTime(dto.getStartTime());
-        session.setLastUpdated(Instant.now()); // Todo: only if old stamp is newer then 24h
+        session.setLastUpdated(clock.instant()); // Todo: only if old stamp is newer then 24h
         session.setWeight(dto.getWeight());
         session.setVolume(dto.getVolume());
         session.setLocation(dto.getLocation());
@@ -95,6 +105,7 @@ public class SessionService {
             .removeIf(infusion -> infusion.getId() != null && !infusionsToKeep.contains(infusion.getId()));
 
         session.getTastingNotes().clear();
+        repository.flush();
         for (TastingNoteDto noteDto : dto.getTastingNotes()) {
             TastingNote note = tastingNoteResolver.get(noteDto.note());
 
@@ -117,6 +128,7 @@ public class SessionService {
         infusion.setRinse(dto.isRinse());
 
         infusion.getTastingNotes().clear();
+        repository.flush();
         for (TastingNoteDto noteDto : dto.getTastingNotes()) {
             TastingNote note = tastingNoteResolver.get(noteDto.note());
 

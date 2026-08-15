@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Session } from './types';
+	import type { SessionDto } from '$lib/api/gen/types';
 	import Rating from '$lib/basics/Rating.svelte';
 	import Textarea from '$lib/basics/Textarea.svelte';
 
-	let { session = $bindable() }: { session: Session } = $props();
+	let { session = $bindable() }: { session: SessionDto } = $props();
 </script>
 
 <div class="mb-4 flex flex-col gap-4">

@@ -1,30 +1,3 @@
-// Todo: should come from the backend
-
-export interface Infusion {
-	startTime: Date;
-	infusionTime?: number;
-	temperature?: number;
-	rating?: number;
-	tastingNotes: Record<string, string[]>;
-	isRinse?: boolean;
-}
-
-export interface Session {
-	weight?: number;
-	volume?: number;
-	brewingMethod?: string;
-	location?: string;
-	people?: string;
-	tastingNotes: Record<string, string[]>; // dry leaf eyes and nose
-
-	infusions: Infusion[];
-
-	rating?: number;
-	sessionSummary?: string;
-	nextSessionHint?: string;
-	startTime?: Date;
-}
-
 export type TastingNoteCategory = {
 	name: string;
 	subCategories: string[];

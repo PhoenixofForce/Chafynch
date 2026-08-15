@@ -15,11 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SessionController {
 
-    // Todo: add tea
-
     private final SessionService service;
 
-    @GetMapping //Todo: stripped down variant
+    // Todo: stripped down variant
+    // Todo: add for by tea
+    @GetMapping
     public List<SessionDto> getAll() {
         return service.findAll();
     }
@@ -29,14 +29,14 @@ public class SessionController {
         return service.getById(id);
     }
 
-    @PostMapping
-    public SessionDto createSession(@Valid @RequestBody SessionDto dto) {
-        return service.createOrUpdateSession(dto);
+    @PostMapping("/{teaId}")
+    public SessionDto createSession(@PathVariable Long teaId, @Valid @RequestBody SessionDto dto) {
+        return service.createOrUpdateSession(teaId, dto);
     }
 
     @PutMapping("/{id}")
     public SessionDto updateSession(@PathVariable Long id, @Valid @RequestBody SessionDto dto) {
         dto.setId(id);
-        return service.createOrUpdateSession(dto);
+        return service.createOrUpdateSession(null, dto);
     }
 }

@@ -132,14 +132,14 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
-	'/api/sessions': {
+	'/api/sessions/{teaId}': {
 		parameters: {
 			query?: never;
 			header?: never;
 			path?: never;
 			cookie?: never;
 		};
-		get: operations['getAll'];
+		get?: never;
 		put?: never;
 		post: operations['createSession'];
 		delete?: never;
@@ -174,6 +174,22 @@ export interface paths {
 		get: operations['search_1'];
 		put?: never;
 		post: operations['create_3'];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	'/api/sessions': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get: operations['getAll'];
+		put?: never;
+		post?: never;
 		delete?: never;
 		options?: never;
 		head?: never;
@@ -711,31 +727,13 @@ export interface operations {
 			};
 		};
 	};
-	getAll: {
-		parameters: {
-			query?: never;
-			header?: never;
-			path?: never;
-			cookie?: never;
-		};
-		requestBody?: never;
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					'*/*': components['schemas']['SessionDto'][];
-				};
-			};
-		};
-	};
 	createSession: {
 		parameters: {
 			query?: never;
 			header?: never;
-			path?: never;
+			path: {
+				teaId: number;
+			};
 			cookie?: never;
 		};
 		requestBody: {
@@ -839,6 +837,26 @@ export interface operations {
 				};
 				content: {
 					'*/*': components['schemas']['CultivarDto'];
+				};
+			};
+		};
+	};
+	getAll: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['SessionDto'][];
 				};
 			};
 		};

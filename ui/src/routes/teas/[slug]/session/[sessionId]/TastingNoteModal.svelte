@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { TastingNoteDto } from '$lib/api/gen/types';
 	import Input from '$lib/basics/Input.svelte';
 	import Modal from '$lib/basics/Modal.svelte';
 	import { type TastingNoteCategory } from './types';
@@ -6,7 +7,7 @@
 	let {
 		infusion,
 		categories
-	}: { infusion?: { tastingNotes: Record<string, string[]> }; categories: TastingNoteCategory[] } =
+	}: { infusion?: { tastingNotes?: TastingNoteDto[] }; categories: TastingNoteCategory[] } =
 		$props();
 
 	let allNotes = ['Smooth', 'Sweet'];
@@ -19,21 +20,41 @@
 	let selectedSubCategoryIndex = $state(0);
 	let selectedSubCategory = $derived(selectedCategory.subCategories[selectedSubCategoryIndex]);
 
-	let categoryKey = $derived(selectedCategory.name + '/' + selectedSubCategory);
-	let selectedNotes = $derived<string[]>(infusion?.tastingNotes[categoryKey] ?? []);
+	let selectedNotes = $derived<TastingNoteDto[]>(
+		infusion?.tastingNotes?.filter(
+			(e) => e.category === selectedCategory.name && e.subCategory === selectedSubCategory
+		) ?? []
+	);
 
 	let noteSuggestions = $derived(
 		allNotes
 			.filter((note) => note.toLowerCase().includes(filter.toLowerCase()))
-			.filter((note) => !selectedNotes.includes(note))
+			.filter((note) => !selectedNotes.some((e) => e.note === note))
 	);
 
 	function toggle(tag: string) {
 		if (!infusion) return;
-		let notes = infusion.tastingNotes[categoryKey] ?? [];
-		infusion.tastingNotes[categoryKey] = notes.includes(tag)
-			? notes.filter((e) => e !== tag)
-			: [tag, ...notes];
+		const tastingNote: TastingNoteDto = {
+			category: selectedCategory.name,
+			subCategory: selectedSubCategory,
+			note: tag
+		};
+
+		infusion.tastingNotes = infusion.tastingNotes?.some(
+			(e) =>
+				e.note === tastingNote.note &&
+				e.category === tastingNote.category &&
+				e.subCategory === tastingNote.subCategory
+		)
+			? infusion.tastingNotes.filter(
+					(e) =>
+						!(
+							e.note === tastingNote.note &&
+							e.category === tastingNote.category &&
+							e.subCategory === tastingNote.subCategory
+						)
+				)
+			: [tastingNote, ...(infusion.tastingNotes ?? [])];
 	}
 
 	let modalOpen = $state(false);
@@ -96,7 +117,7 @@
 		{#if selectedNotes.length}
 			<div class="flex gap-2">
 				{#each selectedNotes as tag (tag)}
-					<button class="badge badge-accent" onclick={() => toggle(tag)}>{tag}</button>
+					<button class="badge badge-accent" onclick={() => toggle(tag.note!)}>{tag.note}</button>
 				{/each}
 			</div>
 

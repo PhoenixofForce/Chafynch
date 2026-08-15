@@ -2,13 +2,14 @@
 	import CountryMap from '$lib/geo/CountryMap.svelte';
 	import Button from '$lib/basics/Button.svelte';
 	import Markdown from '$lib/basics/Markdown.svelte';
-	import { Calendar, Coffee, Coins, Pen, Trash, Weight, X } from '@lucide/svelte';
+	import { Calendar, Coffee, Coins, Pen, Trash, Weight } from '@lucide/svelte';
 	import { icons } from '$lib/basics/icons.js';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { teaService } from '$lib/api/tea.service.js';
 	import { toast } from '$lib/toast/toast.store.svelte.js';
 	import { confirmation } from '$lib/confirmation/confirmation.store.svelte.js';
+	import { sessionService } from '$lib/api/session.service.js';
 
 	let { data } = $props();
 	let deleting = $state(false);
@@ -35,6 +36,23 @@
 				}
 			}
 		});
+	}
+
+	async function startNewSession() {
+		const newSession = await sessionService.create(data.tea.id!, {
+			startTime: new Date().toISOString()
+		});
+
+		if (!newSession || !newSession.id) {
+			toast.error('Could not create new session');
+		}
+
+		goto(
+			resolve('/teas/[slug]/session/[sessionId]', {
+				slug: data.tea.id + '',
+				sessionId: newSession.id! + ''
+			})
+		);
 	}
 </script>
 
@@ -170,12 +188,7 @@
 	<div class="flex flex-col items-center gap-4 md:items-end">
 		<div class="prose mb-3 flex min-w-full items-center justify-between">
 			<h2 class="mb-0">Session Logs</h2>
-			<Button
-				class="btn-primary"
-				icon={Coffee}
-				label="Drink now"
-				onclick={() => goto(resolve('/teas/[slug]/session', { slug: data.tea.id + '' }))}
-			/>
+			<Button class="btn-primary" icon={Coffee} label="Drink now" onclick={startNewSession} />
 		</div>
 		<div class="w-full overflow-x-auto">
 			<table class="table table-zebra table-xs">
@@ -402,6 +415,7 @@
 
 {#snippet stats()}
 	<div class="flex flex-col gap-4 text-xs">
+		<!---
 		{#if data.tea.tastingNotes?.length}
 			<b>Tasting Notes</b>
 			<div class="flex flex-wrap gap-2">
@@ -413,6 +427,7 @@
 				{/each}
 			</div>
 		{/if}
+		-->
 		<div>more info coming soon</div>
 	</div>
 {/snippet}

@@ -2,13 +2,14 @@
 	import Button from '$lib/basics/Button.svelte';
 	import { Flag, Leaf, Plus } from '@lucide/svelte';
 	import { tick } from 'svelte';
-	import type { Infusion, Tabs } from './types';
+	import type { Tabs } from './types';
+	import type { InfusionDto } from '$lib/api/gen/types';
 
 	let {
 		disabled = false,
 		infusions = $bindable([]),
 		activeTab = $bindable()
-	}: { disabled?: boolean; infusions: Infusion[]; activeTab: Tabs } = $props();
+	}: { disabled?: boolean; infusions?: InfusionDto[]; activeTab: Tabs } = $props();
 
 	let scrollable: HTMLDivElement;
 
@@ -21,8 +22,8 @@
 
 	async function addInfusion() {
 		infusions.push({
-			startTime: new Date(),
-			tastingNotes: {}
+			startTime: new Date().toISOString(),
+			tastingNotes: []
 		});
 
 		setInfusion(infusions.length - 1);
@@ -53,7 +54,7 @@
 				onclick={() => setInfusion(i)}
 			>
 				<div class="flex flex-col">
-					<b>{infusion.isRinse ? '~' : i + 1}</b>
+					<b>{infusion.rinse ? '~' : i + 1}</b>
 					<span class="text-xs text-neutral/80">
 						{infusion.infusionTime ? infusion.infusionTime.toFixed(2) + 's' : ''}
 					</span>

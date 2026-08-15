@@ -1,20 +1,19 @@
 <script lang="ts">
-	import Combobox from '$lib/basics/Combobox.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
-	import { globalCategories, type Session } from './types';
+	import { globalCategories } from './types';
 	import TastingNoteModal from './TastingNoteModal.svelte';
 	import Button from '$lib/basics/Button.svelte';
-	import { Beaker, CookingPot, MapPin, Scale, User } from '@lucide/svelte';
+	import { Beaker, MapPin, Scale, User } from '@lucide/svelte';
+	import type { SessionDto } from '$lib/api/gen/types';
 
 	let {
 		session = $bindable(),
 		globalTastingNoteModal
-	}: { session: Session; globalTastingNoteModal: ReturnType<typeof TastingNoteModal> } = $props();
+	}: { session: SessionDto; globalTastingNoteModal: ReturnType<typeof TastingNoteModal> } =
+		$props();
 
-	let hasNotes = $derived(
-		Object.values(session?.tastingNotes ?? {}).some((notes) => notes.length > 0)
-	);
+	let hasNotes = $derived((session.tastingNotes?.length ?? 0) > 0);
 </script>
 
 <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -38,6 +37,7 @@
 		bind:value={session.volume}
 	/>
 
+	<!-- forgotton
 	<Combobox
 		class="col-span-full"
 		icon={CookingPot}
@@ -45,6 +45,7 @@
 		placeholder="Brewing Method"
 		bind:value={session.brewingMethod}
 	/>
+	 -->
 
 	<div class="col-span-full w-full text-xs text-base-content/50 uppercase">Surrounding</div>
 	<Input icon={User} inputClass="w-full" placeholder="People" bind:value={session.people} />
@@ -52,12 +53,15 @@
 </div>
 {#if hasNotes}
 	{#each globalCategories as category (category.name)}
-		{#if category.subCategories.some((sub) => (session?.tastingNotes[category.name + '/' + sub] ?? []).length > 0)}
+		{#if category.subCategories.some((sub) => (session?.tastingNotes?.filter((e) => e.category === category.name && e.subCategory === sub) ?? []).length > 0)}
 			<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
 		{/if}
 
 		{#each category.subCategories as subCategory (subCategory)}
-			{@const notes = session?.tastingNotes[category.name + '/' + subCategory] ?? []}
+			{@const notes =
+				session?.tastingNotes?.filter(
+					(e) => e.category === category.name && e.subCategory === subCategory
+				) ?? []}
 			{#if notes.length > 0}
 				<TastingNoteDisplay
 					name={subCategory}
