@@ -64,22 +64,24 @@
 {#if hasNotes}
 	{#each globalCategories as category (category.name)}
 		{#if category.subCategories.some((sub) => (session?.tastingNotes?.filter((e) => e.category === category.name && e.subCategory === sub) ?? []).length > 0)}
-			<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
-		{/if}
+			<div class="flex flex-col gap-2">
+				<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
 
-		{#each category.subCategories as subCategory (subCategory)}
-			{@const notes =
-				session?.tastingNotes?.filter(
-					(e) => e.category === category.name && e.subCategory === subCategory
-				) ?? []}
-			{#if notes.length > 0}
-				<TastingNoteDisplay
-					name={subCategory}
-					{notes}
-					openModal={() => globalTastingNoteModal?.open(category.name, subCategory)}
-				/>
-			{/if}
-		{/each}
+				{#each category.subCategories as subCategory (subCategory)}
+					{@const notes =
+						session?.tastingNotes?.filter(
+							(e) => e.category === category.name && e.subCategory === subCategory
+						) ?? []}
+					{#if notes.length > 0}
+						<TastingNoteDisplay
+							name={subCategory}
+							{notes}
+							openModal={() => globalTastingNoteModal?.open(category.name, subCategory)}
+						/>
+					{/if}
+				{/each}
+			</div>
+		{/if}
 	{/each}
 {:else}
 	<Button
