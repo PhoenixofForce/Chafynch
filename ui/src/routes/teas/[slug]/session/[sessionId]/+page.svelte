@@ -124,7 +124,9 @@
 		{/if}
 	</div>
 	{#if activeTab.tab === 'infusion'}
-		<TimerBar {activeInfusion} bind:isTimerRunning />
+		{#key activeTab.index}
+			<TimerBar {activeInfusion} bind:isTimerRunning />
+		{/key}
 	{/if}
 	<SessionBottomBar disabled={isTimerRunning} bind:infusions={session.infusions} bind:activeTab />
 </div>
