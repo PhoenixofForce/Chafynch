@@ -96,9 +96,10 @@ public class SessionService {
             .resolveOrCreateAll(allTastingNotes);
 
         Set<Long> infusionsToKeep = new HashSet<>();
+        List<Infusion> newInfusions = new ArrayList<>();
         for (InfusionDto infusionDto : dto.getInfusions()) {
             if (infusionDto.getId() == null) {
-                session.addInfusion(applyDto(infusionDto, new Infusion(), tastingNoteResolver));
+                newInfusions.add(applyDto(infusionDto, new Infusion(), tastingNoteResolver));
                 continue;
             }
 
@@ -111,6 +112,7 @@ public class SessionService {
         }
         session.getInfusions()
             .removeIf(infusion -> infusion.getId() != null && !infusionsToKeep.contains(infusion.getId()));
+        newInfusions.forEach(session::addInfusion);
 
         session.getTastingNotes().clear();
         repository.flush();
