@@ -15,6 +15,7 @@ declare global {
 		// interface Locals {}
 		interface PageData {
 			breadcrumbs: Breadcrumb[];
+			selfScrolling?: boolean;
 		}
 		// interface PageState {}
 		// interface Platform {}

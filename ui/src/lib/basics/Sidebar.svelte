@@ -14,7 +14,7 @@
 
 <div class="drawer min-h-0 flex-1 lg:drawer-open">
 	<input id="sidebar" class="drawer-toggle" type="checkbox" bind:checked={drawerOpen} />
-	<div class="drawer-content flex flex-col overflow-y-auto">
+	<div class="drawer-content flex flex-col overflow-y-auto p-6">
 		<!-- Page content here -->
 		{@render pageContent()}
 	</div>

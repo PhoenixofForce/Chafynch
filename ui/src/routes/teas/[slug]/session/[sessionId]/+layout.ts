@@ -10,6 +10,7 @@ export async function load({ params, parent }) {
 	return {
 		tea,
 		session,
+		selfScrolling: true,
 		breadcrumbs: [
 			...breadcrumbs,
 			{ label: 'Session ' + sessionId, path: `/teas/${slug}/session/${sessionId}` }
