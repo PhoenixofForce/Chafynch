@@ -19,9 +19,9 @@ public class SessionController {
 
     // Todo: stripped down variant
     // Todo: add for by tea
-    @GetMapping
-    public List<SessionDto> getAll() {
-        return service.findAll();
+    @GetMapping("/byTea/{teaId}")
+    public List<SessionDto> getAll(@PathVariable Long teaId) {
+        return service.findAll(teaId);
     }
 
     @GetMapping("/{id}")

@@ -28,6 +28,8 @@ public class SessionDto {
 
     private Integer rating;
 
+    private Integer displayRating;
+
     private String sessionSummary;
 
     private String nextSessionHint;
@@ -49,12 +51,23 @@ public class SessionDto {
             dto.setStartTime(Instant.now());
         }
 
+        dto.setRating(session.getRating());
+        if (session.getRating() != null && session.getRating() > 0) {
+            dto.setDisplayRating(session.getRating());
+        } else {
+            double averageRating = session.getInfusions()
+                .stream()
+                .mapToInt(e -> e.getRating() == null ? 0 : e.getRating())
+                .average()
+                .orElse(0);
+            dto.setDisplayRating((int) Math.round(averageRating));
+        }
+
         dto.setLastUpdated(session.getLastUpdated());
         dto.setWeight(session.getWeight());
         dto.setVolume(session.getVolume());
         dto.setLocation(session.getLocation());
         dto.setPeople(session.getPeople());
-        dto.setRating(session.getRating());
         dto.setSessionSummary(session.getSessionSummary());
         dto.setNextSessionHint(session.getNextSessionHint());
 

@@ -31,8 +31,8 @@ public class SessionService {
     private final SessionRepository repository;
 
     @Transactional(readOnly = true)
-    public List<SessionDto> findAll() {
-        return repository.findAll().stream()
+    public List<SessionDto> findAll(Long teaId) {
+        return repository.findByTeaId(teaId).stream()
             .map(SessionDto::from)
             .toList();
     }
@@ -41,7 +41,13 @@ public class SessionService {
     public SessionDto getById(Long id) {
         Session session = repository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
-        return SessionDto.from(session);
+
+        SessionDto dto = SessionDto.from(session);
+
+        Optional<Session> lastSession = repository.findLastSessionBeforeId(id);
+        dto.setHintFromLastSession(lastSession.map(Session::getNextSessionHint).orElse(null));
+
+        return dto;
     }
 
     @Transactional

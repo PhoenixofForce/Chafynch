@@ -180,7 +180,7 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
-	'/api/sessions': {
+	'/api/sessions/byTea/{teaId}': {
 		parameters: {
 			query?: never;
 			header?: never;
@@ -288,6 +288,8 @@ export interface components {
 			people?: string;
 			/** Format: int32 */
 			rating?: number;
+			/** Format: int32 */
+			displayRating?: number;
 			sessionSummary?: string;
 			nextSessionHint?: string;
 			hintFromLastSession?: string;
@@ -845,7 +847,9 @@ export interface operations {
 		parameters: {
 			query?: never;
 			header?: never;
-			path?: never;
+			path: {
+				teaId: number;
+			};
 			cookie?: never;
 		};
 		requestBody?: never;

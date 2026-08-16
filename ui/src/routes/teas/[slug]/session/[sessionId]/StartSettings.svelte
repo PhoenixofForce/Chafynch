@@ -51,6 +51,16 @@
 	<Input icon={User} inputClass="w-full" placeholder="People" bind:value={session.people} />
 	<Input icon={MapPin} inputClass="w-full" placeholder="Location" bind:value={session.location} />
 </div>
+
+<div class="prose">
+	<div class="col-span-full w-full text-xs text-base-content/50 uppercase">
+		Note from last session
+	</div>
+	<p>
+		{session.hintFromLastSession}
+	</p>
+</div>
+
 {#if hasNotes}
 	{#each globalCategories as category (category.name)}
 		{#if category.subCategories.some((sub) => (session?.tastingNotes?.filter((e) => e.category === category.name && e.subCategory === sub) ?? []).length > 0)}
