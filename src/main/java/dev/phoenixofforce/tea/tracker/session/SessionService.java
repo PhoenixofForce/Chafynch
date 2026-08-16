@@ -34,7 +34,9 @@ public class SessionService {
     public List<SessionDto> findAll(Long teaId) {
         return repository.findByTeaId(teaId).stream()
             .map(SessionDto::from)
-            .toList();
+            .sorted(Comparator.comparing(SessionDto::getStartTime))
+            .toList()
+            .reversed();
     }
 
     @Transactional(readOnly = true)
