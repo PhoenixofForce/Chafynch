@@ -23,7 +23,8 @@
 	async function addInfusion() {
 		infusions.push({
 			startTime: new Date().toISOString(),
-			tastingNotes: []
+			tastingNotes: [],
+			temperature: !infusions?.length ? undefined : infusions!.at(-1)!.temperature
 		});
 
 		setInfusion(infusions.length - 1);

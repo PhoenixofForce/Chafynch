@@ -18,7 +18,7 @@
 
 	let targetTime = $state(20);
 	let blindMode = $state(false);
-	let timingDone = $derived((activeInfusion?.infusionTime ?? 0) > 0);
+	let timingDone = $state((activeInfusion?.infusionTime ?? 0) > 0);
 
 	let interval: ReturnType<typeof setInterval> | null = $state(null);
 
