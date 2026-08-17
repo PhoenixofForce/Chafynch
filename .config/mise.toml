@@ -1,0 +1,90 @@
+[env]
+JAVA_TOOL_OPTIONS = "-Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8"
+
+[tools]
+java = "25"
+maven = "3.9.12"
+node = "24.12.0"
+lefthook = "latest"
+
+[hooks]
+postinstall = { task = "setup" }
+
+[tasks.setup]
+description = "Installs everything needed"
+depends = ["setup:service", "setup:ui"]
+run = "lefthook install"
+
+[tasks."setup:service"]
+description = "Installs everything needed for the backend"
+run = "mvn install -DskipTests"
+
+[tasks."setup:ui"]
+description = "Installs everything needed for the frontend"
+dir = "ui"
+run = "npm ci"
+
+[tasks.external]
+dir = "docker"
+run = [
+  "docker desktop start --timeout 120 || true",
+  "docker compose --file compose.dev.yml up -d --wait",
+]
+description = "Starts docker compose with dev dependencies"
+
+[tasks."external:down"]
+dir = "docker"
+run = "docker compose --file compose.dev.yml down"
+description = "Stops docker compose with dev dependencies"
+
+[tasks.service]
+depends = ["external"]
+run = "mvn spring-boot:run"
+description = "Starts backend"
+env = { SPRING_PROFILES_ACTIVE = "dev" }
+
+[tasks.ui]
+description = "Starts frontend"
+dir = "ui"
+run = "npm run dev"
+
+[tasks.dev]
+description = "Starts the external dependencies as well as backend and frontend"
+depends = ["service", "ui"]
+
+[tasks.ci]
+description = "Does the same checks the ci does"
+depends = ["ci:ui", "ci:service"]
+
+[tasks."ci:service"]
+description = "Does the same backend checks the ci does"
+run = ["mvn spotless:check", "mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args="]
+
+[tasks."ci:ui"]
+description = "Does the same frontend checks the ci does"
+dir = "ui"
+run = "npm run ci"
+
+[tasks.fix]
+description = "Formats everything"
+depends = ["fix:ui", "fix:service"]
+run = "mise fmt"
+
+[tasks."fix:service"]
+description = "Formats backend"
+run = "mvn spotless:apply"
+
+[tasks."fix:ui"]
+description = "Formats frontend"
+dir = "ui"
+run = "npm run fix"
+
+[tasks."generate:api"]
+description = "Generates api from a running backend"
+dir = "ui"
+run = "npm run generate:api"
+
+[tasks."generate:countries"]
+description = "Generates countries"
+dir = "ui"
+run = "npm run generate:countries"

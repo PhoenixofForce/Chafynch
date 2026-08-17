@@ -1,3 +1,4 @@
+name: tea-tracker
 services:
   postgres:
     image: postgres:17
@@ -9,6 +10,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U tea_tracker -d tea_tracker" ]
+      interval: 2s
+      timeout: 3s
+      retries: 10
 
 volumes:
   postgres_data:

@@ -21,6 +21,9 @@ jobs:
             backend:
               - 'src/**'
               - 'pom.xml'
+              - '.config/**'
+              - '.mvn/**'
+              - 'mvnw'
             frontend:
               - 'ui/**'
 
@@ -40,8 +43,11 @@ jobs:
       - name: Check formatting
         run: mvn spotless:check
 
+      - name: Check style
+        run: mvn checkstyle:check -Dcheckstyle.failOnViolation=true
+
       - name: Build and test backend
-        run: mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args=
+        run: mvn verify -Dcheckstyle.skip=true -Derrorprone.args=
 
   frontend:
     needs: changes
