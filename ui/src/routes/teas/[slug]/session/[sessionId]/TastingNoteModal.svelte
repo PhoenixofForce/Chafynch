@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { TastingNoteDto } from '$lib/api/gen/types';
+	import { tastingNoteService } from '$lib/api/tastingNote.service';
 	import Input from '$lib/basics/Input.svelte';
 	import Modal from '$lib/basics/Modal.svelte';
 	import { type TastingNoteCategory } from './types';
@@ -9,8 +10,6 @@
 		categories
 	}: { infusion?: { tastingNotes?: TastingNoteDto[] }; categories: TastingNoteCategory[] } =
 		$props();
-
-	let allNotes = ['Smooth', 'Sweet'];
 
 	let filter = $state('');
 
@@ -26,11 +25,7 @@
 		) ?? []
 	);
 
-	let noteSuggestions = $derived(
-		allNotes
-			.filter((note) => note.toLowerCase().includes(filter.toLowerCase()))
-			.filter((note) => !selectedNotes.some((e) => e.note === note))
-	);
+	let noteSuggestions = $state<string[]>([]);
 
 	function toggle(tag: string) {
 		if (!infusion) return;
@@ -73,6 +68,16 @@
 
 		modalOpen = true;
 	}
+
+	let fetchDebounce: ReturnType<typeof setTimeout> | undefined;
+	function fetchSuggestions() {
+		clearTimeout(fetchDebounce);
+		fetchDebounce = setTimeout(async () => {
+			noteSuggestions = await tastingNoteService.findByNote(filter, 10);
+		}, 200);
+	}
+
+	fetchSuggestions();
 </script>
 
 <Modal class="modal-bottom sm:modal-middle" bind:open={modalOpen}>
@@ -124,7 +129,7 @@
 			<div class="divider my-0"></div>
 		{/if}
 
-		<div class="flex gap-2">
+		<div class="flex flex-wrap gap-2">
 			{#if noteSuggestions.length > 0}
 				{#each noteSuggestions as tag (tag)}
 					<button class="badge badge-neutral" onclick={() => toggle(tag)}>{tag}</button>
@@ -141,6 +146,7 @@
 					toggle(filter);
 					filter = '';
 				}
+				fetchSuggestions();
 			}}
 			placeholder="Search Note (Enter to add)"
 			bind:value={filter}
