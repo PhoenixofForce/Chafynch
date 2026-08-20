@@ -13,12 +13,13 @@ Track your tea stash and take notes as you progress through your sessions.
 
 # Features
 
-- Tea Organization
-  - fetch data automatically from vendors website
-  - see the origin on a map
-- Session tracking
-  - Tasting notes
-  - Timer
+- Keep all your teas in one place with vendor, harvest date, origin and more
+  - Fetch data automatically from vendors website instead of copy-pasting endless fields
+  - See where your teas come from on a map
+- Log your sessions while drinking
+  - Time your infusions
+  - Keep track of how tasting notes develop over time
+  - Leave a message for your next session
 
 ## Planned Features
 
