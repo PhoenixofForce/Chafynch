@@ -88,3 +88,21 @@ run = "npm run generate:api"
 description = "Generates countries"
 dir = "ui"
 run = "npm run generate:countries"
+
+[tasks."test"]
+description = "Runs all tests"
+depends = ["test:service", "test:ui"]
+
+[tasks."test:service"]
+description = "Runs the backend tests"
+run = "mvn test"
+
+[tasks."test:ui"]
+description = "Runs the frontend tests"
+dir = "ui"
+run = "npm run test"
+
+[tasks."test:ui:watch"]
+description = "Runs the frontend tests again on every change"
+dir = "ui"
+run = "npm run test:watch"

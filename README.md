@@ -2,82 +2,64 @@
 
 Track your tea stash and take notes as you progress through your sessions.
 
-## Table of Contents
-- [System Overview](#system-overview)
-- [Development](#development)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
+# Table of Contents
+
+1. [Features](#features)
+   1. [Planned Features](#planned-features)
+2. [System Overview](#system-overview)
+3. [Deployment](#deployment)
+4. [Contributing](#contributing)
+5. [License](#license)
+
+# Features
+
+- Tea Organization
+  - fetch data automatically from vendors website
+  - see the origin on a map
+- Session tracking
+  - Tasting notes
+  - Timer
+
+## Planned Features
+
+- Stock tracking (always know how much tea you got left)
+- user management
+- Teaware tracking
+- Label Generator
+- Collaborative tea sessions
+- LLM integration
 
 # System Overview
 
-This Project requires
-- Java 25
-- npm, node
+The frontend is built as a static site and served from an nginx container. The nginx also proxies `/api` back to the backend, so only one container needs to publish its ports.
 
-and uses
-- [Spring](https://spring.io) as a backend framework
-- **PostgreSQL** used as the database                                                                                                                                                
+This project uses
+- [Spring](https://spring.io) (+ Java 25) as a backend framework
+- **PostgreSQL** used as the database
 - **Flyway** for database migrations
-- [Lombok](https://projectlombok.org) to avoid writing boilerplate
-- [SvelteKit](https://svelte.dev) as a frontend framework
+- [SvelteKit](https://svelte.dev) (+ Typescript) as a frontend framework
 - [Tailwind](https://tailwindcss.com) for fancy css classes
 - [DaisyUi](https://daisyui.com) for components and theming
-- **Typescript**
-
-# Development
-
-## Side Services
-
-Start the `docker/compose.dev.yml` to start the database. 
-```bash
-docker compose --file docker/compose.dev.yml up -d
-```
-
-## Backend
-
-Run `./mvnw clean install` to install dependencies, then you can run the backend.
-```bash
-./mvnw clean install
-```
-
-## Frontend
-
-Run `npm install`, then start deployment with `npm run dev`.
-```bash
-cd ui
-npm install
-npm run dev
-```
-
-## Scripts
-
-All frontend scripts are run from the `ui` directory.
-
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Build for production |
-| `npm run check` | Run svelte-check for type errors |
-| `npm run lint` | Lint the source code |
-| `npm run lint-fix` | Auto-fix lint issues |
-| `npm run format` | Check formatting |
-| `npm run format-fix` | Auto-fix formatting issues |
-| `npm run fix` | Run lint-fix and format-fix |
-| `npm run ci` | Run check, lint, build, and format |
-| `npm run generate:api` | Generate API types from the running backend's OpenAPI schema |
-| `npm run generate:countries` | Generate the country list |
 
 # Deployment
 
-Docker Compose. TBD
+1. Download the [docker/compose.prod.yml](docker/compose.prod.yml)
+2. Adjust the environment variables to your liking by creating a `.env` file
+3. `docker compose up -d`
+4. Open the ui at http://localhost:3000
+
+Or in one command for testing
+```bash
+curl -fsSL https://raw.githubusercontent.com/PhoenixofForce/TeaTracker/refs/heads/main/docker/compose.prod.yml -o compose.yml && docker compose up -d
+```
+
+> **Important**
+> The service in the compose file has to stay called *service*. Otherwise the frontend cannot reach it.
 
 # Contributing
 
-- If you want to **report a bug** or **request a feature** simply open an issue. Please use the appropriate label bug/enhancement
-- If you want to **contribute code** open a Pull Request (to the currently non-existent develop branch) with a meaningful description. Please refrain from opening a pull request that only contains cosmetic changes.
+See [how to contribute](CONTRIBUTING.md).
 
-## Loose Code Guidelines
-- Use early returns/ guard clauses when applicable
-- Don't indent *too* deep
-- DRY for big pieces of code
-- Only repeat smaller pieces of code a few times
+# License
+
+[MIT](LICENSE)

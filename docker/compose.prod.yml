@@ -1,22 +1,33 @@
 services:
   postgres:
     image: postgres:17
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: tea_tracker
-      POSTGRES_USER: tea_tracker
-      POSTGRES_PASSWORD: tea_tracker
+      POSTGRES_DB: ${POSTGRES_DB:-tea_tracker}
+      POSTGRES_USER: ${POSTGRES_USER:-tea_tracker}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tea_tracker}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tea_tracker} -d ${POSTGRES_DB:-tea_tracker}" ]
+      interval: 2s
+      timeout: 3s
+      retries: 10
 
   service:
-    image: ghcr.io/phoenixofforce/teatracker-service
-    ports:
-      - "8080:8080"
+    image: ghcr.io/phoenixofforce/tea-tracker-service:latest
+    restart: unless-stopped
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-tea_tracker}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-tea_tracker}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-tea_tracker}
 
   ui:
-    image: ghcr.io/phoenixofforce/teatracker-ui
+    image: ghcr.io/phoenixofforce/tea-tracker-ui:latest
+    restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
