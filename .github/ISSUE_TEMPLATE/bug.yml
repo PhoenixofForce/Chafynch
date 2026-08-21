@@ -1,0 +1,36 @@
+name: Bug Report
+description: Something unexpected happened
+title: "scope: "
+labels: ["bug"]
+body:
+  - type: "markdown"
+    attributes:
+      value: "Please replace `scope` in the title with the area this happens in (eg: 'session:', 'tea:', 'vendor:' or 'ci:').\n\nSearch the existing issues first."
+  - type: "input"
+    attributes:
+      label: "Version"
+      description: "Which version did you experience the issue on?"
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+  - type: "textarea"
+    attributes:
+      label: "Bug Description"
+      description: "What behaviour did you observe and what did you expect?"
+      value: "Observed:\n\nExpected:\n"
+    validations:
+      required: true
+  - type: "textarea"
+    attributes:
+      label: "Steps to reproduce"
+      description: "How can I reproduce the bug?"
+      value: "1. "
+    validations:
+      required: true
+  - type: "textarea"
+    attributes:
+      label: "Logs"
+      description: "Are there any logs you can provide?"
+      render: "shell"
+    validations:
+      required: false

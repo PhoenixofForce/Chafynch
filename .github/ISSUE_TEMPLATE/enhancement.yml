@@ -1,0 +1,20 @@
+name: Enhancement
+description: Improve something that already exists
+title: "scope: "
+labels: ["enhancement"]
+body:
+  - type: "markdown"
+    attributes:
+      value: "Please replace `scope` in the title with the area this happens in (eg: 'session:', 'tea:', 'vendor:' or 'ci:').\n\nSearch the existing issues first."
+  - type: "textarea"
+    attributes:
+      label: "How does it work today?"
+      description: "Name the part of the app you want to have improved"
+    validations:
+      required: false
+  - type: "textarea"
+    attributes:
+      label: "How can this be improved?"
+      description: "How can this fit the overall workflow better?"
+    validations:
+      required: true

@@ -1,0 +1,20 @@
+name: Feature Request
+description: Suggest something the app cannot do yet
+title: "scope: "
+labels: ["feature"]
+body:
+  - type: "markdown"
+    attributes:
+      value: "Please replace `scope` in the title with the area this happens in (eg: 'session:', 'tea:', 'vendor:' or 'ci:').\n\nSearch the existing issues first and have a look at the planned features in the readme."
+  - type: "textarea"
+    attributes:
+      label: "What is missing?"
+      description: "Describe the problem the app currently cannot solve for you"
+    validations:
+      required: true
+  - type: "textarea"
+    attributes:
+      label: "How could the app help you?"
+      description: "Describe possible solutions or workflows"
+    validations:
+      required: false
