@@ -68,7 +68,7 @@
 		{/each}
 	{:else}
 		<Button
-			class="w-full btn-dash"
+			class="mt-2 w-full btn-dash"
 			label="Add your first tasting note"
 			onclick={() => tastingNoteModal?.open()}
 		/>
