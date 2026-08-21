@@ -12,6 +12,8 @@ jobs:
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
+      backend-deps: ${{ steps.filter.outputs.backend-deps }}
+      frontend-deps: ${{ steps.filter.outputs.frontend-deps }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -26,6 +28,11 @@ jobs:
               - 'mvnw'
             frontend:
               - 'ui/**'
+            backend-deps:
+              - 'pom.xml'
+            frontend-deps:
+              - 'ui/package.json'
+              - 'ui/package-lock.json'
 
   backend:
     needs: changes
@@ -46,6 +53,10 @@ jobs:
       - name: Check style
         run: mvn checkstyle:check -Dcheckstyle.failOnViolation=true
 
+      - name: Check licenses
+        if: needs.changes.outputs.backend-deps == 'true'
+        run: mvn license:add-third-party -Dlicense.failOnBlacklist=true
+
       - name: Build and test backend
         run: mvn verify -Dcheckstyle.skip=true -Derrorprone.args=
 
@@ -64,6 +75,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ui
+
+      - name: Check licenses
+        if: needs.changes.outputs.frontend-deps == 'true'
+        run: npm run license-check
         working-directory: ui
 
       - name: Check formatting

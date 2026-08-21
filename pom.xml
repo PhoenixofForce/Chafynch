@@ -225,6 +225,30 @@
 					</java>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.5.0</version>
+				<configuration>
+					<excludedScopes>test,provided</excludedScopes>
+					<failOnMissing>true</failOnMissing>
+					<organizeLicensesByDependencies>true</organizeLicensesByDependencies>
+					<includedLicenses>
+						<includedLicense>Apache-2.0</includedLicense>
+						<includedLicense>MIT</includedLicense>
+						<includedLicense>BSD-2-Clause</includedLicense>
+						<includedLicense>BSD-3-Clause</includedLicense>
+						<includedLicense>EPL-2.0</includedLicense>
+						<includedLicense>EDL-1.0</includedLicense>
+					</includedLicenses>
+					<licenseMerges>
+						<licenseMerge>Apache-2.0|Apache License, Version 2.0|The Apache Software License, Version 2.0|The Apache License, Version 2.0|Apache License 2.0|Apache License, version 2.0|Apache License Version 2.0</licenseMerge>
+						<licenseMerge>MIT|The MIT License</licenseMerge>
+						<licenseMerge>EPL-2.0|EPL 2.0|Eclipse Public License - v 2.0|Eclipse Public License v. 2.0</licenseMerge>
+						<licenseMerge>EDL-1.0|EDL 1.0|Eclipse Distribution License - v 1.0|Eclipse Distribution License v. 1.0</licenseMerge>
+					</licenseMerges>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

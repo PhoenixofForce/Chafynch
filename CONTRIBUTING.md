@@ -236,7 +236,7 @@ In frontend tests select things the way a user would find them: `getByText` and 
 
 # Other Commands
 
-The most used commands are available with `mise run` where you get an interactive menu with all the commands to choose from.
+The most used commands are available with `mise run` where you get an interactive menu with all the commands to choose from. However, there are also hidden tasks to keep the list short and focussed on the most used ones. To see the other available ones run `mise tasks --hidden` or look at `.config/mise.toml` directly.
 Other less used commands are found in `ui/package.json`
 
 ## Generate API

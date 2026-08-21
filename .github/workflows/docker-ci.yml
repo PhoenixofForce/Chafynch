@@ -1,0 +1,83 @@
+name: Docker CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docker/**'
+      - 'pom.xml'
+  push:
+    branches: [main]
+    paths:
+      - 'docker/**'
+      - 'pom.xml'
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      compose: ${{ steps.filter.outputs.compose }}
+      service: ${{ steps.filter.outputs.service }}
+      ui: ${{ steps.filter.outputs.ui }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            compose:
+              - 'docker/compose.*.yml'
+            service:
+              - 'docker/service.Dockerfile*'
+              - 'pom.xml'
+            ui:
+              - 'docker/ui.Dockerfile*'
+              - 'docker/nginx.conf'
+
+  compose:
+    needs: changes
+    if: needs.changes.outputs.compose == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate compose files
+        run: |
+          for file in docker/compose.*.yml; do
+            echo "Validating $file"
+            docker compose --file "$file" config --quiet
+          done
+
+  service:
+    needs: changes
+    if: needs.changes.outputs.service == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./docker/service.Dockerfile
+          push: false
+          cache-from: type=gha,scope=service
+          cache-to: type=gha,mode=max,scope=service
+
+  ui:
+    needs: changes
+    if: needs.changes.outputs.ui == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./docker/ui.Dockerfile
+          push: false
+          cache-from: type=gha,scope=ui
+          cache-to: type=gha,mode=max,scope=ui

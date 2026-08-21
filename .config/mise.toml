@@ -18,11 +18,13 @@ run = "lefthook install"
 [tasks."setup:service"]
 description = "Installs everything needed for the backend"
 run = "mvn install -DskipTests"
+hide = true
 
 [tasks."setup:ui"]
 description = "Installs everything needed for the frontend"
 dir = "ui"
 run = "npm ci"
+hide = true
 
 [tasks.external]
 dir = "docker"
@@ -53,31 +55,35 @@ description = "Starts the external dependencies as well as backend and frontend"
 depends = ["service", "ui"]
 
 [tasks.ci]
-description = "Does the same checks the ci does"
+description = "[:service :ui] Does the same checks the ci does"
 depends = ["ci:ui", "ci:service"]
 
 [tasks."ci:service"]
 description = "Does the same backend checks the ci does"
 run = ["mvn spotless:check", "mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args="]
+hide = true
 
 [tasks."ci:ui"]
 description = "Does the same frontend checks the ci does"
 dir = "ui"
 run = "npm run ci"
+hide = true
 
 [tasks.fix]
-description = "Formats everything"
+description = "[:service :ui] Formats everything"
 depends = ["fix:ui", "fix:service"]
 run = "mise fmt"
 
 [tasks."fix:service"]
 description = "Formats backend"
 run = "mvn spotless:apply"
+hide = true
 
 [tasks."fix:ui"]
 description = "Formats frontend"
 dir = "ui"
 run = "npm run fix"
+hide = true
 
 [tasks."generate:api"]
 description = "Generates api from a running backend"
@@ -90,19 +96,30 @@ dir = "ui"
 run = "npm run generate:countries"
 
 [tasks."test"]
-description = "Runs all tests"
+description = "[:service :ui :ui:watch] Runs all tests"
 depends = ["test:service", "test:ui"]
 
 [tasks."test:service"]
 description = "Runs the backend tests"
 run = "mvn test"
+hide = true
 
 [tasks."test:ui"]
 description = "Runs the frontend tests"
 dir = "ui"
 run = "npm run test"
+hide = true
 
 [tasks."test:ui:watch"]
 description = "Runs the frontend tests again on every change"
 dir = "ui"
 run = "npm run test:watch"
+hide = true
+
+[tasks.build]
+dir = "docker"
+run = [
+	"docker desktop start --timeout 120 || true",
+	"docker compose --file compose.test.yml build",
+]
+description = "Build the images locally"

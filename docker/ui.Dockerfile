@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY ui/package.json ui/package-lock.json ./
 RUN npm ci
+RUN npm run --silent license-file > /THIRD-PARTY.txt
 
 COPY ui/ .
 RUN npm pkg set version="$APP_VERSION"
@@ -12,6 +13,7 @@ RUN npm run build
 
 FROM nginx:alpine-slim
 
+COPY --from=build /THIRD-PARTY.txt /usr/share/nginx/html/THIRD-PARTY.txt
 COPY --from=build /app/build /usr/share/nginx/html
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 

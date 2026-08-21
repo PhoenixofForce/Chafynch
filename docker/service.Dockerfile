@@ -7,6 +7,7 @@ COPY pom.xml mvnw ./
 COPY .mvn .mvn
 RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
+RUN ./mvnw license:add-third-party license:download-licenses -B
 
 COPY .config .config
 COPY src src
@@ -38,6 +39,9 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 COPY --from=build /jre-minimalist $JAVA_HOME
 
 WORKDIR /app
+
+COPY --from=build /app/target/generated-sources/license/THIRD-PARTY.txt licenses/THIRD-PARTY.txt
+COPY --from=build /app/target/generated-resources/licenses licenses/texts
 
 COPY --from=build /app/target/*.jar app.jar
 
