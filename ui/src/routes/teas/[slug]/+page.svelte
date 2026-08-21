@@ -260,19 +260,17 @@
 
 {#snippet stats()}
 	<div class="flex flex-col gap-4 text-xs">
-		<!---
 		{#if data.tea.tastingNotes?.length}
-			<b>Tasting Notes</b>
+			<b>Top Tasting Notes</b>
 			<div class="flex flex-wrap gap-2">
-				{#each data.tea.tastingNotes as tastingNote (tastingNote.id)}
+				{#each data.tea.tastingNotes as tastingNote (tastingNote)}
 					<div class="badge badge-accent">
-						{tastingNote.note}
-						<Button class=" btn-accent btn-xs" icon={X} noAnimation />
+						{tastingNote}
 					</div>
 				{/each}
 			</div>
 		{/if}
-		-->
+
 		<div>more info coming soon</div>
 	</div>
 {/snippet}

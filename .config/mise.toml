@@ -14,16 +14,22 @@ postinstall = { task = "setup" }
 description = "Installs everything needed"
 depends = ["setup:service", "setup:ui"]
 run = "lefthook install"
+sources = ["../.config/lefthook.yml"]
+outputs = { auto = true }
 
 [tasks."setup:service"]
 description = "Installs everything needed for the backend"
 run = "mvn install -DskipTests"
+sources = ["pom.xml"]
+outputs = { auto = true }
 hide = true
 
 [tasks."setup:ui"]
 description = "Installs everything needed for the frontend"
 dir = "ui"
 run = "npm ci"
+sources = ["package.json", "package-lock.json"]
+outputs = ["node_modules/.package-lock.json"]
 hide = true
 
 [tasks.external]
@@ -123,3 +129,4 @@ run = [
 	"docker compose --file compose.test.yml build",
 ]
 description = "Build the images locally"
+hide = true

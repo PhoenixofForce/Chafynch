@@ -96,7 +96,7 @@
 	<div class="w-full px-2">
 		<div>
 			<b>{data.tea.name}</b>
-			<span class="ml-2 text-sm text-base-content/80 italic">Session 48</span>
+			<span class="ml-2 text-sm text-base-content/80 italic">Session {session.id}</span>
 		</div>
 		<div class="flex gap-2 text-sm">
 			{#if session.weight || session.volume}
@@ -113,6 +113,9 @@
 				<span class="flex items-center"><MapPin /> {session.location}</span>
 			{/if}
 		</div>
+		{#if session.hintFromLastSession}
+			<p class="text-sm italic">{session.hintFromLastSession}</p>
+		{/if}
 	</div>
 	<div class="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto px-2">
 		{#if activeTab.tab === 'infusion'}

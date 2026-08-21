@@ -273,6 +273,7 @@ export interface components {
 			website?: string;
 			/** Format: int32 */
 			rating?: number;
+			tastingNotes?: string[];
 		};
 		TeaTypeDto: {
 			/** Format: int64 */

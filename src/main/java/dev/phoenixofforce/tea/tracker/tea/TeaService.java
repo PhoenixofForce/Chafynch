@@ -1,6 +1,8 @@
 package dev.phoenixofforce.tea.tracker.tea;
 
 import dev.phoenixofforce.tea.tracker.location.LocationService;
+import dev.phoenixofforce.tea.tracker.session.SessionDto;
+import dev.phoenixofforce.tea.tracker.session.SessionService;
 import dev.phoenixofforce.tea.tracker.tea.cultivar.CultivarService;
 import dev.phoenixofforce.tea.tracker.tea.type.TeaTypeService;
 import dev.phoenixofforce.tea.tracker.vendor.VendorService;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +33,8 @@ public class TeaService {
 
     private final LocationService locationService;
 
+    private final SessionService sessionService;
+
     @Transactional(readOnly = true)
     public List<TeaDTO> findAll() {
         return TeaDTO.from(teaRepository.findAll());
@@ -38,7 +44,31 @@ public class TeaService {
     public TeaDTO findById(Long id) {
         Tea tea = teaRepository.findById(id)
             .orElseThrow();
-        return TeaDTO.from(tea);
+
+        TeaDTO dto = TeaDTO.from(tea);
+        dto.setTastingNotes(findTopTastingNotesForTea(tea.getId(), 10));
+        return dto;
+    }
+
+    private List<String> findTopTastingNotesForTea(long teaId, long limit) {
+        List<SessionDto> sessions = sessionService.findAll(teaId);
+        Map<String, Integer> notesByCount = new HashMap<>();
+        for (SessionDto session : sessions) {
+            for (var tastingNote : session.getTastingNotes()) {
+                notesByCount.put(tastingNote.note(), notesByCount.getOrDefault(tastingNote.note(), 0) + 1);
+            }
+
+            for (var infusion : session.getInfusions()) {
+                for (var tastingNote : infusion.getTastingNotes()) {
+                    notesByCount.put(tastingNote.note(), notesByCount.getOrDefault(tastingNote.note(), 0) + 1);
+                }
+            }
+        }
+        return notesByCount.entrySet().stream()
+            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+            .limit(limit)
+            .map(Map.Entry::getKey)
+            .toList();
     }
 
     @Transactional

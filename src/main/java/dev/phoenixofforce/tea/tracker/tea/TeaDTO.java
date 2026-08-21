@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -48,6 +49,8 @@ public class TeaDTO {
     private String website;
 
     private Integer rating;
+
+    private List<String> tastingNotes = new ArrayList<>();
 
     public static TeaDTO from(Tea tea) {
         TeaDTO dto = new TeaDTO();
