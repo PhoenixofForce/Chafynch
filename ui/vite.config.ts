@@ -15,7 +15,20 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'jsdom',
-		setupFiles: ['./src/vitest-setup.js']
+		setupFiles: ['./src/vitest-setup.js'],
+		deps: {
+			optimizer: {
+				client: {
+					enabled: true,
+					include: [
+						'@lucide/svelte',
+						'svelte',
+						'svelte/internal/client',
+						'svelte/internal/disclose-version'
+					]
+				}
+			}
+		}
 	},
 	resolve: process.env.VITEST ? { conditions: ['browser'] } : undefined
 });

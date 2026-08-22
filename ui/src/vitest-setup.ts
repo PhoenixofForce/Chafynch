@@ -8,3 +8,5 @@ HTMLDialogElement.prototype.close = function (returnValue?: string) {
 	if (returnValue !== undefined) this.returnValue = returnValue;
 	this.dispatchEvent(new Event('close'));
 };
+Element.prototype.scrollTo = () => {};
+Element.prototype.scrollIntoView = () => {};

@@ -51,6 +51,7 @@
 				class="h-20 w-16 {activeTab.tab === 'infusion' && i == activeTab.index!
 					? 'btn-primary'
 					: 'btn-dash'}"
+				aria-label="Select Infusion {i}"
 				{disabled}
 				onclick={() => setInfusion(i)}
 			>
@@ -65,7 +66,13 @@
 				</div>
 			</Button>
 		{/each}
-		<Button class="h-20 w-16 btn-dash" {disabled} icon={Plus} onclick={addInfusion} />
+		<Button
+			class="h-20 w-16 btn-dash"
+			aria-label="Add infusion"
+			{disabled}
+			icon={Plus}
+			onclick={addInfusion}
+		/>
 	</div>
 
 	<div class="py-4">
