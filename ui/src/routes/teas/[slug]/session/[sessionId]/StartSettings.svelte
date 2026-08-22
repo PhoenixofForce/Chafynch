@@ -64,7 +64,7 @@
 {#if hasNotes}
 	{#each globalCategories as category (category.name)}
 		{#if category.subCategories.some((sub) => (session?.tastingNotes?.filter((e) => e.category === category.name && e.subCategory === sub) ?? []).length > 0)}
-			<div class="flex flex-col gap-2">
+			<div class="flex flex-col gap-2" aria-label={category.name} role="group">
 				<div class="w-full text-xs text-base-content/50 uppercase">{category.name}</div>
 
 				{#each category.subCategories as subCategory (subCategory)}

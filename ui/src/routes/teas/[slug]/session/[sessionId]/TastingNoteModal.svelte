@@ -6,7 +6,7 @@
 	import { type TastingNoteCategory } from './types';
 
 	let {
-		infusion,
+		infusion = $bindable(),
 		categories
 	}: { infusion?: { tastingNotes?: TastingNoteDto[] }; categories: TastingNoteCategory[] } =
 		$props();
@@ -86,7 +86,7 @@
 			<h3>Add Tasting Notes</h3>
 		</div>
 
-		<div class="join w-full" data-testid="Category-Picker">
+		<div class="join w-full">
 			{#each categories as category, i (category.name)}
 				<input
 					name="category"
@@ -122,7 +122,9 @@
 		{#if selectedNotes.length}
 			<div class="flex gap-2">
 				{#each selectedNotes as tag (tag)}
-					<button class="badge badge-accent" onclick={() => toggle(tag.note!)}>{tag.note}</button>
+					<button class="badge badge-accent" aria-pressed="true" onclick={() => toggle(tag.note!)}>
+						{tag.note}
+					</button>
 				{/each}
 			</div>
 

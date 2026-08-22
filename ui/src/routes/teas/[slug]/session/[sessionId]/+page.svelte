@@ -85,11 +85,11 @@
 	</div>
 {/snippet}
 
-<TastingNoteModal bind:this={tastingNoteModal} {categories} infusion={activeInfusion} />
+<TastingNoteModal bind:this={tastingNoteModal} {categories} bind:infusion={activeInfusion} />
 <TastingNoteModal
 	bind:this={globalTastingNoteModal}
 	categories={globalCategories}
-	infusion={session}
+	bind:infusion={session}
 />
 
 <div class="flex min-h-0 w-full flex-1 flex-col items-center justify-between gap-6">
