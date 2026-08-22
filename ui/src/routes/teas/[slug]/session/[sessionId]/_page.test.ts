@@ -16,7 +16,7 @@ test('infusion should take temperature of the previous one', async () => {
 		props: {
 			data: {
 				session: { id: 0, infusions: [] },
-				tea: {},
+				tea: { name: '' },
 				selfScrolling: true,
 				sessions: [],
 				breadcrumbs: []
@@ -79,3 +79,8 @@ test('infusion should take temperature of the previous one', async () => {
 	expect(temperatureInput).toBeVisible();
 	expect(temperatureInput).toHaveValue(null);
 });
+
+// Todo: header logic
+// Todo: modal logic
+// Todo: timer logic
+// Todo: rinse
