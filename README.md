@@ -1,4 +1,4 @@
-# Tea Tracker
+# Chafynch
 
 Track your tea stash and take notes as you progress through your sessions.
 
