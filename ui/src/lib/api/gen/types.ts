@@ -12,6 +12,6 @@ export type TastingNoteDto = components['schemas']['TastingNoteDto'];
 export type CultivarDto = components['schemas']['CultivarDto'];
 export type ExtractionFieldSetting = components['schemas']['ExtractionFieldSetting'];
 export type ExtractionProfile = components['schemas']['ExtractionProfile'];
-export type VendorOverviewDto = components['schemas']['VendorOverviewDto'];
 export type ExtractionDetail = components['schemas']['ExtractionDetail'];
 export type ExtractionResult = components['schemas']['ExtractionResult'];
+export type VendorOverviewDto = components['schemas']['VendorOverviewDto'];

@@ -33,6 +33,14 @@ public class ExtractionService {
 
     private final RawProfileRepository repository;
 
+    @Transactional(readOnly = true)
+    public List<ExtractionProfile> getAllProfiles() {
+        List<RawProfile> profiles = repository.findAll();
+        return profiles.stream()
+            .map(ExtractionProfile::from)
+            .toList();
+    }
+
     @Transactional
     public void create(ExtractionProfile profile) {
         RawProfile rawProfile = new RawProfile();
@@ -57,6 +65,10 @@ public class ExtractionService {
 
     public ExtractionResult extractTea(String url) {
         ExtractionProfile profile = findSettingsForUrl(url);
+        return extractTea(url, profile);
+    }
+
+    public ExtractionResult extractTea(String url, ExtractionProfile profile) {
         if (profile == null) {
             return new ExtractionResult(new TeaDTO(), List.of());
         }

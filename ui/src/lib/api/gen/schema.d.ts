@@ -164,6 +164,22 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
+	'/api/extract/test': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get?: never;
+		put?: never;
+		post: operations['extract_1'];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
 	'/api/cultivars': {
 		parameters: {
 			query?: never;
@@ -220,6 +236,22 @@ export interface paths {
 			cookie?: never;
 		};
 		get: operations['search_2'];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	'/api/extract/all': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get: operations['getAllProfiles'];
 		put?: never;
 		post?: never;
 		delete?: never;
@@ -335,13 +367,6 @@ export interface components {
 			validUrls?: string[];
 			settings?: components['schemas']['ExtractionFieldSetting'][];
 		};
-		VendorOverviewDto: {
-			vendor: components['schemas']['VendorDto'];
-			/** Format: double */
-			averagePricePerGram?: number;
-			/** Format: int64 */
-			teas?: number;
-		};
 		ExtractionDetail: {
 			fieldName?: string;
 			fieldValue?: string;
@@ -350,6 +375,13 @@ export interface components {
 		ExtractionResult: {
 			teaDTO?: components['schemas']['TeaDTO'];
 			details?: components['schemas']['ExtractionDetail'][];
+		};
+		VendorOverviewDto: {
+			vendor: components['schemas']['VendorDto'];
+			/** Format: double */
+			averagePricePerGram?: number;
+			/** Format: int64 */
+			teas?: number;
 		};
 	};
 	responses: never;
@@ -816,6 +848,32 @@ export interface operations {
 			};
 		};
 	};
+	extract_1: {
+		parameters: {
+			query: {
+				url: string;
+			};
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody: {
+			content: {
+				'application/json': components['schemas']['ExtractionProfile'];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['ExtractionResult'];
+				};
+			};
+		};
+	};
 	search_1: {
 		parameters: {
 			query?: {
@@ -923,6 +981,26 @@ export interface operations {
 				};
 				content: {
 					'*/*': components['schemas']['LocationDto'][];
+				};
+			};
+		};
+	};
+	getAllProfiles: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': components['schemas']['ExtractionProfile'][];
 				};
 			};
 		};
