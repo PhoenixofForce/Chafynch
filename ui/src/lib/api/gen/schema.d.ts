@@ -363,6 +363,8 @@ export interface components {
 			grabAll?: boolean;
 		};
 		ExtractionProfile: {
+			/** Format: int64 */
+			id: number;
 			name?: string;
 			validUrls?: string[];
 			settings?: components['schemas']['ExtractionFieldSetting'][];

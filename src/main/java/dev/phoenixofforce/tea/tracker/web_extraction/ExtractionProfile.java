@@ -1,8 +1,11 @@
 package dev.phoenixofforce.tea.tracker.web_extraction;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public record ExtractionProfile(
+    @NotNull long id,
     String name,
     List<String> validUrls,
     List<ExtractionFieldSetting> settings) {
@@ -19,6 +22,7 @@ public record ExtractionProfile(
             .toList();
 
         return new ExtractionProfile(
+            rawProfile.getId(),
             rawProfile.getName(),
             rawProfile.getValidUrls(),
             settings);
