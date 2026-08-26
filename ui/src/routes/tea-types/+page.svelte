@@ -35,8 +35,12 @@
 	}
 </script>
 
-{#snippet editTitle(draft: TeaTypeDto)}
-	<Input hint="Name is required" placeholder="Name*" required bind:value={draft.name} />
+{#snippet title(type: TeaTypeDto, editing: boolean)}
+	{#if editing}
+		<Input hint="Name is required" placeholder="Name*" required bind:value={type.name} />
+	{:else}
+		<div class="m-0 text-lg font-bold">{type.name}</div>
+	{/if}
 {/snippet}
 
 <div class="flex w-full flex-col gap-8 p-8">
@@ -55,18 +59,10 @@
 	{/if}
 
 	{#if editor.isNew}
-		<BasicEntityCard {editTitle} {editor} entity={editor.draft!} {onDelete} {onSave}>
-			{#snippet title()}
-				<div class="text-lg font-bold">New Tea Type</div>
-			{/snippet}
-		</BasicEntityCard>
+		<BasicEntityCard {editor} entity={editor.draft!} {onDelete} {onSave} {title} />
 	{/if}
 
 	{#each data.types as type (type.id)}
-		<BasicEntityCard {editTitle} {editor} entity={type} {onDelete} {onSave}>
-			{#snippet title()}
-				<div class="m-0 text-lg font-bold">{type.name}</div>
-			{/snippet}
-		</BasicEntityCard>
+		<BasicEntityCard {editor} entity={type} {onDelete} {onSave} {title} />
 	{/each}
 </div>

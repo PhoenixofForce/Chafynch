@@ -11,15 +11,12 @@
 		onSave: (t: T, isNew: boolean) => void;
 		onDelete: (t: T) => void;
 
-		title: Snippet<[]>;
-		editTitle: Snippet<[T]>;
-		header?: Snippet<[]>;
-		editHeader?: Snippet<[T]>;
-		body?: Snippet<[]>;
+		title: Snippet<[T, boolean]>;
+		header?: Snippet<[T, boolean]>;
+		body?: Snippet<[T, boolean]>;
 	};
 
-	const { entity, editor, onSave, onDelete, title, editTitle, header, editHeader, body }: Props =
-		$props();
+	const { entity, editor, onSave, onDelete, title, header, body }: Props = $props();
 
 	let formEl: HTMLFormElement;
 
@@ -62,11 +59,7 @@
 	<div class="card-body">
 		<form bind:this={formEl}>
 			<div class="flex {editing ? 'items-start' : 'items-center'} justify-between">
-				{#if editing}
-					{@render editTitle(editor.draft!)}
-				{:else}
-					{@render title()}
-				{/if}
+				{@render title(editing ? editor.draft! : entity, editing)}
 				<div>
 					{#if !editing}
 						<Button
@@ -99,15 +92,9 @@
 				</div>
 			</div>
 
-			{#if editing && editHeader}
-				{@render editHeader(editor.draft!)}
-			{:else if header}
-				{@render header()}
-			{/if}
+			{@render header?.(editing ? editor.draft! : entity, editing)}
 		</form>
 
-		{#if body}
-			{@render body()}
-		{/if}
+		{@render body?.(editing ? editor.draft! : entity, editing)}
 	</div>
 </div>

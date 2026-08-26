@@ -35,8 +35,12 @@
 	}
 </script>
 
-{#snippet editTitle(draft: CultivarDto)}
-	<Input hint="Name is required" placeholder="Name*" required bind:value={draft.name} />
+{#snippet title(cultivar: CultivarDto, editing: boolean)}
+	{#if editing}
+		<Input hint="Name is required" placeholder="Name*" required bind:value={cultivar.name} />
+	{:else}
+		<div class="m-0 text-lg font-bold">{cultivar.name}</div>
+	{/if}
 {/snippet}
 
 <div class="flex w-full flex-col gap-8 p-8">
@@ -54,18 +58,10 @@
 	{/if}
 
 	{#if editor.isNew}
-		<BasicEntityCard {editTitle} {editor} entity={editor.draft!} {onDelete} {onSave}>
-			{#snippet title()}
-				<div class="text-lg font-bold">New Cultivar</div>
-			{/snippet}
-		</BasicEntityCard>
+		<BasicEntityCard {editor} entity={editor.draft!} {onDelete} {onSave} {title} />
 	{/if}
 
 	{#each data.cultivars as cultivar (cultivar.id)}
-		<BasicEntityCard {editTitle} {editor} entity={cultivar} {onDelete} {onSave}>
-			{#snippet title()}
-				<div class="m-0 text-lg font-bold">{cultivar.name}</div>
-			{/snippet}
-		</BasicEntityCard>
+		<BasicEntityCard {editor} entity={cultivar} {onDelete} {onSave} {title} />
 	{/each}
 </div>

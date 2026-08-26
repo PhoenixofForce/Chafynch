@@ -48,41 +48,53 @@
 	});
 </script>
 
-{#snippet editTitle(draft: VendorDto)}
-	<div class="mr-4 flex-1">
-		<Input
-			hint="Name is required"
-			inputClass="w-full"
-			placeholder="Name*"
-			required
-			bind:value={draft.name}
-		/>
-	</div>
+{#snippet title(entity: VendorDto, editing: boolean)}
+	{#if editing}
+		<div class="mr-4 flex-1">
+			<Input
+				hint="Name is required"
+				inputClass="w-full"
+				placeholder="Name*"
+				required
+				bind:value={entity.name}
+			/>
+		</div>
+	{:else}
+		<div class="text-lg font-bold">{entity.name}</div>
+	{/if}
 {/snippet}
 
-{#snippet editHeader(draft: VendorDto)}
-	<div>
-		<Input
-			class="mb-2"
-			hint="Must be a valid URL"
-			inputClass="w-full"
-			pattern="(http(s?):\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]+(\/.*)?"
-			placeholder="Website"
-			type="url"
-			bind:value={draft.website}
-		/>
-	</div>
+{#snippet header(entity: VendorDto, editing: boolean)}
+	{#if editing}
+		<div>
+			<Input
+				class="mb-2"
+				hint="Must be a valid URL"
+				inputClass="w-full"
+				pattern="(http(s?):\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]+(\/.*)?"
+				placeholder="Website"
+				type="url"
+				bind:value={entity.website}
+			/>
+		</div>
 
-	<div class="grid grid-cols-3 gap-2">
-		<Combobox
-			options={countryNames}
-			placeholder="Country"
-			bind:value={draft.locationDto!.country}
-		/>
+		<div class="grid grid-cols-3 gap-2">
+			<Combobox
+				options={countryNames}
+				placeholder="Country"
+				bind:value={entity.locationDto!.country}
+			/>
 
-		<Input inputClass="w-full" placeholder="Provinz" bind:value={draft.locationDto!.province} />
-		<Input inputClass="w-full" placeholder="Stadt" bind:value={draft.locationDto!.city} />
-	</div>
+			<Input inputClass="w-full" placeholder="Provinz" bind:value={entity.locationDto!.province} />
+			<Input inputClass="w-full" placeholder="Stadt" bind:value={entity.locationDto!.city} />
+		</div>
+	{:else}
+		{#if entity.website}
+			<div>
+				<a href={entity.website} rel="external noopener noreferrer" target="_blank"> Visit Shop </a>
+			</div>
+		{/if}
+	{/if}
 {/snippet}
 
 <div class="flex w-full flex-col gap-8 p-8">
@@ -101,29 +113,11 @@
 	{/if}
 
 	{#if editor.isNew}
-		<BasicEntityCard {editHeader} {editTitle} {editor} entity={editor.draft!} {onDelete} {onSave}>
-			{#snippet title()}
-				<div class="text-lg font-bold">New Vendor</div>
-			{/snippet}
-		</BasicEntityCard>
+		<BasicEntityCard {editor} entity={editor.draft!} {header} {onDelete} {onSave} {title} />
 	{/if}
 
 	{#each data.vendors as overview (overview.vendor.id)}
-		<BasicEntityCard {editHeader} {editTitle} {editor} entity={overview.vendor} {onDelete} {onSave}>
-			{#snippet title()}
-				<div class="m-0 text-lg font-bold">{overview.vendor.name}</div>
-			{/snippet}
-
-			{#snippet header()}
-				{#if overview.vendor.website}
-					<div>
-						<a href={overview.vendor.website} rel="external noopener noreferrer" target="_blank">
-							Visit Shop
-						</a>
-					</div>
-				{/if}
-			{/snippet}
-
+		<BasicEntityCard {editor} entity={overview.vendor} {header} {onDelete} {onSave} {title}>
 			{#snippet body()}
 				<div class="stats stats-vertical bg-base-100 shadow md:stats-horizontal">
 					<div class="stat">
