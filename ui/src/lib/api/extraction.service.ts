@@ -1,4 +1,4 @@
-import { api, unwrap } from './client';
+import { api, mutate, unwrap } from './client';
 import type { ExtractionProfile, ExtractionResult } from './gen/types';
 
 function getAll(): Promise<ExtractionProfile[]> {
@@ -6,7 +6,7 @@ function getAll(): Promise<ExtractionProfile[]> {
 }
 
 function create(extractionProfile: ExtractionProfile) {
-	return unwrap(api.POST('/api/extract', { body: extractionProfile }));
+	return mutate(api.POST('/api/extract', { body: extractionProfile }));
 }
 
 function extract(url: string): Promise<ExtractionResult> {

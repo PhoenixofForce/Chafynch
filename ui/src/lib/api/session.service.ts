@@ -1,4 +1,4 @@
-import { api, unwrap } from './client';
+import { api, mutate, unwrap } from './client';
 import type { SessionDto } from './gen/types';
 
 function findForTea(teaId: number): Promise<SessionDto[]> {
@@ -10,11 +10,11 @@ function getById(sessionId: number): Promise<SessionDto> {
 }
 
 function create(teaId: number, session: SessionDto): Promise<SessionDto> {
-	return unwrap(api.POST('/api/sessions/{teaId}', { params: { path: { teaId } }, body: session }));
+	return mutate(api.POST('/api/sessions/{teaId}', { params: { path: { teaId } }, body: session }));
 }
 
 function update(session: SessionDto): Promise<SessionDto> {
-	return unwrap(
+	return mutate(
 		api.PUT('/api/sessions/{id}', { body: session, params: { path: { id: session.id! } } })
 	);
 }

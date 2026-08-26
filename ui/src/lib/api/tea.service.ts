@@ -1,8 +1,8 @@
-import { api, unwrap } from './client';
+import { api, mutate, unwrap } from './client';
 import type { TeaDTO } from './gen/types';
 
 function create(tea: TeaDTO) {
-	return unwrap(api.POST('/api/teas', { body: tea }));
+	return mutate(api.POST('/api/teas', { body: tea }));
 }
 
 function getAll() {
@@ -14,7 +14,7 @@ function getById(id: number) {
 }
 
 function update(tea: TeaDTO) {
-	return unwrap(
+	return mutate(
 		api.PUT('/api/teas/{id}', {
 			body: tea,
 			params: { path: { id: tea.id! } }
@@ -23,7 +23,7 @@ function update(tea: TeaDTO) {
 }
 
 function remove(id: number) {
-	return api.DELETE('/api/teas/{id}', { params: { path: { id: id } } });
+	return mutate(api.DELETE('/api/teas/{id}', { params: { path: { id: id } } }));
 }
 
 export const teaService = {

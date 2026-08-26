@@ -1,8 +1,8 @@
-import { api, unwrap } from './client';
+import { api, mutate, unwrap } from './client';
 import type { CultivarDto } from './gen/types';
 
 function create(cultivar: string) {
-	return unwrap(api.POST('/api/cultivars', { params: { query: { name: cultivar } } }));
+	return mutate(api.POST('/api/cultivars', { params: { query: { name: cultivar } } }));
 }
 
 function getAll(query?: string): Promise<CultivarDto[]> {
@@ -10,7 +10,7 @@ function getAll(query?: string): Promise<CultivarDto[]> {
 }
 
 function update(cultivar: CultivarDto) {
-	return unwrap(
+	return mutate(
 		api.PUT('/api/cultivars/{id}', {
 			body: cultivar,
 			params: { path: { id: cultivar.id! } }
@@ -19,7 +19,7 @@ function update(cultivar: CultivarDto) {
 }
 
 function remove(id: number) {
-	return api.DELETE('/api/cultivars/{id}', { params: { path: { id: id } } });
+	return mutate(api.DELETE('/api/cultivars/{id}', { params: { path: { id: id } } }));
 }
 
 export const cultivarService = {

@@ -1,8 +1,8 @@
-import { api, unwrap } from './client';
+import { api, mutate, unwrap } from './client';
 import type { VendorDto } from './gen/types';
 
 function create(vendor: VendorDto) {
-	return unwrap(api.POST('/api/vendors', { body: vendor }));
+	return mutate(api.POST('/api/vendors', { body: vendor }));
 }
 
 function getAll(query?: string) {
@@ -10,7 +10,7 @@ function getAll(query?: string) {
 }
 
 function update(vendor: VendorDto) {
-	return unwrap(
+	return mutate(
 		api.PUT('/api/vendors/{id}', {
 			body: vendor,
 			params: { path: { id: vendor.id! } }
@@ -19,7 +19,7 @@ function update(vendor: VendorDto) {
 }
 
 function remove(id: number) {
-	return api.DELETE('/api/vendors/{id}', { params: { path: { id: id } } });
+	return mutate(api.DELETE('/api/vendors/{id}', { params: { path: { id: id } } }));
 }
 
 export const vendorService = {
