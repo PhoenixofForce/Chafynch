@@ -37,7 +37,15 @@
 
 {#snippet title(type: TeaTypeDto, editing: boolean)}
 	{#if editing}
-		<Input hint="Name is required" placeholder="Name*" required bind:value={type.name} />
+		<div class="mr-4 flex-1">
+			<Input
+				hint="Name is required"
+				inputClass="w-full"
+				placeholder="Name*"
+				required
+				bind:value={type.name}
+			/>
+		</div>
 	{:else}
 		<div class="m-0 text-lg font-bold">{type.name}</div>
 	{/if}

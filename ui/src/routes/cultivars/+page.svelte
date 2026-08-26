@@ -37,7 +37,15 @@
 
 {#snippet title(cultivar: CultivarDto, editing: boolean)}
 	{#if editing}
-		<Input hint="Name is required" placeholder="Name*" required bind:value={cultivar.name} />
+		<div class="mr-4 flex-1">
+			<Input
+				hint="Name is required"
+				inputClass="w-full"
+				placeholder="Name*"
+				required
+				bind:value={cultivar.name}
+			/>
+		</div>
 	{:else}
 		<div class="m-0 text-lg font-bold">{cultivar.name}</div>
 	{/if}
