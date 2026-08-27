@@ -57,7 +57,7 @@
 
 <div class="card w-full bg-base-200 shadow">
 	<div class="card-body">
-		<form bind:this={formEl}>
+		<form bind:this={formEl} class="flex flex-col gap-4">
 			<div class="flex {editing ? 'items-start' : 'items-center'} justify-between">
 				{@render title(editing ? editor.draft! : entity, editing)}
 				<div>
