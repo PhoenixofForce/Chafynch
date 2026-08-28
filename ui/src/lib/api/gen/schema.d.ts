@@ -68,7 +68,7 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
-	'/api/cultivars/{id}': {
+	'/api/extract/{id}': {
 		parameters: {
 			query?: never;
 			header?: never;
@@ -79,6 +79,22 @@ export interface paths {
 		put: operations['update_3'];
 		post?: never;
 		delete: operations['delete_2'];
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	'/api/cultivars/{id}': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get?: never;
+		put: operations['update_4'];
+		post?: never;
+		delete: operations['delete_3'];
 		options?: never;
 		head?: never;
 		patch?: never;
@@ -350,11 +366,6 @@ export interface components {
 			subCategory?: string;
 			note?: string;
 		};
-		CultivarDto: {
-			/** Format: int64 */
-			id: number;
-			name: string;
-		};
 		ExtractionFieldSetting: {
 			field?: string;
 			selector?: string;
@@ -368,6 +379,11 @@ export interface components {
 			name?: string;
 			validUrls?: string[];
 			settings?: components['schemas']['ExtractionFieldSetting'][];
+		};
+		CultivarDto: {
+			/** Format: int64 */
+			id: number;
+			name: string;
 		};
 		ExtractionDetail: {
 			fieldName?: string;
@@ -613,6 +629,50 @@ export interface operations {
 		};
 		requestBody: {
 			content: {
+				'application/json': components['schemas']['ExtractionProfile'];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	delete_2: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				id: number;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	update_4: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				id: number;
+			};
+			cookie?: never;
+		};
+		requestBody: {
+			content: {
 				'application/json': components['schemas']['CultivarDto'];
 			};
 		};
@@ -628,7 +688,7 @@ export interface operations {
 			};
 		};
 	};
-	delete_2: {
+	delete_3: {
 		parameters: {
 			query?: never;
 			header?: never;

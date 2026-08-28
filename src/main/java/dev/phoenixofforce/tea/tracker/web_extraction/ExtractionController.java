@@ -23,6 +23,16 @@ public class ExtractionController {
         service.create(profile);
     }
 
+    @PutMapping("/{id}")
+    public void update(@PathVariable long id, @RequestBody ExtractionProfile profile) {
+        service.update(id, profile);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) {
+        service.delete(id);
+    }
+
     @GetMapping
     public ExtractionResult extract(@RequestParam String url) {
         return service.extractTea(url);

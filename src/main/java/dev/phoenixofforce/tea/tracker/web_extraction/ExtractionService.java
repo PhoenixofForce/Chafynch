@@ -11,8 +11,11 @@ import org.jsoup.select.Elements;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -43,24 +46,32 @@ public class ExtractionService {
 
     @Transactional
     public void create(ExtractionProfile profile) {
-        RawProfile rawProfile = new RawProfile();
-        rawProfile.setName(profile.name());
-        rawProfile.setValidUrls(profile.validUrls());
+        RawProfile rawProfile = profile.apply(new RawProfile());
+        repository.save(rawProfile);
+    }
 
-        List<RawFieldSetting> settings = new ArrayList<>();
-        for (ExtractionFieldSetting setting : profile.settings()) {
-            RawFieldSetting rawSetting = new RawFieldSetting();
-            rawSetting.setField(setting.field());
-            rawSetting.setSelector(setting.selector());
-            rawSetting.setRegex(setting.regex());
-            rawSetting.setOperations(setting.operations());
-            rawSetting.setGrabAll(setting.grabAll());
+    @Transactional
+    public void update(long id, ExtractionProfile dto) {
+        RawProfile profile = repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not Found"));
 
-            settings.add(rawSetting);
+        profile.getSettings().clear();
+        repository.flush();
+        dto.apply(profile);
+        repository.save(profile);
+    }
+
+    @Transactional
+    public void delete(long id) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not Found");
         }
 
-        rawProfile.setSettings(settings);
-        repository.save(rawProfile);
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException _) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Profile in use");
+        }
     }
 
     public ExtractionResult extractTea(String url) {

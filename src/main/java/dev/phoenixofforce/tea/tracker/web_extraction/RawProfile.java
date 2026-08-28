@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class RawProfile {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "profile_id", nullable = false)
-    private List<RawFieldSetting> settings;
+    private List<RawFieldSetting> settings = new ArrayList<>();
 
     @Convert(converter = StringSplitConverter.class)
     private List<String> validUrls;

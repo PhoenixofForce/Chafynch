@@ -8,6 +8,7 @@
 	import Tabs from '$lib/basics/Tabs.svelte';
 	import BasicEntityCard from '$lib/crud/BasicEntityCard.svelte';
 	import type { createEditor } from '$lib/crud/editable.svelte';
+	import { toast } from '$lib/toast/toast.store.svelte';
 	import { Plus, Send, X } from '@lucide/svelte';
 
 	/*
@@ -47,8 +48,19 @@
 	}
 
 	// Todo:
-	function onDelete() {}
-	function onSave() {}
+	async function onDelete(profile: ExtractionProfile) {
+		await extractionService.delete(profile);
+		return toast.success(`Successfully created '${profile.name}'`);
+	}
+	async function onSave(profile: ExtractionProfile, isNew: boolean) {
+		if (isNew) {
+			await extractionService.create(profile);
+			return toast.success(`Successfully created '${profile.name}'`);
+		}
+
+		await extractionService.update(profile);
+		return toast.success(`Successfully updated '${profile.name}'`);
+	}
 
 	const validFields = ['title', 'description', 'origin', 'harvest', 'cultivar'];
 	const unsetFields = $derived(
