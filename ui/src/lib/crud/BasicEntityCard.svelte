@@ -12,11 +12,12 @@
 		onDelete: (t: T) => void;
 
 		title: Snippet<[T, boolean]>;
+		buttons?: Snippet<[T, boolean]>;
 		header?: Snippet<[T, boolean]>;
 		body?: Snippet<[T, boolean]>;
 	};
 
-	const { entity, editor, onSave, onDelete, title, header, body }: Props = $props();
+	const { entity, editor, onSave, onDelete, title, buttons, header, body }: Props = $props();
 
 	let formEl: HTMLFormElement;
 
@@ -60,7 +61,8 @@
 		<form bind:this={formEl} class="flex flex-col gap-4">
 			<div class="flex {editing ? 'items-start' : 'items-center'} justify-between">
 				{@render title(editing ? editor.draft! : entity, editing)}
-				<div>
+				<div class="flex items-center gap-2">
+					{@render buttons?.(editing ? editor.draft! : entity, editing)}
 					{#if !editing}
 						<Button
 							disabled={editor.editingAny() || editor.isPending}

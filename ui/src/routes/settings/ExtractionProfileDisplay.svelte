@@ -3,6 +3,7 @@
 	import type { ExtractionProfile, ExtractionResult } from '$lib/api/gen/types';
 	import Button from '$lib/basics/Button.svelte';
 	import Checkbox from '$lib/basics/Checkbox.svelte';
+	import Codeblock from '$lib/basics/Codeblock.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import Select from '$lib/basics/Select.svelte';
 	import Tabs from '$lib/basics/Tabs.svelte';
@@ -73,6 +74,8 @@
 	}
 
 	const operations = ['nextSibling', 'nextElementSibling'];
+
+	let showConfig = $state(false);
 </script>
 
 <BasicEntityCard {editor} entity={profile} {onDelete} {onSave}>
@@ -86,6 +89,10 @@
 				<h3>{entity.name}</h3>
 			</div>
 		{/if}
+	{/snippet}
+
+	{#snippet buttons()}
+		<Checkbox label="Show Config" bind:value={showConfig} />
 	{/snippet}
 
 	{#snippet header(entity, editing)}
@@ -256,11 +263,15 @@
 				<h4>Raw result</h4>
 			</div>
 
-			<div class="mockup-code h-86 w-full overflow-y-scroll">
-				{#each JSON.stringify(testResult, null, 4).split('\n') as line, i (i)}
-					<pre data-prefix={i + 1}><code>{line}</code></pre>
-				{/each}
+			<Codeblock text={JSON.stringify(testResult, null, 4)} />
+		{/if}
+
+		{#if showConfig}
+			<div class="prose">
+				<h4>Config</h4>
 			</div>
+
+			<Codeblock text={JSON.stringify(entity, null, 4)} />
 		{/if}
 	{/snippet}
 </BasicEntityCard>
