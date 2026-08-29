@@ -4,7 +4,7 @@
 	const { data } = $props();
 </script>
 
-<div class="tabs-border tabs w-full">
+<div class="tabs tabs-border w-full">
 	<input
 		name="my_tabs_2"
 		class="tab checked:text-primary"

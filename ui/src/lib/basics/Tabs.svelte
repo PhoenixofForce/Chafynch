@@ -37,7 +37,7 @@
 	});
 </script>
 
-<div class="tabs-border tabs w-full {className}" role="tablist">
+<div class="tabs tabs-border w-full {className}" role="tablist">
 	{#each tabItems as tab (tab.id)}
 		<label class="tab capitalize {tabClass}">
 			<input

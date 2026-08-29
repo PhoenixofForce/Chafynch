@@ -66,7 +66,10 @@ depends = ["ci:ui", "ci:service"]
 
 [tasks."ci:service"]
 description = "Does the same backend checks the ci does"
-run = ["mvn spotless:check", "mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args="]
+run = [
+  "mvn spotless:check",
+  "mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args=",
+]
 hide = true
 
 [tasks."ci:ui"]
@@ -125,8 +128,8 @@ hide = true
 [tasks.build]
 dir = "docker"
 run = [
-	"docker desktop start --timeout 120 || true",
-	"docker compose --file compose.test.yml build",
+  "docker desktop start --timeout 120 || true",
+  "docker compose --file compose.test.yml build",
 ]
 description = "Build the images locally"
 hide = true
