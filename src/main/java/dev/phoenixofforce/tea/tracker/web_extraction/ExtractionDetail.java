@@ -14,7 +14,7 @@ public record ExtractionDetail(String fieldName, Optional<String> fieldValue, Li
         } else if (detail.fieldValue.isEmpty()) {
             newValue = fieldValue;
         } else {
-            newValue = Optional.of(fieldValue.get() + "\n" + detail.fieldValue.get());
+            newValue = Optional.of(fieldValue.get() + "\n\n" + detail.fieldValue.get());
         }
 
         List<String> newErrors = new ArrayList<>();
