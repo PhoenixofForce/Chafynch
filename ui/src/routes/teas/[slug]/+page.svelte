@@ -218,7 +218,7 @@
 										})
 									)}
 							>
-								<th>{session.id}</th>
+								<th>{session.sessionNumber ?? session.id}</th>
 								<td>{data.tea.name}</td>
 								<td><Rating class="rating-sm" readonly value={session.displayRating} /></td>
 								<td>{session.infusions?.length} infusions</td>

@@ -3,6 +3,7 @@ package dev.phoenixofforce.tea.tracker.session;
 import dev.phoenixofforce.tea.tracker.session.infusion.Infusion;
 import dev.phoenixofforce.tea.tracker.tea.Tea;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
@@ -29,6 +30,13 @@ public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Formula("""
+        (Select count(*)
+        From session s
+        Where s.tea_id = tea_id and s.id <= id)
+        """)
+    private Long sessionNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tea_id", nullable = false)

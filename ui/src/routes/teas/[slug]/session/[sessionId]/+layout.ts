@@ -13,7 +13,10 @@ export async function load({ params, parent }) {
 		selfScrolling: true,
 		breadcrumbs: [
 			...breadcrumbs,
-			{ label: 'Session ' + sessionId, path: `/teas/${slug}/session/${sessionId}` }
+			{
+				label: 'Session ' + (session.sessionNumber ?? sessionId),
+				path: `/teas/${slug}/session/${sessionId}`
+			}
 		] satisfies Breadcrumb[]
 	};
 }

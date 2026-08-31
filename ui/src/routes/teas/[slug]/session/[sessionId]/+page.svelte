@@ -96,7 +96,9 @@
 	<div class="w-full px-2">
 		<div>
 			<b>{data.tea.name}</b>
-			<span class="ml-2 text-sm text-base-content/80 italic">Session {session.id}</span>
+			<span class="ml-2 text-sm text-base-content/80 italic"
+				>Session {session.sessionNumber ?? session.id}</span
+			>
 		</div>
 		<div class="flex gap-2 text-sm">
 			{#if session.weight || session.volume}

@@ -14,6 +14,8 @@ public class SessionDto {
 
     private Long id;
 
+    private Long sessionNumber;
+
     private Instant startTime;
 
     private Instant lastUpdated;
@@ -44,6 +46,7 @@ public class SessionDto {
         SessionDto dto = new SessionDto();
 
         dto.setId(session.getId());
+        dto.setSessionNumber(session.getSessionNumber());
 
         if (session.getStartTime() != null) {
             dto.setStartTime(session.getStartTime());

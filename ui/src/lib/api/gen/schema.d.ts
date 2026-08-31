@@ -343,6 +343,8 @@ export interface components {
 		SessionDto: {
 			/** Format: int64 */
 			id?: number;
+			/** Format: int64 */
+			sessionNumber?: number;
 			/** Format: date-time */
 			startTime?: string;
 			/** Format: date-time */
