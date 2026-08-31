@@ -31,8 +31,8 @@ test('infusion should take temperature of the previous one', async () => {
 
 	// Add first infusion - temperature inpus visible but empty
 	await fireEvent.click(addInfusion);
-	expect(await screen.findByRole('button', { name: 'Select Infusion 0' })).toBeVisible();
-	expect(await screen.findByRole('button', { name: 'Select Infusion 0' })).toHaveClass(
+	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).toBeVisible();
+	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).toHaveClass(
 		'btn-primary'
 	);
 
@@ -42,11 +42,11 @@ test('infusion should take temperature of the previous one', async () => {
 
 	// Add secand infusion - temperature still visible and empty
 	await fireEvent.click(addInfusion);
-	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).toBeVisible();
-	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).toHaveClass(
+	expect(await screen.findByRole('button', { name: 'Select Infusion 2' })).toBeVisible();
+	expect(await screen.findByRole('button', { name: 'Select Infusion 2' })).toHaveClass(
 		'btn-primary'
 	);
-	expect(await screen.findByRole('button', { name: 'Select Infusion 0' })).not.toHaveClass(
+	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).not.toHaveClass(
 		'btn-primary'
 	);
 	expect(temperatureInput).toBeVisible();
@@ -58,22 +58,22 @@ test('infusion should take temperature of the previous one', async () => {
 
 	// Add third infusion - temperature should still be visible and have the value of second infusion
 	await fireEvent.click(addInfusion);
-	expect(await screen.findByRole('button', { name: 'Select Infusion 2' })).toBeVisible();
-	expect(await screen.findByRole('button', { name: 'Select Infusion 2' })).toHaveClass(
+	expect(await screen.findByRole('button', { name: 'Select Infusion 3' })).toBeVisible();
+	expect(await screen.findByRole('button', { name: 'Select Infusion 3' })).toHaveClass(
 		'btn-primary'
 	);
-	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).not.toHaveClass(
+	expect(await screen.findByRole('button', { name: 'Select Infusion 2' })).not.toHaveClass(
 		'btn-primary'
 	);
 	expect(temperatureInput).toBeVisible();
 	expect(temperatureInput).toHaveValue(85);
 
 	// First infusion still null
-	(await screen.findByRole('button', { name: 'Select Infusion 0' })).click();
-	expect(await screen.findByRole('button', { name: 'Select Infusion 0' })).toHaveClass(
+	(await screen.findByRole('button', { name: 'Select Infusion 1' })).click();
+	expect(await screen.findByRole('button', { name: 'Select Infusion 1' })).toHaveClass(
 		'btn-primary'
 	);
-	expect(await screen.findByRole('button', { name: 'Select Infusion 2' })).not.toHaveClass(
+	expect(await screen.findByRole('button', { name: 'Select Infusion 3' })).not.toHaveClass(
 		'btn-primary'
 	);
 	expect(temperatureInput).toBeVisible();
