@@ -144,7 +144,7 @@ class ExtractionServiceTest {
 
         assertTrue(detail.fieldValue().isPresent());
         assertTrue(detail.errors().isEmpty());
-        assertEquals("Success 1\nSuccess 2", detail.fieldValue().get());
+        assertEquals("Success 1\n\nSuccess 2", detail.fieldValue().get());
     }
 
     @Test

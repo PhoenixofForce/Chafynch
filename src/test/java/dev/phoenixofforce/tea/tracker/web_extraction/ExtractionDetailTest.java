@@ -45,7 +45,7 @@ public class ExtractionDetailTest {
 
         ExtractionDetail result = a.merge(b);
         assertTrue(result.fieldValue().isPresent());
-        assertEquals("a\nb", result.fieldValue().get());
+        assertEquals("a\n\nb", result.fieldValue().get());
     }
 
 }
