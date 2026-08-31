@@ -47,16 +47,17 @@
 	</div>
 	<div bind:this={scrollable} class="flex flex-1 gap-4 overflow-x-auto py-4">
 		{#each infusions as infusion, i (infusion.startTime)}
+			{@const infusionCount = infusions.slice(0, i + 1).filter((i) => !i.rinse).length}
 			<Button
 				class="h-20 w-16 {activeTab.tab === 'infusion' && i == activeTab.index!
 					? 'btn-primary'
 					: 'btn-dash'}"
-				aria-label="Select Infusion {i}"
+				aria-label="Select Infusion {infusionCount}"
 				{disabled}
 				onclick={() => setInfusion(i)}
 			>
 				<div class="flex flex-col">
-					<b>{infusion.rinse ? '~' : i + 1}</b>
+					<b>{infusion.rinse ? '~' : infusionCount}</b>
 					<span class="text-xs text-neutral/80">
 						{infusion.infusionTime ? infusion.infusionTime.toFixed(2) + 's' : ''}
 					</span>
