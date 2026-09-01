@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TeaDTO } from '$lib/api/gen/types';
-	import CountryMap from '../../lib/geo/CountryMap.svelte';
+	import CountryMap from '$lib/geo/CountryMap.svelte';
 	import { Leaf, Store, Scale } from '@lucide/svelte';
 
 	let { tea }: { tea: TeaDTO } = $props();
