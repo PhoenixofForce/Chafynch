@@ -17,21 +17,17 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: "Guides",
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: "Example Guide", slug: "guides/example" },
-					],
+					label: "Install",
+					items: [{ autogenerate: { directory: "install" } }],
 				},
 				{
-					label: "Reference",
-					items: [{ autogenerate: { directory: "reference" } }],
-				},
-				{
-					label: "Stars",
-					items: [{ autogenerate: { directory: "stars" } }],
+					label: "Features",
+					items: [{ autogenerate: { directory: "features" } }],
 				},
 			],
+			editLink: {
+				baseUrl: "https://github.com/phoenixofforce/Chafynch/edit/main/docs/",
+			},
 		}),
 	],
 });

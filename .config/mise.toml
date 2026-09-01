@@ -133,3 +133,7 @@ run = [
 ]
 description = "Build the images locally"
 hide = true
+
+[tasks.docs]
+dir = "docs"
+run = "npm run dev"

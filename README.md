@@ -51,7 +51,7 @@ This project uses
 
 Or in one command for testing
 ```bash
-curl -fsSL https://raw.githubusercontent.com/PhoenixofForce/TeaTracker/refs/heads/main/docker/compose.prod.yml -o compose.yml && docker compose up -d
+curl -fsSL https://raw.githubusercontent.com/PhoenixofForce/Chafynch/refs/heads/main/docker/compose.prod.yml -o compose.yml && docker compose up -d
 ```
 
 > **Important**
