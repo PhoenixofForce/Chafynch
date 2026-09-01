@@ -2,10 +2,10 @@
 
 @plugin '@tailwindcss/typography';
 @plugin 'daisyui' {
-	themes:
-		lemonade --default,
-		forest;
+	themes: false;
 }
+@import './light.css';
+@import './dark.css';
 
 @layer base {
 	.lucide {
