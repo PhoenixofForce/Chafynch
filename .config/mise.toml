@@ -60,6 +60,7 @@ description = "Starts backend"
 env = { SPRING_PROFILES_ACTIVE = "dev" }
 
 [tasks.ui]
+depends = ["docs:preview"]
 description = "Starts frontend"
 dir = "ui"
 run = "npm run dev"
@@ -151,3 +152,11 @@ hide = true
 [tasks.docs]
 dir = "docs"
 run = "npm run dev"
+
+[tasks."docs:preview"]
+dir = "docs"
+run = [
+	"npm run build",
+	"npm run preview -- --port 4322"
+]
+hide = true

@@ -1,6 +1,6 @@
 # Chafynch
 
-Track your tea stash and take notes as you progress through your sessions.
+Chafynch is a self-hosted tea tracker. You can keep an eye your tea stash and take notes as you progress through your sessions.
 
 # Table of Contents
 

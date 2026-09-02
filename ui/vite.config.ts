@@ -10,6 +10,14 @@ export default defineConfig({
 		proxy: {
 			'/api': {
 				target: 'http://localhost:8080'
+			},
+			'/docs': {
+				target: 'http://localhost:4322',
+				ws: true
+			},
+			'/_astro': {
+				target: 'http://localhost:4322',
+				ws: true
 			}
 		}
 	},
