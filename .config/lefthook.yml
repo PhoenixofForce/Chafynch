@@ -14,3 +14,9 @@ pre-commit:
       glob: "ui/src/*.{js,ts,svelte,css,html,json,md}"
       run: npx prettier --write {staged_files}
       stage_fixed: true
+    - name: docs prettier
+      root: "docs/"
+      glob: "docs/src/*.{js,ts,css,html,json,md,mdx}"
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
+      exclude: "docs/src/styles/custom.gen.css"

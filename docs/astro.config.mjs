@@ -1,33 +1,33 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import starlight from "@astrojs/starlight";
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: "Chafynch",
-			customCss: ["./src/styles/custom.gen.css"],
+			title: 'Chafynch',
+			customCss: ['./src/styles/custom.gen.css'],
 			social: [
 				{
-					icon: "github",
-					label: "GitHub",
-					href: "https://github.com/PhoenixofForce/Chafynch/",
-				},
+					icon: 'github',
+					label: 'GitHub',
+					href: 'https://github.com/PhoenixofForce/Chafynch/'
+				}
 			],
 			sidebar: [
 				{
-					label: "Install",
-					items: [{ autogenerate: { directory: "install" } }],
+					label: 'Install',
+					items: [{ autogenerate: { directory: 'docs/install' } }]
 				},
 				{
-					label: "Features",
-					items: [{ autogenerate: { directory: "features" } }],
-				},
+					label: 'Features',
+					items: [{ autogenerate: { directory: 'docs/features' } }]
+				}
 			],
 			editLink: {
-				baseUrl: "https://github.com/phoenixofforce/Chafynch/edit/main/docs/",
-			},
-		}),
-	],
+				baseUrl: 'https://github.com/phoenixofforce/Chafynch/edit/main/docs/'
+			}
+		})
+	]
 });

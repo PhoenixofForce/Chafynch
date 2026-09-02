@@ -1,4 +1,4 @@
-:root[data-theme="--theme"] {
+:root[data-theme='--theme'] {
 	--sl-color-black: --color-base-100;
 	--sl-color-white: --color-base-content;
 	--sl-color-gray-1: --color-base-content;

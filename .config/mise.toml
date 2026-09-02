@@ -12,7 +12,7 @@ postinstall = { task = "setup" }
 
 [tasks.setup]
 description = "Installs everything needed"
-depends = ["setup:service", "setup:ui"]
+depends = ["setup:service", "setup:ui", "setup:docs"]
 run = "lefthook install"
 sources = ["../.config/lefthook.yml"]
 outputs = { auto = true }
@@ -27,6 +27,14 @@ hide = true
 [tasks."setup:ui"]
 description = "Installs everything needed for the frontend"
 dir = "ui"
+run = "npm ci"
+sources = ["package.json", "package-lock.json"]
+outputs = ["node_modules/.package-lock.json"]
+hide = true
+
+[tasks."setup:docs"]
+description = "Installs everything needed for the docs"
+dir = "docs"
 run = "npm ci"
 sources = ["package.json", "package-lock.json"]
 outputs = ["node_modules/.package-lock.json"]
@@ -80,7 +88,7 @@ hide = true
 
 [tasks.fix]
 description = "[:service :ui] Formats everything"
-depends = ["fix:ui", "fix:service"]
+depends = ["fix:ui", "fix:service", 'fix:docs']
 run = "mise fmt"
 
 [tasks."fix:service"]
@@ -91,6 +99,12 @@ hide = true
 [tasks."fix:ui"]
 description = "Formats frontend"
 dir = "ui"
+run = "npm run fix"
+hide = true
+
+[tasks."fix:docs"]
+description = "Formats docs"
+dir = "docs"
 run = "npm run fix"
 hide = true
 
