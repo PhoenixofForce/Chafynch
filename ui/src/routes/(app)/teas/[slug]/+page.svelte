@@ -49,7 +49,7 @@
 		}
 
 		goto(
-			resolve('/teas/[slug]/session/[sessionId]', {
+			resolve('/(app)/teas/[slug]/session/[sessionId]', {
 				slug: data.tea.id + '',
 				sessionId: newSession.id! + ''
 			})
@@ -171,7 +171,7 @@
 					disabled={deleting}
 					icon={Pen}
 					label="Edit"
-					onclick={() => goto(resolve('/teas/[slug]/edit', { slug: data.tea.id + '' }))}
+					onclick={() => goto(resolve('/(app)/teas/[slug]/edit', { slug: data.tea.id + '' }))}
 				/>
 				<Button
 					class="btn-ghost btn-error"
@@ -212,7 +212,7 @@
 								class="cursor-pointer"
 								onclick={() =>
 									goto(
-										resolve('/teas/[slug]/session/[sessionId]', {
+										resolve('/(app)/teas/[slug]/session/[sessionId]', {
 											slug: data.tea.id! + '',
 											sessionId: session.id! + ''
 										})

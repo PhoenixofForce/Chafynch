@@ -89,7 +89,7 @@
 
 	function backlink(id: number | undefined) {
 		if (id) {
-			return resolve('/teas/[slug]', { slug: id + '' });
+			return resolve('/(app)/teas/[slug]', { slug: id + '' });
 		}
 		return resolve('/teas');
 	}
