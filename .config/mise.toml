@@ -10,6 +10,10 @@ lefthook = "latest"
 [hooks]
 postinstall = { task = "setup" }
 
+############
+# Setup
+############
+
 [tasks.setup]
 description = "Installs everything needed"
 depends = ["setup:service", "setup:ui", "setup:docs"]
@@ -40,11 +44,15 @@ sources = ["package.json", "package-lock.json"]
 outputs = ["node_modules/.package-lock.json"]
 hide = true
 
+############
+# Startup
+############
+
 [tasks.external]
 dir = "docker"
 run = [
-  "docker desktop start --timeout 120 || true",
-  "docker compose --file compose.dev.yml up -d --wait",
+	"docker desktop start --timeout 120 || true",
+	"docker compose --file compose.dev.yml up -d --wait",
 ]
 description = "Starts docker compose with dev dependencies"
 
@@ -60,14 +68,29 @@ description = "Starts backend"
 env = { SPRING_PROFILES_ACTIVE = "dev" }
 
 [tasks.ui]
-depends = ["docs:preview"]
 description = "Starts frontend"
 dir = "ui"
 run = "npm run dev"
 
 [tasks.dev]
 description = "Starts the external dependencies as well as backend and frontend"
-depends = ["service", "ui"]
+depends = ["service", "ui", "docs:preview"]
+
+
+[tasks.docs]
+description = "Starts the docs in dev mode"
+dir = "docs"
+run = "npm run dev"
+
+[tasks."docs:preview"]
+description = "Starts the docs in preview mode so it can be embedded it the ui"
+dir = "docs"
+run = ["npm run build", "npm run preview -- --port 4322"]
+hide = true
+
+############
+# CI Check
+############
 
 [tasks.ci]
 description = "[:service :ui] Does the same checks the ci does"
@@ -76,8 +99,8 @@ depends = ["ci:ui", "ci:service"]
 [tasks."ci:service"]
 description = "Does the same backend checks the ci does"
 run = [
-  "mvn spotless:check",
-  "mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args=",
+	"mvn spotless:check",
+	"mvn verify -Dcheckstyle.failOnViolation=true -Derrorprone.args=",
 ]
 hide = true
 
@@ -86,6 +109,10 @@ description = "Does the same frontend checks the ci does"
 dir = "ui"
 run = "npm run ci"
 hide = true
+
+############
+# CI Fix
+############
 
 [tasks.fix]
 description = "[:service :ui] Formats everything"
@@ -109,6 +136,10 @@ dir = "docs"
 run = "npm run fix"
 hide = true
 
+############
+# Generator
+############
+
 [tasks."generate:api"]
 description = "Generates api from a running backend"
 dir = "ui"
@@ -118,6 +149,14 @@ run = "npm run generate:api"
 description = "Generates countries"
 dir = "ui"
 run = "npm run generate:countries"
+
+[tasks."generate:docs-css"]
+description = "Generates docs css from the ui themes"
+run = "node scripts/generate-docs-theme-from-ui.mjs"
+
+############
+# Test
+############
 
 [tasks."test"]
 description = "[:service :ui :ui:watch] Runs all tests"
@@ -140,23 +179,15 @@ dir = "ui"
 run = "npm run test:watch"
 hide = true
 
+############
+# Other
+############
+
 [tasks.build]
 dir = "docker"
 run = [
-  "docker desktop start --timeout 120 || true",
-  "docker compose --file compose.test.yml build",
+	"docker desktop start --timeout 120 || true",
+	"docker compose --file compose.test.yml build",
 ]
 description = "Build the images locally"
-hide = true
-
-[tasks.docs]
-dir = "docs"
-run = "npm run dev"
-
-[tasks."docs:preview"]
-dir = "docs"
-run = [
-	"npm run build",
-	"npm run preview -- --port 4322"
-]
 hide = true

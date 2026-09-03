@@ -1,4 +1,4 @@
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
 	--sl-color-black:  oklch(20.84% 0.008 17.911);
 	--sl-color-white:  oklch(83.768% 0.001 17.911);
 	--sl-color-gray-1:  oklch(83.768% 0.001 17.911);
@@ -16,7 +16,7 @@
 	--sl-color-bg-sidebar: var(--sl-color-gray-6);
 	--sl-color-bg-nav: var(--sl-color-gray-7);
 }
-:root[data-theme="light"] {
+:root[data-theme='light'] {
 	--sl-color-black:  oklch(98.71% 0.02 123.72);
 	--sl-color-white:  oklch(19.742% 0.004 123.72);
 	--sl-color-gray-1:  oklch(19.742% 0.004 123.72);
