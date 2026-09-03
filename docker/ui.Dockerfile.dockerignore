@@ -1,8 +1,13 @@
 *
 !ui
+!docs
 !docker/nginx.conf
 
 ui/node_modules
 ui/build
 ui/.svelte-kit
 **/.env
+
+docs/node_modules
+docs/dist
+docs/.astro
