@@ -19,9 +19,16 @@ function update(session: SessionDto): Promise<SessionDto> {
 	);
 }
 
+function findBrewingMethods(query?: string): Promise<string[]> {
+	return unwrap(
+		api.GET('/api/sessions/brewing-methods', { params: { query: { limit: 10, query: query } } })
+	);
+}
+
 export const sessionService = {
 	findForTea,
 	getById,
 	create,
-	update
+	update,
+	findBrewingMethods
 };

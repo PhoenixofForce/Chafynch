@@ -244,6 +244,22 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
+	'/api/sessions/brewing-methods': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get: operations['getBrewingMethods'];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
 	'/api/locations': {
 		parameters: {
 			query?: never;
@@ -351,6 +367,7 @@ export interface components {
 			lastUpdated?: string;
 			weight?: number;
 			volume?: number;
+			brewingMethod?: string;
 			location?: string;
 			people?: string;
 			/** Format: int32 */
@@ -1023,6 +1040,29 @@ export interface operations {
 				};
 				content: {
 					'*/*': components['schemas']['SessionDto'][];
+				};
+			};
+		};
+	};
+	getBrewingMethods: {
+		parameters: {
+			query?: {
+				query?: string;
+				limit?: number;
+			};
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'*/*': string[];
 				};
 			};
 		};

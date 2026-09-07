@@ -1,5 +1,6 @@
 package dev.phoenixofforce.tea.tracker.session;
 
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,11 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
         """)
     Optional<Session> findLastSessionBeforeId(Long sessionId);
 
+    @Query("""
+            Select distinct s.brewingMethod
+            from Session s
+            where lower(s.brewingMethod) like lower(concat('%', :query, '%'))
+            order by s.brewingMethod
+        """)
+    List<String> findBrewingMethods(String query, Limit of);
 }

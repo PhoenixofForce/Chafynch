@@ -24,6 +24,8 @@ public class SessionDto {
 
     private BigDecimal volume;
 
+    private String brewingMethod;
+
     private String location;
 
     private String people;
@@ -69,6 +71,7 @@ public class SessionDto {
         dto.setLastUpdated(session.getLastUpdated());
         dto.setWeight(session.getWeight());
         dto.setVolume(session.getVolume());
+        dto.setBrewingMethod(session.getBrewingMethod());
         dto.setLocation(session.getLocation());
         dto.setPeople(session.getPeople());
         dto.setSessionSummary(session.getSessionSummary());

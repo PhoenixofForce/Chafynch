@@ -4,8 +4,10 @@
 	import { globalCategories } from './types';
 	import TastingNoteModal from './TastingNoteModal.svelte';
 	import Button from '$lib/basics/Button.svelte';
-	import { Beaker, MapPin, Scale, User } from '@lucide/svelte';
+	import { Beaker, CookingPot, MapPin, Scale, User } from '@lucide/svelte';
 	import type { SessionDto } from '$lib/api/gen/types';
+	import Combobox from '$lib/basics/Combobox.svelte';
+	import { sessionService } from '$lib/api/session.service';
 
 	let {
 		session = $bindable(),
@@ -37,15 +39,14 @@
 		bind:value={session.volume}
 	/>
 
-	<!-- forgotton
 	<Combobox
 		class="col-span-full"
 		icon={CookingPot}
-		options={['Gongfu', 'Western', 'Grandpa', 'Coldbrew']}
+		options={[]}
 		placeholder="Brewing Method"
+		search={sessionService.findBrewingMethods}
 		bind:value={session.brewingMethod}
 	/>
-	 -->
 
 	<div class="col-span-full w-full text-xs text-base-content/50 uppercase">Surrounding</div>
 	<Input icon={User} inputClass="w-full" placeholder="People" bind:value={session.people} />

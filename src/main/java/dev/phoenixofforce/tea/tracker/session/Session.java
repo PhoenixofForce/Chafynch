@@ -52,6 +52,8 @@ public class Session {
 
     private BigDecimal volume;
 
+    private String brewingMethod;
+
     private String location;
 
     private String people;

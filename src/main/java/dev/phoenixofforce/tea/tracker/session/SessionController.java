@@ -39,4 +39,10 @@ public class SessionController {
         dto.setId(id);
         return service.createOrUpdateSession(null, dto);
     }
+
+    @GetMapping("/brewing-methods")
+    public List<String> getBrewingMethods(@RequestParam(defaultValue = "") String query,
+        @RequestParam(defaultValue = "10") int limit) {
+        return service.findBrewingMethods(query, limit);
+    }
 }

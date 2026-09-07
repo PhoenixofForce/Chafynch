@@ -10,6 +10,7 @@ import dev.phoenixofforce.tea.tracker.tea.TeaRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Limit;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +75,7 @@ public class SessionService {
         session.setLastUpdated(clock.instant()); // Todo: only if old stamp is newer then 24h
         session.setWeight(dto.getWeight());
         session.setVolume(dto.getVolume());
+        session.setBrewingMethod(dto.getBrewingMethod());
         session.setLocation(dto.getLocation());
         session.setPeople(dto.getPeople());
         session.setRating(dto.getRating());
@@ -152,5 +154,9 @@ public class SessionService {
         }
 
         return infusion;
+    }
+
+    public List<String> findBrewingMethods(String query, int limit) {
+        return repository.findBrewingMethods(query, Limit.of(limit));
     }
 }
