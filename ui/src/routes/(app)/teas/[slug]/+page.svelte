@@ -231,12 +231,6 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="join mt-4">
-				<button class="btn join-item">1</button>
-				<button class="btn btn-active join-item">2</button>
-				<button class="btn join-item">3</button>
-				<button class="btn join-item">4</button>
-			</div>
 		{/if}
 	</div>
 {/snippet}
