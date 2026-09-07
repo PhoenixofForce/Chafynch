@@ -3,7 +3,7 @@
 	import Checkbox from '$lib/basics/Checkbox.svelte';
 	import Input from '$lib/basics/Input.svelte';
 	import Rating from '$lib/basics/Rating.svelte';
-	import { MapPin, User } from '@lucide/svelte';
+	import { CircleCheck, MapPin, TriangleAlert, User } from '@lucide/svelte';
 	import SessionBottomBar from './SessionBottomBar.svelte';
 	import StartSettings from './StartSettings.svelte';
 	import TastingNoteDisplay from './TastingNoteDisplay.svelte';
@@ -12,24 +12,34 @@
 	import { categories, globalCategories, type Tabs } from './types.js';
 	import EndSettings from './EndSettings.svelte';
 	import { sessionService } from '$lib/api/session.service.js';
+	import Loading from '$lib/basics/Loading.svelte';
+	import Tooltip from '$lib/basics/Tooltip.svelte';
 
 	let { data } = $props();
 	let session = $state(data.session);
 	let lastSaved = JSON.stringify($state.snapshot(session));
+	let saved = $state<'saved' | 'saving' | 'unsaved'>('saved');
 
 	let saveDebounce: ReturnType<typeof setTimeout> | undefined;
 	$effect(() => {
 		const snapshot = JSON.stringify($state.snapshot(session));
 		if (snapshot === lastSaved) return;
+		saved = 'unsaved';
 
 		if (saveDebounce) clearTimeout(saveDebounce);
-		saveDebounce = setTimeout(() => {
-			sessionService.update(session);
+		saveDebounce = setTimeout(async () => {
+			save();
 			lastSaved = snapshot;
 		}, 1000);
 
 		return () => clearTimeout(saveDebounce);
 	});
+
+	async function save() {
+		saved = 'saving';
+		await sessionService.update(session);
+		saved = 'saved';
+	}
 
 	let activeTab = $state<Tabs>({ tab: 'start' });
 
@@ -96,11 +106,23 @@
 	<div class="w-full px-2">
 		<div>
 			<b>{data.tea.name}</b>
-			<span class="ml-2 text-sm text-base-content/80 italic"
-				>Session {session.sessionNumber ?? session.id}</span
-			>
+			<span class="ml-2 text-sm text-base-content/80 italic">
+				Session {session.sessionNumber ?? session.id}
+			</span>
 		</div>
-		<div class="flex gap-2 text-sm">
+		<div class="mt-2 flex gap-2 text-sm">
+			<Tooltip label="t">
+				<button class="badge badge-sm" onclick={save}>
+					{#if saved === 'saving'}
+						<Loading class="loading-xs" /> Saving
+					{:else if saved === 'saved'}
+						<CircleCheck /> Saved
+					{:else}
+						<TriangleAlert /> Unsaved
+					{/if}
+				</button>
+			</Tooltip>
+
 			{#if session.weight || session.volume}
 				<span
 					>{session.weight ? session.weight + 'g' : ''}
