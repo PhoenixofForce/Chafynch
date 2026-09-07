@@ -110,17 +110,15 @@
 			</span>
 		</div>
 		<div class="mt-2 flex gap-2 text-sm">
-			<Tooltip label="t">
-				<button class="badge badge-sm" onclick={save}>
-					{#if saved === 'saving'}
-						<Loading class="loading-xs" /> Saving
-					{:else if saved === 'saved'}
-						<CircleCheck /> Saved
-					{:else}
-						<TriangleAlert /> Unsaved
-					{/if}
-				</button>
-			</Tooltip>
+			<button class="badge badge-sm" onclick={save}>
+				{#if saved === 'saving'}
+					<Loading class="loading-xs" /> Saving
+				{:else if saved === 'saved'}
+					<CircleCheck /> Saved
+				{:else}
+					<TriangleAlert /> Unsaved
+				{/if}
+			</button>
 
 			{#if session.weight || session.volume}
 				<span
