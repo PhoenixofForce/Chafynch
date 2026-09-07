@@ -13,7 +13,6 @@
 	import EndSettings from './EndSettings.svelte';
 	import { sessionService } from '$lib/api/session.service.js';
 	import Loading from '$lib/basics/Loading.svelte';
-	import Tooltip from '$lib/basics/Tooltip.svelte';
 
 	let { data } = $props();
 	let session = $state(data.session);
