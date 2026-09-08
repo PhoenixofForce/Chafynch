@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	interface TabDefinition {
+	export interface TabDefinition {
 		id: string;
 		label?: string;
 		content?: Snippet<[TabDefinition]>;

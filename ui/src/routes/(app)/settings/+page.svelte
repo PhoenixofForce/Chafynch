@@ -1,24 +1,15 @@
 <script lang="ts">
+	import Tabs, { type TabDefinition } from '$lib/basics/Tabs.svelte';
 	import ExtractionProfileTab from './ExtractionProfileTab.svelte';
 
 	const { data } = $props();
+	const tabs: TabDefinition[] = [{ id: 'extraction', label: 'Extraction Profiles' }];
 </script>
 
-<div class="tabs tabs-border w-full">
-	<input
-		name="my_tabs_2"
-		class="tab checked:text-primary"
-		aria-label="Scraper Settings"
-		checked={true}
-		type="radio"
-	/>
-	<div class="tab-content px-12 py-8">
-		<ExtractionProfileTab bind:profiles={data.profiles} />
-	</div>
-
-	<input name="my_tabs_2" class="tab checked:text-primary" aria-label="Tab 2" type="radio" />
-	<div class="tab-content px-6 py-4">Tab content 2</div>
-
-	<input name="my_tabs_2" class="tab checked:text-primary" aria-label="Tab 3" type="radio" />
-	<div class="tab-content px-6 py-4">Tab content 3</div>
-</div>
+<Tabs {tabs}>
+	{#snippet renderTab(tabDefiniton)}
+		{#if tabDefiniton.id === 'extraction'}
+			<ExtractionProfileTab bind:profiles={data.profiles} />
+		{/if}
+	{/snippet}
+</Tabs>
