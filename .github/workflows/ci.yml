@@ -16,6 +16,7 @@ jobs:
       backend-deps: ${{ steps.filter.outputs.backend-deps }}
       frontend-deps: ${{ steps.filter.outputs.frontend-deps }}
       docs-deps: ${{ steps.filter.outputs.docs-deps }}
+      docs-css: ${{ steps.filter.outputs.docs-css }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -40,7 +41,11 @@ jobs:
             docs-deps:
               - 'docs/package.json'
               - 'docs/package-lock.json'
-
+            docs-css:
+              - 'ui/src/routes/light.css'
+              - 'ui/src/routes/dark.css'
+              - 'docs/src/styles/custom.in.css'
+              - 'scripts/generate-docs-theme-from-ui.mjs'
   backend:
     needs: changes
     if: needs.changes.outputs.backend == 'true'
@@ -138,3 +143,18 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: docs
+
+  docs-css:
+    needs: changes
+    if: needs.changes.outputs.docs-css == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: docs/package.json
+
+      - run: node scripts/generate-docs-theme-from-ui.mjs
+
+      - run: git diff --exit-code -- docs/src/styles/custom.gen.css
