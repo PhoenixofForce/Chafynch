@@ -43,7 +43,7 @@ public class TeaService {
     @Transactional(readOnly = true)
     public TeaDTO findById(Long id) {
         Tea tea = teaRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tea not found"));
 
         TeaDTO dto = TeaDTO.from(tea);
         dto.setTastingNotes(findTopTastingNotesForTea(tea.getId(), 10));
