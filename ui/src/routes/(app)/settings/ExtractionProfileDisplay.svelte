@@ -271,7 +271,7 @@
 				<h4>Config</h4>
 			</div>
 
-			<Codeblock text={JSON.stringify(entity, null, 4)} />
+			<Codeblock text={JSON.stringify((({ id: _id, ...rest }) => rest)(entity), null, 4)} />
 		{/if}
 	{/snippet}
 </BasicEntityCard>
