@@ -27,8 +27,11 @@
 
 		if (saveDebounce) clearTimeout(saveDebounce);
 		saveDebounce = setTimeout(async () => {
-			save();
-			lastSaved = snapshot;
+			try {
+				await save();
+			} catch (_) {
+				saved = 'unsaved';
+			}
 		}, 1000);
 
 		return () => clearTimeout(saveDebounce);
@@ -36,8 +39,24 @@
 
 	async function save() {
 		saved = 'saving';
-		await sessionService.update(session);
+		const payload = $state.snapshot(session);
+		const result = await sessionService.update(payload);
+
+		for (let i = 0; i < (session.infusions?.length ?? -1); i++) {
+			const infusion = session.infusions![i];
+			if (infusion.id) continue;
+
+			for (let j = 0; j < (result.infusions?.length ?? -1); j++) {
+				const savedInfsion = result.infusions![j];
+				if (savedInfsion.startTime !== infusion.startTime) continue;
+				infusion.id = savedInfsion.id;
+				payload.infusions![i].id = savedInfsion.id;
+				break;
+			}
+		}
+
 		saved = 'saved';
+		lastSaved = JSON.stringify(payload);
 	}
 
 	let activeTab = $state<Tabs>({ tab: 'start' });

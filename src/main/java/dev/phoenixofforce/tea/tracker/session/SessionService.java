@@ -47,7 +47,7 @@ public class SessionService {
 
         SessionDto dto = SessionDto.from(session);
 
-        Optional<Session> lastSession = repository.findLastSessionBeforeId(id);
+        Optional<Session> lastSession = repository.findLastSessionBeforeId(id, session.getTea().getId());
         dto.setHintFromLastSession(lastSession.map(Session::getNextSessionHint).orElse(null));
 
         return dto;

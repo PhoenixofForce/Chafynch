@@ -19,10 +19,10 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
         where s.id = (
             Select MAX(s.id)
             from Session s
-            where s.id < :sessionId
+            where s.id < :sessionId and s.tea.id = :teaId
         )
         """)
-    Optional<Session> findLastSessionBeforeId(Long sessionId);
+    Optional<Session> findLastSessionBeforeId(Long sessionId, Long teaId);
 
     @Query("""
             Select distinct s.brewingMethod

@@ -51,8 +51,9 @@
 	// Todo:
 	async function onDelete(profile: ExtractionProfile) {
 		await extractionService.delete(profile);
-		return toast.success(`Successfully created '${profile.name}'`);
+		return toast.success(`Successfully deleted '${profile.name}'`);
 	}
+
 	async function onSave(profile: ExtractionProfile, isNew: boolean) {
 		if (isNew) {
 			await extractionService.create(profile);
