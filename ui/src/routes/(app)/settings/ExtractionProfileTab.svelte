@@ -31,6 +31,6 @@
 	{/if}
 
 	{#each profiles, i}
-		<ExtractionProfileDisplay {editor} bind:profile={profiles[i]} />
+		<ExtractionProfileDisplay {editor} profile={profiles[i]} />
 	{/each}
 </div>

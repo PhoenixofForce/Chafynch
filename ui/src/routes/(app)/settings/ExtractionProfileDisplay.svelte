@@ -71,11 +71,15 @@
 	function addField(profile: ExtractionProfile, field: string) {
 		profile.settings = profile.settings ?? [];
 		profile.settings!.push({ field });
+		activeTab = field;
+		popoverElement?.hidePopover();
 	}
 
 	const operations = ['nextSibling', 'nextElementSibling'];
 
 	let showConfig = $state(false);
+	let activeTab = $state<string>((profile.settings?.map((e) => e.field!) ?? [])[0] ?? '');
+	let popoverElement = $state<HTMLUListElement>();
 </script>
 
 <BasicEntityCard {editor} entity={profile} {onDelete} {onSave}>
@@ -155,12 +159,18 @@
 		</div>
 
 		<!-- Todo: make deletable -->
-		<Tabs class="tabs-border" contentClass="border-base-300 bg-base-100" {tabs}>
+		<Tabs
+			class="tabs-border"
+			contentClass="border-base-300 bg-base-100"
+			{tabs}
+			bind:active={activeTab}
+		>
 			{#if editing && unsetFields.length}
 				<button style="anchor-name:--anchor-1" class="tab" popovertarget="popover-1" type="button">
 					<Plus />
 				</button>
 				<ul
+					bind:this={popoverElement}
 					id="popover-1"
 					style="position-anchor:--anchor-1"
 					class="menu dropdown w-52 rounded-box bg-base-100 shadow-sm"

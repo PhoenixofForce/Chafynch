@@ -9,7 +9,7 @@
 <Tabs {tabs}>
 	{#snippet renderTab(tabDefiniton)}
 		{#if tabDefiniton.id === 'extraction'}
-			<ExtractionProfileTab bind:profiles={data.profiles} />
+			<ExtractionProfileTab profiles={data.profiles} />
 		{/if}
 	{/snippet}
 </Tabs>
