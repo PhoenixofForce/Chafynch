@@ -18,7 +18,7 @@
 				baseProfile = JSON.parse(importProfileJson);
 				importProfileJson = '';
 			}
-		} catch (_) {
+		} catch {
 			toast.warning('Could not parse JSON.');
 			baseProfile = { name: '' };
 		}

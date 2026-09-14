@@ -29,7 +29,7 @@
 		saveDebounce = setTimeout(async () => {
 			try {
 				await save();
-			} catch (_) {
+			} catch {
 				saved = 'unsaved';
 			}
 		}, 1000);
