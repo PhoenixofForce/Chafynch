@@ -1,3 +1,5 @@
+import { loadLocale } from 'wuchale/load-utils';
+import './locales/main.loader.svelte.js';
 import '@testing-library/jest-dom/vitest';
 
 HTMLDialogElement.prototype.showModal = function () {
@@ -10,3 +12,5 @@ HTMLDialogElement.prototype.close = function (returnValue?: string) {
 };
 Element.prototype.scrollTo = () => {};
 Element.prototype.scrollIntoView = () => {};
+
+await loadLocale('en');
