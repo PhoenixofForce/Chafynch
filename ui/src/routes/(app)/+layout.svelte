@@ -3,7 +3,6 @@
 	import { page } from '$app/state';
 	import Toast from '$lib/toast/Toast.svelte';
 	import Sidebar from '$lib/basics/Sidebar.svelte';
-	import Controls from '$lib/layout/ThemeToggle.svelte';
 	import SidebarMenu from '$lib/layout/SidebarMenu.svelte';
 	import ConfirmationModal from '$lib/confirmation/ConfirmationModal.svelte';
 
@@ -31,5 +30,4 @@
 
 	<Toast />
 	<ConfirmationModal />
-	<Controls />
 </div>

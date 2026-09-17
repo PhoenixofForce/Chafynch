@@ -3,9 +3,10 @@ import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
 import { svelteTesting } from '@testing-library/svelte/vite';
+import { wuchale } from 'wuchale/vite';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit(), devtoolsJson(), svelteTesting()],
+	plugins: [wuchale(), tailwindcss(), sveltekit(), devtoolsJson(), svelteTesting()],
 	server: {
 		proxy: {
 			'/api': {

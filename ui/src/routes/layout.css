@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source not '../locales/';
 
 @plugin '@tailwindcss/typography';
 @plugin 'daisyui' {

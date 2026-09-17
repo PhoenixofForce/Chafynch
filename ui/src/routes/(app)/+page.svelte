@@ -16,7 +16,10 @@
 		<div class="stat-title">Tea Types</div>
 		<div class="stat-value">{data.types?.length ?? 0}</div>
 		<div class="stat-desc">
-			{data.types.slice(0, Math.min(3, data.types.length)).join(', ')}, ...
+			{data.types
+				.map((e) => e.name)
+				.slice(0, Math.min(3, data.types.length))
+				.join(', ')}, ...
 		</div>
 	</div>
 	<div class="stat">

@@ -21,3 +21,9 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+src/locales/.wuchale/
+src/locales/data.js
+src/locales/plural.js
+src/locales/main.loader.server.svelte.js
+src/locales/main.loader.svelte.js

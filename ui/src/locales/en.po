@@ -1,0 +1,758 @@
+msgid ""
+msgstr ""
+"Source-Language: en\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2\n"
+"X-Plurals-Order: one, other\n"
+
+#. 0: locale
+#: src/routes/+layout.svelte
+msgid "sprache {0}"
+msgstr "sprache {0}"
+
+#: src/lib/confirmation/ConfirmationModal.svelte
+msgid "Do you really want to perform this action"
+msgstr "Do you really want to perform this action"
+
+#: src/lib/confirmation/ConfirmationModal.svelte
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/lib/basics/Combobox.svelte
+msgid "Choose an object from the list"
+msgstr "Choose an object from the list"
+
+#: src/lib/basics/Combobox.svelte
+msgid "No Entries"
+msgstr "No Entries"
+
+#: src/lib/basics/Combobox.svelte
+msgid "Start typing"
+msgstr "Start typing"
+
+#: src/lib/basics/Modal.svelte
+msgid "close"
+msgstr "close"
+
+#: src/lib/basics/Codeblock.svelte
+#: src/routes/+error.svelte
+msgid "Copy"
+msgstr "Copy"
+
+#: src/lib/basics/Codeblock.svelte
+#: src/routes/+error.svelte
+msgid "Copied!"
+msgstr "Copied!"
+
+#: src/routes/+error.svelte
+msgid "This was not supposed to happen"
+msgstr "This was not supposed to happen"
+
+#: src/routes/+error.svelte
+msgid "You can go back to the <0>home page</0>"
+msgstr "You can go back to the <0>home page</0>"
+
+#: src/lib/basics/Select.svelte
+#: src/lib/basics/Select.svelte
+msgid "Choose an option"
+msgstr "Choose an option"
+
+#: src/lib/basics/Select.svelte
+msgid "Please choose a valid object"
+msgstr "Please choose a valid object"
+
+#: src/lib/basics/Input.svelte
+#: src/lib/basics/Textarea.svelte
+msgid "Placeholder"
+msgstr "Placeholder"
+
+#. 0: i + 1
+#. 0: i + 1
+#. 0: i
+#: src/lib/basics/Rating.svelte
+#: src/lib/basics/Rating.svelte
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "{0} star"
+msgstr "{0} star"
+
+#: src/lib/basics/Loading.svelte
+msgid "Loading..."
+msgstr "Loading..."
+
+#: src/lib/crud/BasicEntityCard.svelte
+msgid "Do you really want to delete this?"
+msgstr "Do you really want to delete this?"
+
+#: src/lib/crud/BasicEntityCard.svelte
+#: src/routes/(app)/teas/[slug]/+page.svelte
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Delete"
+msgstr "Delete"
+
+#: src/lib/layout/Navbar.svelte
+msgid "Item 1"
+msgstr "Item 1"
+
+#: src/lib/layout/Navbar.svelte
+msgid "Item 2"
+msgstr "Item 2"
+
+#: src/routes/(auth)/AuthCard.svelte
+msgid "Tea Tracker"
+msgstr "Tea Tracker"
+
+#: src/routes/(app)/+page.svelte
+#: src/routes/(app)/teas/+page.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Total Teas"
+msgstr "Total Teas"
+
+#: src/routes/(app)/+page.svelte
+#: src/routes/(app)/teas/+page.svelte
+msgid "Tea Types"
+msgstr "Tea Types"
+
+#: src/routes/(app)/+page.svelte
+#: src/routes/(app)/teas/+page.svelte
+msgid "Origin Countries"
+msgstr "Origin Countries"
+
+#: src/routes/(app)/+page.svelte
+msgid "Recent Tees"
+msgstr "Recent Tees"
+
+#: src/routes/(app)/+page.svelte
+msgid "<0/> All Teas"
+msgstr "<0/> All Teas"
+
+#: src/routes/(app)/+page.svelte
+#: src/routes/(app)/teas/+page.svelte
+msgid "No teas"
+msgstr "No teas"
+
+#. 0: cultivar.name
+#. 0: profile.name
+#. 0: teaType.name
+#. 0: vendor.name
+#: src/routes/(app)/cultivars/+page.svelte
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+#: src/routes/(app)/tea-types/+page.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Successfully created '{0}'"
+msgstr "Successfully created '{0}'"
+
+#. 0: cultivar.name
+#. 0: profile.name
+#. 0: teaType.name
+#. 0: vendor.name
+#: src/routes/(app)/cultivars/+page.svelte
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+#: src/routes/(app)/tea-types/+page.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Successfully updated '{0}'"
+msgstr "Successfully updated '{0}'"
+
+#. 0: cultivar.name
+#. 0: profile.name
+#. 0: teaType.name
+#. 0: data.tea.name
+#. 0: vendor.name
+#: src/routes/(app)/cultivars/+page.svelte
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+#: src/routes/(app)/tea-types/+page.svelte
+#: src/routes/(app)/teas/[slug]/+page.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Successfully deleted '{0}'"
+msgstr "Successfully deleted '{0}'"
+
+#: src/routes/(app)/cultivars/+page.svelte
+#: src/routes/(app)/tea-types/+page.svelte
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Name is required"
+msgstr "Name is required"
+
+#: src/routes/(app)/cultivars/+page.svelte
+#: src/routes/(app)/tea-types/+page.svelte
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Name*"
+msgstr "Name*"
+
+#: src/routes/(app)/cultivars/+page.svelte
+msgid "Manage Cultivars"
+msgstr "Manage Cultivars"
+
+#: src/routes/(app)/cultivars/+page.svelte
+msgid "Add Cultivar"
+msgstr "Add Cultivar"
+
+#: src/routes/(app)/settings/+page.svelte
+msgid "Extraction Profiles"
+msgstr "Extraction Profiles"
+
+#: src/routes/(app)/settings/+page.svelte
+msgid "extraction"
+msgstr "extraction"
+
+#: src/routes/(app)/settings/ExtractionProfileTab.svelte
+msgid "Could not parse JSON."
+msgstr "Could not parse JSON."
+
+#: src/routes/(app)/settings/ExtractionProfileTab.svelte
+msgid "Paste exported JSON"
+msgstr "Paste exported JSON"
+
+#: src/routes/(app)/settings/ExtractionProfileTab.svelte
+msgid "Import Extraction Profile"
+msgstr "Import Extraction Profile"
+
+#: src/routes/(app)/settings/ExtractionProfileTab.svelte
+msgid "Add new Extraction Profile"
+msgstr "Add new Extraction Profile"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Profile Name"
+msgstr "Profile Name"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Show Config"
+msgstr "Show Config"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Valid Urls"
+msgstr "Valid Urls"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Add Url"
+msgstr "Add Url"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Url to test"
+msgstr "Url to test"
+
+#. 0: entity.name
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Test {0}"
+msgstr "Test {0}"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Selector"
+msgstr "Selector"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Regex"
+msgstr "Regex"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Grab all?"
+msgstr "Grab all?"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Add Operation"
+msgstr "Add Operation"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Extraced:"
+msgstr "Extraced:"
+
+#. 0: result.errors.length
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "{0} Errors:"
+msgstr "{0} Errors:"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Raw result"
+msgstr "Raw result"
+
+#: src/routes/(app)/settings/ExtractionProfileDisplay.svelte
+msgid "Config"
+msgstr "Config"
+
+#. 0: (tea.price / tea.weightGrams).toFixed(2)
+#: src/routes/(app)/teas/TeaCard.svelte
+msgid "<0/> {0} €/g"
+msgstr "<0/> {0} €/g"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Choose a valid country."
+msgstr "Choose a valid country."
+
+#. 0: editing ? 'updated' \\: 'created'; 1: tea.name
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Successfully {0} '{1}'"
+msgstr "Successfully {0} '{1}'"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Updating a tea"
+msgstr "Updating a tea"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Adding a new tea"
+msgstr "Adding a new tea"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Invalid Website"
+msgstr "Invalid Website"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Website"
+msgstr "Website"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Fetch Data"
+msgstr "Fetch Data"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Tea Type"
+msgstr "Tea Type"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Choose a tea type"
+msgstr "Choose a tea type"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Cultivar z.B. Da Bai"
+msgstr "Cultivar z.B. Da Bai"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Vendor"
+msgstr "Vendor"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Cant be in the future"
+msgstr "Cant be in the future"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Harvest Year"
+msgstr "Harvest Year"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Harvest Label"
+msgstr "Harvest Label"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Description"
+msgstr "Description"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Preview"
+msgstr "Preview"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Country"
+msgstr "Country"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Province"
+msgstr "Province"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "City"
+msgstr "City"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Origin"
+msgstr "Origin"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Must be at least 0"
+msgstr "Must be at least 0"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Price"
+msgstr "Price"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Weight"
+msgstr "Weight"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Date of Purchase"
+msgstr "Date of Purchase"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Purchase"
+msgstr "Purchase"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Saving..."
+msgstr "Saving..."
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Update"
+msgstr "Update"
+
+#: src/routes/(app)/teas/TeaForm.svelte
+msgid "Create"
+msgstr "Create"
+
+#: src/routes/(app)/teas/+page.svelte
+msgid "All Teas"
+msgstr "All Teas"
+
+#: src/routes/(app)/teas/+page.svelte
+msgid "<0/> New Tea"
+msgstr "<0/> New Tea"
+
+#: src/routes/(auth)/register/+page.svelte
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+#: src/routes/(auth)/register/+page.svelte
+#: src/routes/(auth)/register/+page.svelte
+msgid "Register"
+msgstr "Register"
+
+#: src/routes/(auth)/forgot-password/+page.svelte
+#: src/routes/(auth)/login/+page.svelte
+#: src/routes/(auth)/register/+page.svelte
+msgid "Username is required"
+msgstr "Username is required"
+
+#: src/routes/(auth)/register/+page.svelte
+msgid "Username*"
+msgstr "Username*"
+
+#: src/routes/(auth)/register/+page.svelte
+msgid "E-Mail is required"
+msgstr "E-Mail is required"
+
+#: src/routes/(auth)/register/+page.svelte
+msgid "E-Mail*"
+msgstr "E-Mail*"
+
+#: src/routes/(auth)/login/+page.svelte
+#: src/routes/(auth)/register/+page.svelte
+#: src/routes/(auth)/register/+page.svelte
+msgid "Password is required"
+msgstr "Password is required"
+
+#: src/routes/(auth)/login/+page.svelte
+#: src/routes/(auth)/register/+page.svelte
+msgid "Password*"
+msgstr "Password*"
+
+#: src/routes/(auth)/register/+page.svelte
+msgid "Repeat Password*"
+msgstr "Repeat Password*"
+
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Must be a valid URL"
+msgstr "Must be a valid URL"
+
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Visit Shop"
+msgstr "Visit Shop"
+
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Manage Vendors"
+msgstr "Manage Vendors"
+
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Add Vendor"
+msgstr "Add Vendor"
+
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Average Price per Gram"
+msgstr "Average Price per Gram"
+
+#: src/routes/(app)/tea-types/+page.svelte
+msgid "Manage Tea Types"
+msgstr "Manage Tea Types"
+
+#: src/routes/(app)/tea-types/+page.svelte
+msgid "Add Tea Type"
+msgstr "Add Tea Type"
+
+#: src/routes/(auth)/login/+page.svelte
+msgid "Create new user"
+msgstr "Create new user"
+
+#: src/routes/(auth)/login/+page.svelte
+#: src/routes/(auth)/login/+page.svelte
+msgid "Login"
+msgstr "Login"
+
+#: src/routes/(auth)/forgot-password/+page.svelte
+#: src/routes/(auth)/login/+page.svelte
+msgid "Username or E-Mail*"
+msgstr "Username or E-Mail*"
+
+#: src/routes/(auth)/login/+page.svelte
+msgid "<0/> Stay logged in"
+msgstr "<0/> Stay logged in"
+
+#: src/routes/(auth)/login/+page.svelte
+msgid "Forgot Password?"
+msgstr "Forgot Password?"
+
+#: src/routes/(auth)/login/+page.svelte
+msgid "Login with Authentik"
+msgstr "Login with Authentik"
+
+#: src/routes/(auth)/login/+page.svelte
+msgid "Last used"
+msgstr "Last used"
+
+#: src/routes/(auth)/login/+page.svelte
+msgid "OR"
+msgstr "OR"
+
+#: src/routes/(auth)/forgot-password/+page.svelte
+msgid "Back to login"
+msgstr "Back to login"
+
+#: src/routes/(auth)/forgot-password/+page.svelte
+#: src/routes/(auth)/forgot-password/+page.svelte
+msgid "Reset Password"
+msgstr "Reset Password"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Add your first tasting note"
+msgstr "Add your first tasting note"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "Temperature (°C)"
+msgstr "Temperature (°C)"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "Rinse?"
+msgstr "Rinse?"
+
+#. 0: session.sessionNumber ?? session.id
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "Session {0}"
+msgstr "Session {0}"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "saving"
+msgstr "saving"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "<0/> Saving"
+msgstr "<0/> Saving"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "saved"
+msgstr "saved"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "<0/> Saved"
+msgstr "<0/> Saved"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "<0/> Unsaved"
+msgstr "<0/> Unsaved"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "infusion"
+msgstr "infusion"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "start"
+msgstr "start"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/+page.svelte
+msgid "end"
+msgstr "end"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Do you really want to delete tea?"
+msgstr "Do you really want to delete tea?"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Could not create new session"
+msgstr "Could not create new session"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Harvest"
+msgstr "Harvest"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Average Price"
+msgstr "Average Price"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "$ / g"
+msgstr "$ / g"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Inventory"
+msgstr "Inventory"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "20 g"
+msgstr "20 g"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "In the Sideboard"
+msgstr "In the Sideboard"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Buy more"
+msgstr "Buy more"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Edit"
+msgstr "Edit"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Drink now"
+msgstr "Drink now"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Session Logs"
+msgstr "Session Logs"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Tea"
+msgstr "Tea"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Rating"
+msgstr "Rating"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Infusions"
+msgstr "Infusions"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "g/ml"
+msgstr "g/ml"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+#: src/routes/(app)/vendors/+page.svelte
+msgid "Location"
+msgstr "Location"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "People"
+msgstr "People"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Date"
+msgstr "Date"
+
+#. 0: session.infusions?.length
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "{0} infusions"
+msgstr "{0} infusions"
+
+#. 0: session.weight; 1: session.volume
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "{0}g / {1}ml"
+msgstr "{0}g / {1}ml"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "Top Tasting Notes"
+msgstr "Top Tasting Notes"
+
+#: src/routes/(app)/teas/[slug]/+page.svelte
+msgid "more info coming soon"
+msgstr "more info coming soon"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/EndSettings.svelte
+msgid "Final notes"
+msgstr "Final notes"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/EndSettings.svelte
+msgid "Hint for next Session"
+msgstr "Hint for next Session"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/EndSettings.svelte
+msgid "Summary"
+msgstr "Summary"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/EndSettings.svelte
+msgid "For the next brew"
+msgstr "For the next brew"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Weight (g)"
+msgstr "Weight (g)"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Volume (ml)"
+msgstr "Volume (ml)"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Brewing Method"
+msgstr "Brewing Method"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Brewing Parameter"
+msgstr "Brewing Parameter"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Surrounding"
+msgstr "Surrounding"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/StartSettings.svelte
+msgid "Note from last session"
+msgstr "Note from last session"
+
+#. 0: infusionCount
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/SessionBottomBar.svelte
+msgid "Select Infusion {0}"
+msgstr "Select Infusion {0}"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/SessionBottomBar.svelte
+msgid "Add infusion"
+msgstr "Add infusion"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TastingNoteModal.svelte
+msgid "Add Tasting Notes"
+msgstr "Add Tasting Notes"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TastingNoteModal.svelte
+msgid "Notes"
+msgstr "Notes"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TastingNoteModal.svelte
+msgid "No suggestions found"
+msgstr "No suggestions found"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TastingNoteModal.svelte
+msgid "Search Note (Enter to add)"
+msgstr "Search Note (Enter to add)"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TastingNoteDisplay.svelte
+msgid "Add tasting notes"
+msgstr "Add tasting notes"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+msgid "Brewing Time (s)"
+msgstr "Brewing Time (s)"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+msgid "Timer"
+msgstr "Timer"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+msgid "Stopwatch"
+msgstr "Stopwatch"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+msgid "Target Time (s)"
+msgstr "Target Time (s)"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+msgid "Blind Mode"
+msgstr "Blind Mode"

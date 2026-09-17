@@ -4,6 +4,7 @@
 	import { Plus } from '@lucide/svelte';
 
 	let { data } = $props();
+	console.log(data.types);
 </script>
 
 <div class="stats mt-6 w-full stats-horizontal border border-base-300 bg-base-200 shadow">
@@ -16,7 +17,10 @@
 		<div class="stat-title">Tea Types</div>
 		<div class="stat-value">{data.types?.length ?? 0}</div>
 		<div class="stat-desc">
-			{data.types.slice(0, Math.min(3, data.types.length)).join(', ')}, ...
+			{data.types
+				.map((e) => e.name)
+				.slice(0, Math.min(3, data.types.length))
+				.join(', ')}, ...
 		</div>
 	</div>
 	<div class="stat">

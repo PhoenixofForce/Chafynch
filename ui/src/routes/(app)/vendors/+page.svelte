@@ -85,8 +85,8 @@
 				bind:value={entity.locationDto!.country}
 			/>
 
-			<Input inputClass="w-full" placeholder="Provinz" bind:value={entity.locationDto!.province} />
-			<Input inputClass="w-full" placeholder="Stadt" bind:value={entity.locationDto!.city} />
+			<Input inputClass="w-full" placeholder="Province" bind:value={entity.locationDto!.province} />
+			<Input inputClass="w-full" placeholder="City" bind:value={entity.locationDto!.city} />
 		</div>
 	{:else}
 		{#if entity.website}
@@ -143,7 +143,7 @@
 							<div class="stat-figure text-secondary">
 								<MapPin class="icon-lg" />
 							</div>
-							<div class="stat-title">Ort</div>
+							<div class="stat-title">Location</div>
 							<div class="stat-value">{overview.vendor.locationDto.city}</div>
 							<div class="stat-desc">{overview.vendor.locationDto.country}</div>
 						</div>
