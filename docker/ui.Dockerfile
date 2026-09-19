@@ -9,6 +9,7 @@ RUN npm run --silent license-file > /THIRD-PARTY.txt
 
 COPY ui/ .
 RUN npm pkg set version="$APP_VERSION"
+RUN npm run i18n
 RUN npm run build
 
 FROM node:24.12.0-alpine AS build_docs

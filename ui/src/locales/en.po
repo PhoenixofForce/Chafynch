@@ -8,11 +8,6 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 "X-Plurals-Order: one, other\n"
 
-#. 0: locale
-#: src/routes/+layout.svelte
-msgid "sprache {0}"
-msgstr "sprache {0}"
-
 #: src/lib/confirmation/ConfirmationModal.svelte
 msgid "Do you really want to perform this action"
 msgstr "Do you really want to perform this action"
@@ -93,17 +88,8 @@ msgstr "Do you really want to delete this?"
 msgid "Delete"
 msgstr "Delete"
 
-#: src/lib/layout/Navbar.svelte
-msgid "Item 1"
-msgstr "Item 1"
-
-#: src/lib/layout/Navbar.svelte
-msgid "Item 2"
-msgstr "Item 2"
-
-#: src/routes/(auth)/AuthCard.svelte
-msgid "Tea Tracker"
-msgstr "Tea Tracker"
+#~ msgid "Tea Tracker"
+#~ msgstr "Tea Tracker"
 
 #: src/routes/(app)/+page.svelte
 #: src/routes/(app)/teas/+page.svelte
@@ -756,3 +742,27 @@ msgstr "Target Time (s)"
 #: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
 msgid "Blind Mode"
 msgstr "Blind Mode"
+
+#: src/lib/layout/UserSettings.svelte
+#: src/lib/layout/UserSettings.svelte
+msgid "Light"
+msgstr "Light"
+
+#: src/lib/layout/UserSettings.svelte
+#: src/lib/layout/UserSettings.svelte
+msgid "Dark"
+msgstr "Dark"
+
+#. 0: isDark ? 'Dark' \\: 'Light'
+#: src/lib/layout/UserSettings.svelte
+msgid "Theme ({0})"
+msgstr "Theme ({0})"
+
+#. 0: selectedLocale.toLocaleUpperCase()
+#: src/lib/layout/UserSettings.svelte
+msgid "Language ({0})"
+msgstr "Language ({0})"
+
+#: src/routes/(auth)/AuthCard.svelte
+msgid "Chafynch"
+msgstr "Chafynch"

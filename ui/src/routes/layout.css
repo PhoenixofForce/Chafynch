@@ -31,3 +31,9 @@
 .no-transitions .swap-rotate .swap-off {
 	transition-property: all !important;
 }
+
+@layer components {
+	.menu .dropdown[popover] {
+		@apply m-2;
+	}
+}

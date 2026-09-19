@@ -109,6 +109,7 @@ description = "Does the same frontend checks the ci does"
 dir = "ui"
 run = "npm run ci"
 hide = true
+depends = ["i18n"]
 
 ############
 # CI Fix
@@ -191,3 +192,13 @@ run = [
 ]
 description = "Build the images locally"
 hide = true
+
+[tasks."i18n"]
+description = "Extracts strings to translate"
+dir = "ui"
+run = "npm run i18n"
+
+[tasks."i18n:clean"]
+description = "Removes unused translation keys"
+dir = "ui"
+run = "npm run i18n:clean"

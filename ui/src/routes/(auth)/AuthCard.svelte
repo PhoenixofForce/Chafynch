@@ -19,7 +19,7 @@
 </script>
 
 <div class="prose mb-8 text-center">
-	<h1>Tea Tracker</h1>
+	<h1>Chafynch</h1>
 </div>
 
 <div class="card w-full max-w-96 bg-base-300 shadow-sm">

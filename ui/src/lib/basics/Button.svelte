@@ -3,7 +3,13 @@
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 	import Loading from './Loading.svelte';
 
+	const variants = {
+		base: 'btn',
+		plain: ''
+	};
+
 	let {
+		variant = 'base',
 		label,
 		children,
 		loading,
@@ -13,6 +19,7 @@
 		noAnimation,
 		...rest
 	}: {
+		variant?: keyof typeof variants;
 		label?: string;
 		children?: Snippet;
 		loading?: boolean;
@@ -22,7 +29,7 @@
 </script>
 
 <button
-	class="btn {className} transition-transform {noAnimation
+	class="{variants[variant]} {className} transition-transform {noAnimation
 		? ''
 		: 'hover:-translate-y-1'} hover:shadow"
 	class:btn-square={!label}

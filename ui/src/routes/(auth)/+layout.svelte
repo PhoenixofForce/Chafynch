@@ -1,7 +1,9 @@
 <script lang="ts">
+	import Controls from '$lib/layout/UserSettings.svelte';
 	let { children } = $props();
 </script>
 
 <div class="flex min-h-svh w-full flex-col items-center justify-center p-4">
 	{@render children()}
 </div>
+<Controls />
