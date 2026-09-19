@@ -5,7 +5,6 @@ Chafynch is a self-hosted tea tracker. You can keep an eye your tea stash and ta
 # Table of Contents
 
 1. [Features](#features)
-   1. [Planned Features](#planned-features)
 2. [System Overview](#system-overview)
 3. [Deployment](#deployment)
 4. [Contributing](#contributing)
@@ -24,9 +23,9 @@ Chafynch is a self-hosted tea tracker. You can keep an eye your tea stash and ta
 ## Planned Features
 
 - Stock tracking (always know how much tea you got left)
-- user management
+- User management
 - Teaware tracking
-- Label Generator
+- Label generator
 - Collaborative tea sessions
 - LLM integration
 
