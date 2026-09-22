@@ -10,30 +10,30 @@ hero:
     - text: Get started
       link: docs
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: View latest releases
+      link: https://github.com/PhoenixofForce/Chafynch/releases
       icon: external
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## Next steps
+## Features
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Import teas from vendors" icon="setting">
+		Learn how to configure an extraction profile.
 	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a sidebar on this page.
+	<Card title="Make session notes" icon="pencil">
+		Progress through infusions without loosing the notes you taste.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Coming soon" icon="clock">
+		User management, Teaware tracking, Label generator and more
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+	<LinkCard
+		title="Simple docker deployment"
+		icon="rocket"
+		description="Just download the `docker-compose.yml` and start the stack."
+		href="docs/install/quickstart/"
+	/>
 </CardGrid>
