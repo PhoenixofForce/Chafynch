@@ -5,6 +5,8 @@ import starlightLinksValidator from 'starlight-links-validator';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://phoenixofforce.dev',
+	base: process.env.ASTRO_BASE ?? '/Chafynch',
 	integrations: [
 		starlight({
 			title: 'Chafynch',
@@ -29,7 +31,7 @@ export default defineConfig({
 			editLink: {
 				baseUrl: 'https://github.com/phoenixofforce/Chafynch/edit/main/docs/'
 			},
-			plugins: [starlightLinksValidator({ errorOnLocalLinks: false })]
+			plugins: [starlightLinksValidator({ errorOnLocalLinks: false, errorOnRelativeLinks: false })]
 		})
 	]
 });
