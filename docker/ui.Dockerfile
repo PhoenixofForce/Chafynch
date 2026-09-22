@@ -14,6 +14,7 @@ RUN npm run build
 
 FROM node:24.12.0-alpine AS build_docs
 ARG APP_VERSION=0.0.1-SNAPSHOT
+ARG ASTRO_BASE=/.
 
 WORKDIR /app
 
