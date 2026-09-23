@@ -11,16 +11,37 @@
 		isTimerRunning = $bindable(false)
 	}: { activeInfusion?: InfusionDto; isTimerRunning: boolean } = $props();
 
-	let mode = $state(0);
+	let mode = $state(readPreference().mode);
 	let timer = $state(0);
 	let totalTime = $state(0);
 	let direction = 1;
 
 	let targetTime = $state(20);
-	let blindMode = $state(false);
+	let blindMode = $state(readPreference().blind);
 	let timingDone = $state((activeInfusion?.infusionTime ?? 0) > 0);
 
 	let interval: ReturnType<typeof setInterval> | null = $state(null);
+
+	function readPreference() {
+		const storedMode = localStorage.getItem('timerbar_mode') ?? '0';
+		let mode = parseInt(storedMode);
+		if (mode !== 1) mode = 0;
+
+		const storedBlindMode = localStorage.getItem('timerbar_blind') ?? 'false';
+		const blind = storedBlindMode === 'true';
+
+		return { mode, blind };
+	}
+
+	function setMode(newMode: number) {
+		mode = newMode;
+		localStorage.setItem('timerbar_mode', mode + '');
+	}
+
+	function toggleBlind() {
+		blindMode = !blindMode;
+		localStorage.setItem('timerbar_blind', blindMode + '');
+	}
 
 	function startTimer() {
 		if (interval) {
@@ -92,7 +113,7 @@
 					aria-label="Timer"
 					checked={mode == 0}
 					disabled={interval !== null}
-					onclick={() => (mode = 0)}
+					onclick={() => setMode(0)}
 					type="radio"
 				/>
 				<input
@@ -101,7 +122,7 @@
 					aria-label="Stopwatch"
 					checked={mode == 1}
 					disabled={interval !== null}
-					onclick={() => (mode = 1)}
+					onclick={() => setMode(1)}
 					type="radio"
 				/>
 			</div>
@@ -114,7 +135,12 @@
 					bind:value={targetTime}
 				/>
 			{:else}
-				<Checkbox disabled={interval !== null} label="Blind Mode" bind:value={blindMode} />
+				<Checkbox
+					disabled={interval !== null}
+					label="Blind Mode"
+					onchange={() => toggleBlind()}
+					value={blindMode}
+				/>
 			{/if}
 		</div>
 		<Button class="w-full btn-primary md:w-18" icon={interval ? Pause : Play} onclick={startTimer}>
