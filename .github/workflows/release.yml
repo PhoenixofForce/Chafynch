@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: phoenixofforce/tea-tracker
+  IMAGE_NAME: phoenixofforce/chafynch
 
 jobs:
   release:

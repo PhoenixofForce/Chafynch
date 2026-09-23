@@ -15,7 +15,7 @@ services:
       retries: 10
 
   service:
-    image: ghcr.io/phoenixofforce/tea-tracker-service:latest
+    image: ghcr.io/phoenixofforce/chafynch-service:latest
     restart: unless-stopped
     depends_on:
       postgres:
@@ -26,7 +26,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-tea_tracker}
 
   ui:
-    image: ghcr.io/phoenixofforce/tea-tracker-ui:latest
+    image: ghcr.io/phoenixofforce/chafynch-ui:latest
     restart: unless-stopped
     ports:
       - "3000:3000"
