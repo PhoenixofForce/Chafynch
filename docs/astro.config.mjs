@@ -6,7 +6,7 @@ import starlightLinksValidator from 'starlight-links-validator';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://phoenixofforce.dev',
-	base: process.env.ASTRO_BASE ?? '/Chafynch',
+	base: process.env.ASTRO_BASE ?? '/',
 	trailingSlash: 'always',
 	integrations: [
 		starlight({

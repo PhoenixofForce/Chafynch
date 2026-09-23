@@ -91,7 +91,6 @@ run = "npm run dev"
 description = "Starts the docs in preview mode so it can be embedded it the ui"
 dir = "docs"
 run = ["npm run build", "npm run preview -- --port 4322"]
-env = { ASTRO_BASE = "/" }
 hide = true
 
 ############
