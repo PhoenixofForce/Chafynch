@@ -6,10 +6,9 @@
 	import type { InfusionDto } from '$lib/api/gen/types';
 
 	let {
-		disabled = false,
 		infusions = $bindable([]),
 		activeTab = $bindable()
-	}: { disabled?: boolean; infusions?: InfusionDto[]; activeTab: Tabs } = $props();
+	}: { infusions?: InfusionDto[]; activeTab: Tabs } = $props();
 
 	let scrollable: HTMLDivElement;
 
@@ -40,7 +39,6 @@
 	<div class="py-4">
 		<Button
 			class="h-20 w-16 {activeTab.tab === 'start' ? 'btn-primary' : 'btn-ghost'}"
-			{disabled}
 			icon={Leaf}
 			onclick={() => (activeTab = { tab: 'start' })}
 		/>
@@ -53,7 +51,6 @@
 					? 'btn-primary'
 					: 'btn-dash'}"
 				aria-label="Select Infusion {infusionCount}"
-				{disabled}
 				onclick={() => setInfusion(i)}
 			>
 				<div class="flex flex-col">
@@ -70,7 +67,6 @@
 		<Button
 			class="h-20 w-16 btn-dash"
 			aria-label="Add infusion"
-			{disabled}
 			icon={Plus}
 			onclick={addInfusion}
 		/>
@@ -79,7 +75,6 @@
 	<div class="py-4">
 		<Button
 			class="h-20 w-16 {activeTab.tab === 'end' ? 'btn-primary' : 'btn-ghost'}"
-			{disabled}
 			icon={Flag}
 			onclick={() => (activeTab = { tab: 'end' })}
 		/>

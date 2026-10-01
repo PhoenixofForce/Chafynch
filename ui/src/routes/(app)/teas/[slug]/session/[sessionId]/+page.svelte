@@ -13,6 +13,8 @@
 	import EndSettings from './EndSettings.svelte';
 	import { sessionService } from '$lib/api/session.service.js';
 	import Loading from '$lib/basics/Loading.svelte';
+	import { onDestroy } from 'svelte';
+	import { timerState } from './timer.svelte.js';
 
 	let { data } = $props();
 	let session = $state(data.session);
@@ -64,11 +66,12 @@
 	let activeInfusion = $derived(
 		activeTab.tab === 'infusion' ? session.infusions?.at(activeTab.index) : undefined
 	);
-	let isTimerRunning = $state(false);
 
 	let tastingNoteModal = $state<ReturnType<typeof TastingNoteModal>>();
 	let globalTastingNoteModal = $state<ReturnType<typeof TastingNoteModal>>();
 	let hasNotes = $derived(Object.values(activeInfusion?.tastingNotes ?? {}).length > 0);
+
+	onDestroy(() => timerState.stop());
 </script>
 
 {#snippet infusionTab()}
@@ -167,9 +170,7 @@
 		{/if}
 	</div>
 	{#if activeTab.tab === 'infusion'}
-		{#key activeTab.index}
-			<TimerBar {activeInfusion} bind:isTimerRunning />
-		{/key}
+		<TimerBar {activeInfusion} />
 	{/if}
-	<SessionBottomBar disabled={isTimerRunning} bind:infusions={session.infusions} bind:activeTab />
+	<SessionBottomBar bind:infusions={session.infusions} bind:activeTab />
 </div>
