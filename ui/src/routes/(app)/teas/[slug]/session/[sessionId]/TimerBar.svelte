@@ -35,23 +35,23 @@
 					name="options"
 					class="btn join-item"
 					aria-label="Timer"
-					checked={timerState.mode == 0}
+					checked={timerState.mode === 'timer'}
 					disabled={timerState.running}
-					onclick={() => timerState.setMode(0)}
+					onclick={() => timerState.setMode('timer')}
 					type="radio"
 				/>
 				<input
 					name="options"
 					class="btn join-item"
 					aria-label="Stopwatch"
-					checked={timerState.mode == 1}
+					checked={timerState.mode === 'stopwatch'}
 					disabled={timerState.running}
-					onclick={() => timerState.setMode(1)}
+					onclick={() => timerState.setMode('stopwatch')}
 					type="radio"
 				/>
 			</div>
 
-			{#if timerState.mode == 0}
+			{#if timerState.mode === 'timer'}
 				<Input
 					disabled={timerState.running}
 					placeholder="Target Time (s)"
@@ -74,7 +74,7 @@
 			icon={timerState.running ? Pause : Play}
 			onclick={() => timerState.toggle(activeInfusion!)}
 		>
-			{#if timerState.running && (timerState.mode == 0 || !timerState.blind)}
+			{#if timerState.running && (timerState.mode === 'timer' || !timerState.blind)}
 				{timerState.display.toFixed(1) + 's'}
 			{/if}
 		</Button>

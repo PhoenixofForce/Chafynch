@@ -766,3 +766,8 @@ msgstr "Language ({0})"
 #: src/routes/(auth)/AuthCard.svelte
 msgid "Chafynch"
 msgstr "Chafynch"
+
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+#: src/routes/(app)/teas/[slug]/session/[sessionId]/TimerBar.svelte
+msgid "timer"
+msgstr "timer"

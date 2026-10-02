@@ -5,13 +5,15 @@ class TimerState {
 	startedAt = $state<number>();
 	now = $state(Date.now());
 
-	mode = $state<0 | 1>(readPreference().mode);
+	mode = $state<'timer' | 'stopwatch'>(readPreference().mode);
 	targetTime = $state(20);
 	blind = $state(readPreference().blind);
 
 	running = $derived(this.startedAt !== undefined);
 	elapsed = $derived(this.running ? (this.now - this.startedAt!) / 1000 : 0);
-	display = $derived(this.mode === 0 ? Math.max(0, this.targetTime - this.elapsed) : this.elapsed);
+	display = $derived(
+		this.mode === 'timer' ? Math.max(0, this.targetTime - this.elapsed) : this.elapsed
+	);
 
 	#interval?: ReturnType<typeof setInterval>;
 
@@ -27,7 +29,7 @@ class TimerState {
 
 		this.#interval = setInterval(() => {
 			this.now = Date.now();
-			if (this.mode == 0 && this.elapsed >= this.targetTime) this.stop();
+			if (this.mode === 'timer' && this.elapsed >= this.targetTime) this.stop();
 		}, 100);
 	}
 
@@ -37,32 +39,31 @@ class TimerState {
 		if (!this.target) return;
 
 		this.target!.infusionTime = parseFloat(this.elapsed.toFixed(2));
-		if (this.mode === 0 && this.target!.infusionTime > this.targetTime) {
+		if (this.mode === 'timer' && this.target!.infusionTime > this.targetTime) {
 			this.target!.infusionTime = this.targetTime;
-			console.log(this.targetTime);
 		}
 
 		this.startedAt = undefined;
 		this.target = undefined;
 	}
 
-	setMode(newMode: 0 | 1) {
-		timerState.mode = newMode;
+	setMode(newMode: 'timer' | 'stopwatch') {
+		this.mode = newMode;
 		localStorage.setItem('timerbar_mode', newMode + '');
 	}
 
 	toggleBlind() {
-		timerState.blind = !timerState.blind;
-		localStorage.setItem('timerbar_blind', timerState.blind + '');
+		this.blind = !this.blind;
+		localStorage.setItem('timerbar_blind', this.blind + '');
 	}
 }
 
 export const timerState = new TimerState();
 
 function readPreference() {
-	const storedMode = localStorage.getItem('timerbar_mode') ?? '0';
-	const parsedMode = parseInt(storedMode);
-	const mode: 0 | 1 = parsedMode === 1 ? 1 : 0;
+	const storedMode = localStorage.getItem('timerbar_mode') ?? 'timer';
+	const mode: 'timer' | 'stopwatch' =
+		storedMode === '1' || storedMode === 'stopwatch' ? 'stopwatch' : 'timer'; // todo: remove backwards compatibility later
 
 	const storedBlindMode = localStorage.getItem('timerbar_blind') ?? 'false';
 	const blind = storedBlindMode === 'true';
