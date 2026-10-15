@@ -18,30 +18,22 @@ postinstall = { task = "setup" }
 description = "Installs everything needed"
 depends = ["setup:service", "setup:ui", "setup:docs"]
 run = "lefthook install"
-sources = ["../.config/lefthook.yml"]
-outputs = { auto = true }
 
 [tasks."setup:service"]
 description = "Installs everything needed for the backend"
-run = "mvn install -DskipTests"
-sources = ["pom.xml"]
-outputs = { auto = true }
+run = "mvn dependency:go-offline -q"
 hide = true
 
 [tasks."setup:ui"]
 description = "Installs everything needed for the frontend"
 dir = "ui"
-run = "npm ci"
-sources = ["package.json", "package-lock.json"]
-outputs = ["node_modules/.package-lock.json"]
+run = "npm install --no-save --no-audit --no-fund"
 hide = true
 
 [tasks."setup:docs"]
 description = "Installs everything needed for the docs"
 dir = "docs"
-run = "npm ci"
-sources = ["package.json", "package-lock.json"]
-outputs = ["node_modules/.package-lock.json"]
+run = "npm install --no-save --no-audit --no-fund"
 hide = true
 
 ############
