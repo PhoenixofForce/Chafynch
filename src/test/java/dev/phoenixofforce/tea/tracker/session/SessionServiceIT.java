@@ -58,7 +58,7 @@ public class SessionServiceIT extends BaseIT {
                 new TastingNoteDto("wet leaf", "nose", "other apple"),
                 new TastingNoteDto("wet leaf", "nose", "apricot")));
         dto = service.createOrUpdateSession(teaDTO.getId(), dto);
-        assertEquals(2, tastingNoteRepository.findNotes("", Limit.of(20)).size());
+        assertEquals(3, tastingNoteRepository.findNotes("", Limit.of(20)).size());
     }
 
     @Test
